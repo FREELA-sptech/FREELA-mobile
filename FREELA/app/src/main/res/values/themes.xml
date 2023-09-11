@@ -1,0 +1,49 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FREELA" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+    </style>
+
+    <style name="Theme.FREELA" parent="Base.Theme.FREELA">
+        <item name="colorPrimary">@color/color01</item>
+        <item name="colorPrimaryVariant">@color/color01</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color02</item>
+        <item name="colorSecondaryVariant">@color/color02</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="logo" parent="Base.Theme.FREELA">
+        <item name="android:src">@drawable/freela</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="btnprimary" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textColor">@color/backgroundprimary</item>
+        <item name="android:background">@drawable/btn_second</item>
+    </style>
+
+    <style name="title" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textprimary</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+    <style name="inoutLabel" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textsecondary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+
+
+
+</resources>
