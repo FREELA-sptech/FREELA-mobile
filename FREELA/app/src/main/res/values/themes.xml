@@ -29,17 +29,37 @@
         <item name="android:background">@drawable/btn_second</item>
     </style>
 
+    <style name="btnsecundary" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textColor">@color/backgroundprimary</item>
+        <item name="android:background">@drawable/bnt_secundary_night</item>
+    </style>
+
     <style name="title" parent="Base.Theme.FREELA">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textprimary</item>
         <item name="android:textSize">26sp</item>
     </style>
+    <style name="check_box" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textprimary</item>
+        <item name="android:textSize">19.2sp</item>
+    </style>
+
     <style name="inoutLabel" parent="Base.Theme.FREELA">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textsecondary</item>
         <item name="android:textSize">16sp</item>
+    </style>
+    <style name="inoutLabelRegister" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="detalhes" parent="Base.Theme.FREELA">

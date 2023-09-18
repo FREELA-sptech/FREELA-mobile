@@ -7,6 +7,8 @@
     <color name="color03">#A3CEF1</color>
     <color name="color04">#E7ECEF</color>
     <color name="color05">#8B8C89</color>
+    <color name="black">#000000</color>
+
 
     <color name="textprimary">#1D1D1D</color>
     <color name="textsecondary">#8B8C89</color>
@@ -14,6 +16,7 @@
     <color name="disable">#4F535A</color>
 
     <color name="backgroundprimary">#f7f7f7</color>
+
     <color name="white">#ffffff</color>
 
 
