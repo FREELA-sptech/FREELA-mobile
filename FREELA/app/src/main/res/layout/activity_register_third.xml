@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="24dp"
+    android:background="@color/backgroundprimary"
     tools:context=".activity_register_third">
 
     <LinearLayout
@@ -143,17 +144,30 @@
             />
 
         <LinearLayout
-            android:layout_width="360dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Ja tenho uma conta!"
-                android:textStyle="bold"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:text="Já tenho uma conta! "
+                android:textColor="@color/textsecondary" />
+
+            <TextView
+                android:id="@+id/redirect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="12dp"
+                android:text="Entrar"
+                android:textColor="@color/textprimary"
+                android:textFontWeight="700" />
         </LinearLayout>
+
 
     </LinearLayout>
 

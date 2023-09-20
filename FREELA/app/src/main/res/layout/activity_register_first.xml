@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/bnt_secundary_night"
+        android:id="@+id/btnNext"
         android:layout_marginTop="20dp"/>
 
 
