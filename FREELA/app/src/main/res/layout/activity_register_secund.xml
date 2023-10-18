@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/backgroundprimary"
     android:paddingHorizontal="24dp"
-    tools:context=".activity_register_secund">
+    tools:context=".view.activity_register_secund">
 
     <LinearLayout
         android:layout_width="match_parent"

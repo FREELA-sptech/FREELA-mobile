@@ -1,9 +1,10 @@
-package com.example.freela
+package com.example.freela.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.example.freela.R
 
 class activity_register_secund : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
