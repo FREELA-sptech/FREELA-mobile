@@ -139,7 +139,7 @@
         <Button
             android:text="Cadastrar"
             style="@style/btnprimary"
-            android:id="@+id/entrar"
+            android:id="@+id/register"
             android:layout_marginTop="28dp"
             />
 

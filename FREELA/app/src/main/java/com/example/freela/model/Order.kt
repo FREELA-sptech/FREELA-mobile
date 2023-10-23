@@ -8,7 +8,7 @@ data class Order(
     val user: User,
     val expirationTime: String,
     val subCategories: List<SubCategory>,
-    val photos: List<PhotosResponse>,
+//    val photos: List<PhotosResponse>,
     val proposals: List<Proposals>,
     val isAccepted: Boolean
 )

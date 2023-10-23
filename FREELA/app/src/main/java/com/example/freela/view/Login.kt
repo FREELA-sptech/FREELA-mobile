@@ -3,10 +3,20 @@ package com.example.freela.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityLoginBinding
+import com.example.freela.model.dto.request.LoginRequest
+import com.example.freela.model.dto.response.LoginResponse
+import com.example.freela.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.net.PasswordAuthentication
 
 class Login : AppCompatActivity() {
-    val binding by lazy {
+    private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
@@ -15,7 +25,7 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.entrar.setOnClickListener {
-            val intent = Intent(this, Chat::class.java)
+            val intent = Intent(this, activity_home::class.java)
 
             val inputEmail = binding.email.text.toString();
             val inputPassword = binding.password.text.toString();
@@ -25,7 +35,9 @@ class Login : AppCompatActivity() {
             }else if(inputPassword.length < 8){
                 binding.password.error = "Senha muito curta"
             }else{
-                startActivity(intent)
+                tryLogin(inputEmail,inputPassword)
+
+//                startActivity(intent)
             }
 
         }
@@ -44,5 +56,38 @@ class Login : AppCompatActivity() {
 
     private fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun tryLogin(email: String, password: String) {
+        val loginRequest = LoginRequest(
+            email, password
+        )
+        RetrofitClient.getInstance()
+            .create(AuthService::class.java)
+            .login(loginRequest)
+            .enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        //sharedPreferences
+                        val prefes=
+                            getSharedPreferences("AUTH", MODE_PRIVATE)
+                        val editor= prefes.edit()
+                        editor.putString("TOKEN", response.body().toString())
+                        editor.commit()
+                        binding.errorMessage.visibility = View.GONE
+                        Toast.makeText(baseContext, "Login Feito com sucesso! ", Toast.LENGTH_LONG).show()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    binding.errorMessage.visibility = View.VISIBLE
+                    binding.errorMessage.text = "Email ou senha incorretos!"
+                }
+
+            })
     }
 }

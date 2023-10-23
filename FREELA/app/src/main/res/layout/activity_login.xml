@@ -67,7 +67,16 @@
             />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8sp"
+        android:layout_marginTop="8dp"
+        android:textSize="18dp"
+        android:visibility="gone"
+        android:textColor="@color/error"
+        />
     <Button
         android:text="Entrar"
         style="@style/btnprimary"
