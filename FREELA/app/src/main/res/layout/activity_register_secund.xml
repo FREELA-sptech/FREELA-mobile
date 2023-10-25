@@ -44,7 +44,8 @@
                     android:layoutDirection="rtl"
                     android:width="350dp"
                     android:layout_alignParentEnd="true"
-                    android:text="Programação" />
+                    android:text="Programação"
+                    android:tag="1"/>
                 <CheckBox
                     android:id="@+id/checkBox2"
                     style="@style/check_box"
@@ -53,7 +54,8 @@
                     android:layoutDirection="rtl"
                     android:width="350dp"
                     android:layout_alignParentEnd="true"
-                    android:text="Redação" />
+                    android:text="Redação"
+                    android:tag="2"/>
                 <CheckBox
                     android:id="@+id/checkBox3"
                     style="@style/check_box"
@@ -62,32 +64,40 @@
                     android:layoutDirection="rtl"
                     android:width="350dp"
                     android:layout_alignParentEnd="true"
-                    android:text="Tradução" />
+                    android:text="Tradução"
+                    android:tag="3"/>
             </LinearLayout>
 
-
-
-
         </HorizontalScrollView>
+        
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8sp"
+            android:layout_marginTop="8dp"
+            android:textSize="18dp"
+            android:visibility="gone"
+            android:textColor="@color/error"
+            />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:text="Categorias Selecionadas:"
-                android:textAlignment="center"/>
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/btnNext"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/bnt_secundary_night"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:paddingVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Continuar"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@color/disableBtnColor"
+                android:id="@+id/btnNext"
+                />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 

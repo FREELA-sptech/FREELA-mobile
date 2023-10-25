@@ -20,5 +20,15 @@
     <color name="white">#ffffff</color>
     <color name="error">#dc3545</color>
 
+    <color name="selectedCardColor">#E7ECEF</color>
+    <color name="defaultCardColor">#fff</color>
+
+    <color name="disableBtnColor">#4F535A</color>
+    <color name="submitBtnColor">#274C77</color>
+
+
+
+
+
 
 </resources>

@@ -12,7 +12,7 @@ import retrofit2.http.POST
 interface AuthService {
     @POST("/users")
     fun register(@Body registerRequest: RegisterRequest):
-            Call<User>
+            Call<LoginResponse>
 
     @POST("/users/authenticate")
     fun login(@Body loginRequest: LoginRequest):

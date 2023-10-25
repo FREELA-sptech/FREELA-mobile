@@ -3,6 +3,7 @@ package com.example.freela.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -16,6 +17,7 @@ import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
+import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,39 +29,16 @@ class activity_register_third : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_third)
+        setContentView(binding.root)
+
+        binding.btnreturn.setOnClickListener {
+            onBackPressed()
+        }
 
         binding.register.setOnClickListener {
-            val intent = Intent(this, activity_home::class.java)
-            val registerRequest = RegisterRequest(
-                "FreelancerTeste",
-                "freelancer@gmail.com",
-                "12345678",
-                listOf(1,2,3),
-                "São Paulo",
-                "SP",
-                true,
-            )
-
-            RetrofitClient.getInstance()
-                .create(AuthService::class.java)
-                .register(registerRequest)
-                .enqueue(object : Callback<User> {
-                    override fun onResponse(
-                        call: Call<User>,
-                        response: Response<User>
-                    ) {
-                        if (response.isSuccessful) {
-
-                            Toast.makeText(baseContext, "Login Feito com sucesso! ", Toast.LENGTH_LONG).show()
-
-                        }
-                    }
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-                })
-//            startActivity(intent)
+            if (isInputValid()) {
+                performRegistration()
+            }
         }
 
         binding.btnreturn.setOnClickListener {
@@ -72,5 +51,64 @@ class activity_register_third : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+    private fun isInputValid(): Boolean {
+        val inputFields = listOf<TextInputEditText>(
+            binding.user,
+            binding.name,
+            binding.email,
+            binding.cpf,
+            binding.password
+        )
+
+        var isValid = true
+
+        for (inputText in inputFields) {
+            if (inputText != null && inputText.text.isNullOrBlank()) {
+                inputText.error = "Campo obrigatório"
+                isValid = false
+            } else {
+                inputText.error = null
+            }
+        }
+
+        return isValid
+    }
+
+    private fun performRegistration() {
+        val cardSelected = intent.getStringExtra("type")
+        val selectedCategoryIdsStr = intent.getStringExtra("selectedCategoryIds")
+        val subCategories: List<Int> = selectedCategoryIdsStr?.split(",")?.map { it.toInt() } ?: emptyList()
+        val usuario = binding.user?.text.toString()
+        val nome = binding.name?.text.toString()
+        val email = binding.email?.text.toString()
+        val cpf = binding.cpf?.text.toString()
+        val senha = binding.password?.text.toString()
+        val type = cardSelected == "Autônomo"
+
+        val userRequest = RegisterRequest(
+            nome,email,senha,subCategories,"","",type
+        )
+
+        RetrofitClient.getInstance()
+            .create(AuthService::class.java)
+            .register(userRequest)
+            .enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(baseContext, "Registro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                        onBackPressed()
+                    } else {
+                        Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }

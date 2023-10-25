@@ -25,8 +25,6 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.entrar.setOnClickListener {
-            val intent = Intent(this, activity_home::class.java)
-
             val inputEmail = binding.email.text.toString();
             val inputPassword = binding.password.text.toString();
 
@@ -36,8 +34,6 @@ class Login : AppCompatActivity() {
                 binding.password.error = "Senha muito curta"
             }else{
                 tryLogin(inputEmail,inputPassword)
-
-//                startActivity(intent)
             }
 
         }
@@ -59,6 +55,8 @@ class Login : AppCompatActivity() {
     }
 
     private fun tryLogin(email: String, password: String) {
+        val success = Intent(this, Register::class.java)
+
         val loginRequest = LoginRequest(
             email, password
         )
@@ -79,7 +77,10 @@ class Login : AppCompatActivity() {
                         editor.commit()
                         binding.errorMessage.visibility = View.GONE
                         Toast.makeText(baseContext, "Login Feito com sucesso! ", Toast.LENGTH_LONG).show()
-
+                        startActivity(success)
+                    }else{
+                        binding.errorMessage.visibility = View.VISIBLE
+                        binding.errorMessage.text = "Email ou senha incorretos!"
                     }
                 }
 
