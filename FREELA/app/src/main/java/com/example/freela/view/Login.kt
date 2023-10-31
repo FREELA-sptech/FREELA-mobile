@@ -10,6 +10,7 @@ import com.example.freela.databinding.ActivityLoginBinding
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,8 +31,14 @@ class Login : AppCompatActivity() {
 
             if (!isValidEmail(inputEmail)){
                 binding.email.error = "Email inválido"
+                val snackbar = Snackbar.make(it,"Email inválido!",Snackbar.LENGTH_SHORT)
+                snackbar.show();
+
             }else if(inputPassword.length < 8){
                 binding.password.error = "Senha muito curta"
+                val snackbar = Snackbar.make(it,"Senha muito curta!",Snackbar.LENGTH_SHORT)
+                snackbar.show();
+
             }else{
                 tryLogin(inputEmail,inputPassword)
             }

@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">FREELA</string>
-    <string name="login">Fazer login</string>
-    <string name="email">@</string>
-    <string name="senha">********</string>
+    <string name="titleLogin">Bem vindo de volta.</string>
+    <string name="subTitleLogin">digite suas credenciais.</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
 
 
     <string name="menu_home">Inicio</string>
