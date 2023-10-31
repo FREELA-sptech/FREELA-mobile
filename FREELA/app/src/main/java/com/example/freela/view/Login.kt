@@ -1,8 +1,12 @@
 package com.example.freela.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.freela.api.AuthService
@@ -40,7 +44,7 @@ class Login : AppCompatActivity() {
                 snackbar.show();
 
             }else{
-                tryLogin(inputEmail,inputPassword)
+                tryLogin(inputEmail,inputPassword,it)
             }
 
         }
@@ -61,9 +65,14 @@ class Login : AppCompatActivity() {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun tryLogin(email: String, password: String) {
-        val success = Intent(this, Register::class.java)
+    private fun tryLogin(email: String, password: String, view: View) {
+        val progressBar = binding.progressBar
+        progressBar.visibility = View.VISIBLE
+        binding.entrar.isEnabled = false
+        binding.entrar.setTextColor(Color.parseColor("#274C77"))
 
+
+        val success = Intent(this, Register::class.java)
         val loginRequest = LoginRequest(
             email, password
         )
@@ -75,25 +84,36 @@ class Login : AppCompatActivity() {
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-                    if (response.isSuccessful) {
-                        //sharedPreferences
-                        val prefes=
-                            getSharedPreferences("AUTH", MODE_PRIVATE)
-                        val editor= prefes.edit()
-                        editor.putString("TOKEN", response.body().toString())
-                        editor.commit()
-                        binding.errorMessage.visibility = View.GONE
-                        Toast.makeText(baseContext, "Login Feito com sucesso! ", Toast.LENGTH_LONG).show()
-                        startActivity(success)
-                    }else{
-                        binding.errorMessage.visibility = View.VISIBLE
-                        binding.errorMessage.text = "Email ou senha incorretos!"
-                    }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        if (response.isSuccessful) {
+                            //sharedPreferences
+                            val prefes=
+                                getSharedPreferences("AUTH", MODE_PRIVATE)
+                            val editor= prefes.edit()
+                            editor.putString("TOKEN", response.body().toString())
+                            editor.commit()
+                            binding.errorMessage.visibility = View.GONE
+                            val snackbar = Snackbar.make(view,"Login Feito com sucesso!",Snackbar.LENGTH_SHORT)
+                            snackbar.show();
+                            startActivity(success)
+                        }else{
+                            binding.entrar.isEnabled = true
+                            binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
+                        }
+                        progressBar.visibility = View.GONE
+                    },3000)
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    binding.errorMessage.visibility = View.VISIBLE
-                    binding.errorMessage.text = "Email ou senha incorretos!"
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val snackbar = Snackbar.make(view,"Erro no servidor!",Snackbar.LENGTH_SHORT)
+                        snackbar.show();
+                        Log.e("ERRO NA API",t.message.toString())
+                        binding.entrar.isEnabled = true
+                        binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
+                        progressBar.visibility = View.GONE
+                    },3000)
+
                 }
 
             })
