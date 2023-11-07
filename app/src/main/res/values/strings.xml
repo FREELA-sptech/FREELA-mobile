@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">FREELA</string>
+    <string name="login">Fazer login</string>
+    <string name="email">@</string>
+    <string name="senha">********</string>
+
+
+    <string name="menu_home">Inicio</string>
+    <string name="menu_pedidos">Serviços</string>
+    <string name="menu_chat">Chat</string>
+
+    <string name="ola_usuario">Olá, Usuario!</string>
+    <string name="projeto">Projetos</string>
+    <string name="tatoou">Modelos de Tatoou</string>
+    <string name="orcamento">Orçamento:</string>
+    <string name="prazo">Prazo:</string>
+    <string name="valor">R$:200,00</string>
+    <string name="dias">7 dias</string>
+    <string name="detalhes">ver detalhes</string>
+    <string name="errorLoginNotFound">Email ou senha estão incorretos!</string>
+
+</resources>

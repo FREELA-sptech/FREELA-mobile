@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".view.activity_home"
+    android:background="@color/backgroundprimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/imgexemplouser"
+            android:scaleType="fitStart"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/notificacao" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ola_usuario"
+        android:paddingHorizontal="26dp"
+        style="@style/title"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Busque aqui"
+        android:background="@color/white"
+        android:layout_margin="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/projeto"
+        android:paddingHorizontal="26dp"
+        android:textSize="22dp"
+        android:textColor="@color/textprimary"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+-------------
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/tatoou"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tatoou"
+                android:paddingHorizontal="110dp"
+                android:textSize="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/orcamento"
+                android:textColor="@color/textsecondary"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prazo"
+                android:textColor="@color/textsecondary"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitEnd" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="52dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart"
+                    style="@style/logo"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dias"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart"
+                    android:paddingStart="40dp"
+                    style="@style/logo"/>
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="52dp">
+
+            <TextView
+                style="@style/detalhes"
+                android:layout_width="267dp"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart"
+                android:text="detalhes"
+                android:textSize="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/seta"
+                style="@style/detalhes"
+                android:scaleType="fitEnd"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/tatoou"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tatoou"
+                android:paddingHorizontal="110dp"
+                android:textSize="20dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="52dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/orcamento"
+                    android:textColor="@color/textsecondary"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prazo"
+                    android:textColor="@color/textsecondary"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitEnd" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="52dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/valor"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart"
+                    style="@style/logo"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dias"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart"
+                    android:paddingStart="40dp"
+                    style="@style/logo"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="52dp">
+                <TextView
+                    style="@style/detalhes"
+                    android:layout_width="267dp"
+                    android:paddingHorizontal="24dp"
+                    android:scaleType="fitStart"
+                    android:text="detalhes"
+                    android:textSize="20dp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/seta"
+                    style="@style/detalhes"
+                    android:scaleType="fitEnd"></ImageView>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/tatoou"></ImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tatoou"
+            android:paddingHorizontal="110dp"
+            android:textSize="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/orcamento"
+                android:textColor="@color/textsecondary"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prazo"
+                android:textColor="@color/textsecondary"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitEnd" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/valor"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart"
+                style="@style/logo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dias"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart"
+                android:paddingStart="40dp"
+                style="@style/logo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="52dp">
+            <TextView
+                style="@style/detalhes"
+                android:layout_width="267dp"
+                android:paddingHorizontal="24dp"
+                android:scaleType="fitStart"
+                android:text="detalhes"
+                android:textSize="20dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/seta"
+                style="@style/detalhes"
+                android:scaleType="fitEnd"></ImageView>
+        </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/projeto"
+        android:paddingHorizontal="26dp"
+        android:textSize="22dp"
+        android:textColor="@color/textprimary"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/color01"
+        app:itemTextColor="@color/color01"
+        app:itemActiveIndicatorStyle="@drawable/backgrounditemmenu"/>
+</LinearLayout>
