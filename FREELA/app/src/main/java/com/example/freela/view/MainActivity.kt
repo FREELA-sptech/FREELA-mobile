@@ -10,7 +10,7 @@ import com.example.freela.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_intro)
 
         val button : Button = findViewById(R.id.start);
         val redirectLogin : TextView = findViewById(R.id.entrar);

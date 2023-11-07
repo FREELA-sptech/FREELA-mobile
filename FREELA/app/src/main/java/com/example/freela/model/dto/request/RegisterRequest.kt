@@ -1,11 +1,12 @@
 package com.example.freela.model.dto.request
 
 data class RegisterRequest(
-    val nome: String,
+    val name: String,
     val email: String,
-    val senha: String,
-    val subCategoryId: List<Int>,
+    val password: String,
+    val subCategoriesIds: List<Int>,
     val city: String,
     val uf: String,
-    val isFreelancer: Boolean
+    val isFreelancer: Boolean,
+    val devideId : String
 )

@@ -11,26 +11,22 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="-38dp"
+        android:paddingBottom="38dp"
         app:cardBackgroundColor="@color/backgroundprimary"
-        app:cardCornerRadius="28dp"
-        android:paddingBottom="38dp">
+        app:cardCornerRadius="28dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="581dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="36dp"
             android:orientation="vertical"
             android:paddingHorizontal="28dp"
-            android:paddingTop="28dp"
-            android:layout_marginBottom="36dp">
-
-            <ImageView
-                android:id="@+id/btnreturn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
-                android:src="@drawable/arrowback" />
+            android:paddingTop="28dp">
 
             <TextView
                 style="@style/title"
@@ -39,21 +35,25 @@
                 android:layout_marginBottom="12dp"
                 android:text="@string/titleLogin"
                 android:textColor="@color/color01"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/titleWelcome"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="28dp"
                 android:text="@string/subTitleLogin"
-                android:textColor="@color/textsecondary" />
+                android:textColor="@color/textsecondary"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/textsecondary"
                 android:textColorHint="@color/textsecondary"
+                app:boxStrokeColor="@color/textsecondary"
                 app:errorEnabled="true"
                 app:errorTextColor="@color/error"
                 app:hintAnimationEnabled="true"
@@ -65,10 +65,10 @@
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_email"
                     android:hint="@string/email"
-                    android:textColorHint="@color/textsecondary"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:textColor="@color/textprimary" />
+                    android:textColor="@color/textprimary"
+                    android:textColorHint="@color/textsecondary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,13 +76,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/textsecondary"
                 android:textColorHint="@color/textsecondary"
+                app:boxStrokeColor="@color/textsecondary"
                 app:errorEnabled="true"
                 app:errorTextColor="@color/error"
                 app:hintAnimationEnabled="true"
                 app:hintTextColor="@color/textsecondary"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/color01">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
@@ -95,23 +96,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/errorMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingVertical="8sp"
-                android:textColor="@color/error"
-                android:textSize="18dp"
-                android:visibility="gone" />
-
             <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
-                android:id="@+id/progressBar"
-                />
+                android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/entrar"

@@ -77,8 +77,7 @@ class activity_register_third : AppCompatActivity() {
 
     private fun performRegistration() {
         val cardSelected = intent.getStringExtra("type")
-        val selectedCategoryIdsStr = intent.getStringExtra("selectedCategoryIds")
-        val subCategories: List<Int> = selectedCategoryIdsStr?.split(",")?.map { it.toInt() } ?: emptyList()
+        val listaDeIDs: List<Int> = listOf(1, 2, 3, 4, 5)
         val usuario = binding.user?.text.toString()
         val nome = binding.name?.text.toString()
         val email = binding.email?.text.toString()
@@ -87,7 +86,7 @@ class activity_register_third : AppCompatActivity() {
         val type = cardSelected == "Autônomo"
 
         val userRequest = RegisterRequest(
-            nome,email,senha,subCategories,"","",type
+            nome,email,senha,listaDeIDs,"","",type,"001"
         )
 
         RetrofitClient.getInstance()
@@ -108,6 +107,7 @@ class activity_register_third : AppCompatActivity() {
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+                    Log.e("ERRO NA API",t.message.toString())
                 }
             })
     }

@@ -54,11 +54,6 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.btnreturn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -72,7 +67,7 @@ class Login : AppCompatActivity() {
         binding.entrar.setTextColor(Color.parseColor("#274C77"))
 
 
-        val success = Intent(this, Register::class.java)
+        val success = Intent(this, activity_home::class.java)
         val loginRequest = LoginRequest(
             email, password
         )
@@ -92,13 +87,13 @@ class Login : AppCompatActivity() {
                             val editor= prefes.edit()
                             editor.putString("TOKEN", response.body().toString())
                             editor.commit()
-                            binding.errorMessage.visibility = View.GONE
                             val snackbar = Snackbar.make(view,"Login Feito com sucesso!",Snackbar.LENGTH_SHORT)
-                            snackbar.show();
+                            snackbar.show()
                             startActivity(success)
                         }else{
                             binding.entrar.isEnabled = true
                             binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
+                            startActivity(success)
                         }
                         progressBar.visibility = View.GONE
                     },3000)
@@ -112,6 +107,7 @@ class Login : AppCompatActivity() {
                         binding.entrar.isEnabled = true
                         binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
                         progressBar.visibility = View.GONE
+                        startActivity(success)
                     },3000)
 
                 }
