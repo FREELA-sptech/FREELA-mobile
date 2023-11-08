@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "307146861683",
+    "project_id": "freela-5c8ef",
+    "storage_bucket": "freela-5c8ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307146861683:android:bd0e00029223924b360e06",
+        "android_client_info": {
+          "package_name": "com.example.freela"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDueiqHQTEZqcsEQbE8JTKBk4RdRmasINY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
