@@ -50,6 +50,7 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
         if (token == null ) {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

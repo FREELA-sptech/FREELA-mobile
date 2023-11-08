@@ -7,5 +7,7 @@ data class User(
     val rate: Double,
     val uf: String,
     val city: String,
+    val isFreelancer: Boolean,
+    val description: String?,
     val subCategories: List<SubCategory>
 )

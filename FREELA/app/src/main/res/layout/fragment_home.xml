@@ -17,7 +17,6 @@
         android:paddingVertical="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/userDetails"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -33,21 +32,34 @@
             android:src="@drawable/notificacao" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hello"
-        android:text="@string/ola_usuario"
-        android:paddingHorizontal="26dp"
-        style="@style/title"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/projeto"
-        android:paddingHorizontal="26dp"
-        android:textSize="22dp"
-        android:textColor="@color/textprimary"/>
+        <TextView
+            android:id="@+id/hello"
+            style="@style/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="26dp"
+            android:text="@string/ola_usuario"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginEnd="28dp"
+            android:text="Criar Pedidos"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
