@@ -15,6 +15,14 @@ class MainActivity : AppCompatActivity() {
         val button : Button = findViewById(R.id.start);
         val redirectLogin : TextView = findViewById(R.id.entrar);
 
+        val preferences = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val token = preferences.getString("TOKEN", null)
+
+        if (token != null) {
+            val redirect = Intent(this, BaseAuthenticatedActivity::class.java)
+            startActivity(redirect)
+        }
+
         button.setOnClickListener {
             val intent = Intent(this, Register::class.java)
             startActivity(intent)

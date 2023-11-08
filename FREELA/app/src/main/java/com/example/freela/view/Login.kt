@@ -52,6 +52,7 @@ class Login : AppCompatActivity() {
         binding.redirect.setOnClickListener {
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -67,7 +68,7 @@ class Login : AppCompatActivity() {
         binding.entrar.setTextColor(Color.parseColor("#274C77"))
 
 
-        val success = Intent(this, activity_home::class.java)
+        val success = Intent(this, BaseAuthenticatedActivity::class.java)
         val loginRequest = LoginRequest(
             email, password
         )
@@ -81,19 +82,23 @@ class Login : AppCompatActivity() {
                 ) {
                     Handler(Looper.getMainLooper()).postDelayed({
                         if (response.isSuccessful) {
-                            //sharedPreferences
-                            val prefes=
-                                getSharedPreferences("AUTH", MODE_PRIVATE)
-                            val editor= prefes.edit()
-                            editor.putString("TOKEN", response.body().toString())
-                            editor.commit()
-                            val snackbar = Snackbar.make(view,"Login Feito com sucesso!",Snackbar.LENGTH_SHORT)
+                            val loginResponse = response.body()
+                            val token = loginResponse?.token
+
+                            // Salvar o token nas preferências compartilhadas
+                            val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("TOKEN", token)
+                            editor.apply()
+                            finish()
+                            val snackbar = Snackbar.make(view, "Login Feito com sucesso!", Snackbar.LENGTH_SHORT)
                             snackbar.show()
                             startActivity(success)
                         }else{
+                            val snackbar = Snackbar.make(view,"Email ou senha inválida!",Snackbar.LENGTH_SHORT)
+                            snackbar.show()
                             binding.entrar.isEnabled = true
                             binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
-                            startActivity(success)
                         }
                         progressBar.visibility = View.GONE
                     },3000)
@@ -107,7 +112,7 @@ class Login : AppCompatActivity() {
                         binding.entrar.isEnabled = true
                         binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
                         progressBar.visibility = View.GONE
-                        startActivity(success)
+
                     },3000)
 
                 }
