@@ -6,7 +6,7 @@
         android:title="@string/menu_home"
         />
     <item
-        android:id="@+id/menu_pedido"
+        android:id="@+id/menu_orders"
         android:icon="@drawable/border_all"
         android:title="@string/menu_pedidos"/>
     <item

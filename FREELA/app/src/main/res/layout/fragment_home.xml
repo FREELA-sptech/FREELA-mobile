@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:background="@color/backgroundprimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userDetails"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/imgexemplouser" />
+
+        <ImageView
+            android:id="@+id/imageViewRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/notificacao" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/hello"
+            style="@style/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="26dp"
+            android:text="@string/ola_usuario"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginEnd="28dp"
+            android:text="Criar Pedidos"
+            app:cornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="38dp"
+                app:cardBackgroundColor="@color/backgroundprimary"
+                app:cardCornerRadius="28dp"
+                android:layout_marginVertical="14dp"
+                android:clickable="true"
+                app:cardElevation="7dp"
+                android:layout_marginHorizontal="28dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tatoou"
+                        android:adjustViewBounds="true"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="15dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="52dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/orcamento"
+                                android:textColor="@color/textsecondary"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/prazo"
+                                android:textColor="@color/textsecondary"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitEnd" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="52dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/valor"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart"
+                                style="@style/logo"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dias"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart"
+                                android:paddingStart="40dp"
+                                style="@style/logo"/>
+                        </LinearLayout>
+                        <!--                        <com.google.android.material.button.MaterialButton-->
+                        <!--                            android:id="@+id/entrar2"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="60dp"-->
+                        <!--                            android:layout_marginTop="28dp"-->
+                        <!--                            android:text="Detalhes"-->
+                        <!--                            app:cornerRadius="32dp"-->
+                        <!--                            android:layout_gravity="center"/>-->
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="38dp"
+                android:layout_marginVertical="14dp"
+                app:cardBackgroundColor="@color/backgroundprimary"
+                app:cardCornerRadius="28dp"
+                android:clickable="true"
+                app:cardElevation="7dp"
+                android:layout_marginHorizontal="28dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tatoou"
+                        android:adjustViewBounds="true"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="15dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="52dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/orcamento"
+                                android:textColor="@color/textsecondary"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/prazo"
+                                android:textColor="@color/textsecondary"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitEnd" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="52dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/valor"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart"
+                                style="@style/logo"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dias"
+                                android:textSize="20dp"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="24dp"
+                                android:scaleType="fitStart"
+                                android:paddingStart="40dp"
+                                style="@style/logo"/>
+                        </LinearLayout>
+                        <!--                        <com.google.android.material.button.MaterialButton-->
+                        <!--                            android:id="@+id/entrar"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="60dp"-->
+                        <!--                            android:layout_marginTop="28dp"-->
+                        <!--                            android:text="Detalhes"-->
+                        <!--                            app:cornerRadius="32dp"-->
+                        <!--                            android:layout_gravity="center"/>-->
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

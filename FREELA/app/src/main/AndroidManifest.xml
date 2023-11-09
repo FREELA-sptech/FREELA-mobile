@@ -16,16 +16,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".OrderDetails"
+            android:name=".CreateOrder"
+            android:exported="false" />
+        <activity
+            android:name=".view.UserDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.BaseAuthenticatedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.OrderDetails"
             android:exported="false" />
         <activity
             android:name=".view.activity_register_third"
             android:exported="false" />
         <activity
             android:name=".view.activity_register_secund"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity_home"
             android:exported="false" />
         <activity
             android:name=".view.Register"
