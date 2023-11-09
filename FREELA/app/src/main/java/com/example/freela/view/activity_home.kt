@@ -2,6 +2,7 @@ package com.example.freela.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.freela.R
 
 class activity_home : AppCompatActivity() {

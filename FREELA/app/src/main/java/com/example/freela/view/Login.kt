@@ -15,6 +15,7 @@ import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +54,6 @@ class Login : AppCompatActivity() {
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun isValidEmail(email: String): Boolean {

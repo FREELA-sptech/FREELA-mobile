@@ -3,6 +3,7 @@ package com.example.freela.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import com.example.freela.R
 import com.example.freela.databinding.ActivityLoginBinding
@@ -14,6 +15,7 @@ class Register : AppCompatActivity() {
         ActivityRegisterFirstBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         var selectedCard = ""

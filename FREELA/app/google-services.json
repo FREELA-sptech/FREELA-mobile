@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1095462516015",
+    "project_id": "teste-88735",
+    "storage_bucket": "teste-88735.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095462516015:android:e2a8a8ef2d0c9ce3225dda",
+        "android_client_info": {
+          "package_name": "com.example.freela"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQygTGOa84wh7WEsUS8SYfzfSskQ1llYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
