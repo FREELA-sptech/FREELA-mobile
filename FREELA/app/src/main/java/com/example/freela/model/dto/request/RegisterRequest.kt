@@ -7,6 +7,5 @@ data class RegisterRequest(
     val subCategoriesIds: List<Int>,
     val city: String,
     val uf: String,
-    val isFreelancer: Boolean,
-    val devideId : String
+    val isFreelancer: Boolean
 )

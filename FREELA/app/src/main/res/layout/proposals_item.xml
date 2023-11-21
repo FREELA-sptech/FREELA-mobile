@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="24dp"
+    app:cardCornerRadius="18dp">
+    <LinearLayout
+        android:paddingTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginStart="24dp"
+                android:id="@+id/userDetailsWithoutPhoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:textColor="@color/backgroundprimary"
+                android:gravity="center"
+                android:text="U"
+                android:textSize="24sp"
+                android:background="@drawable/background_oval_1"/>
+            <TextView
+                android:id="@+id/user"
+                android:layout_marginStart="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/title"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:text="Usuario"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:layout_gravity="center_vertical"
+            android:paddingVertical="18dp">
+
+            <TextView
+                android:id="@+id/prize"
+                style="@style/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="22dp"
+                android:text="R$ 300,00"
+                android:textColor="@color/color01"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="Prazo"
+                android:id="@+id/deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_toStartOf="@+id/prize"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/deadlineValue"
+                android:layout_below="@+id/deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/prize"
+                android:text="20/11/2023"
+                android:textColor="@color/textsecondary"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

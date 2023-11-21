@@ -1,6 +1,7 @@
 package com.example.freela.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -17,19 +18,23 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         var selectedCard = ""
+        binding.btnNext.isEnabled = false
+        binding.btnNext.setTextColor(Color.parseColor("#274C77"))
 
         binding.autonomoCard.setOnClickListener {
             selectedCard = "Autônomo"
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.setBackgroundColor(resources.getColor(R.color.submitBtnColor))
+            binding.btnNext.isEnabled = true
+            binding.btnNext.setTextColor(Color.parseColor("#f7f7f7"))
         }
 
         binding.clienteCard.setOnClickListener {
             selectedCard = "Cliente"
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.setBackgroundColor(resources.getColor(R.color.submitBtnColor))
+            binding.btnNext.isEnabled = true
+            binding.btnNext.setTextColor(Color.parseColor("#f7f7f7"))
         }
 
         binding.btnNext.setOnClickListener {
