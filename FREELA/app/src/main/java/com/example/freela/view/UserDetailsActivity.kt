@@ -13,6 +13,7 @@ import com.example.freela.R
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.databinding.ActivityUserDetailsBinding
+import com.example.freela.model.Session
 import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
 import retrofit2.Call
@@ -42,6 +43,7 @@ class UserDetailsActivity : AppCompatActivity() {
             editor.remove("TOKEN")
             editor.apply()
             val intent = Intent(this, BaseAuthenticatedActivity::class.java)
+            Session.token = ""
             startActivity(intent)
             finish()
         }

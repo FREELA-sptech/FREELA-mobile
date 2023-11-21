@@ -18,7 +18,7 @@
             style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Criar Pedido"
+            android:text="Criar Proposta"
             android:textColor="@color/backgroundprimary"
             android:textSize="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -69,28 +69,6 @@
             android:orientation="vertical"
             android:paddingHorizontal="28dp"
             android:paddingTop="28dp">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/textsecondary"
-                app:boxStrokeColor="@color/textsecondary"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/error"
-                app:hintAnimationEnabled="true"
-                app:hintTextColor="@color/textsecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Titulo"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/textprimary" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -161,15 +139,8 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/createOrder"
+                android:id="@+id/createProposal"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="28dp"

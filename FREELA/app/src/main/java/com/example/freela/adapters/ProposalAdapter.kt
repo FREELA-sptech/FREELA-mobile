@@ -25,8 +25,8 @@ class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerV
 
         fun bind(proposals: Proposals) {
             textTitleUser.text = proposals.originUser?.name
-            textPrize.text = "R$${proposals.proposalValue}"
-            textDeadline.text = proposals.expirationTime
+            textPrize.text = "R$${proposals.value}"
+            textDeadline.text = proposals.deadline
             if (proposals.originUser?.profilePhoto == null) {
                 txtIcon.text = proposals.originUser?.name?.first().toString()
                 txtIcon.background = itemView.oval(Color.parseColor("#274C77"))

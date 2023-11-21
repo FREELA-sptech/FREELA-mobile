@@ -8,9 +8,9 @@ data class Order(
     val id: Int,
     val description: String?,
     val title: String?,
-    val maxValue: Double,
+    val value: Double,
     val user: User?,
-    val expirationTime: String?,
+    val deadline: String?,
     val subCategories: List<SubCategory>?,
     val photos: List<ByteArray>?,
     val proposals: List<Proposals>?,
@@ -37,9 +37,9 @@ data class Order(
         parcel.writeInt(id)
         parcel.writeString(description)
         parcel.writeString(title)
-        parcel.writeDouble(maxValue)
+        parcel.writeDouble(value)
         parcel.writeParcelable(user, flags) // Escrevendo um objeto Parcelable de User
-        parcel.writeString(expirationTime)
+        parcel.writeString(deadline)
         parcel.writeTypedList(subCategories) // Escrevendo uma lista de objetos Parcelable de SubCategory
         parcel.writeList(photos) // Escrevendo uma lista de ByteArray
         parcel.writeTypedList(proposals) // Escrevendo uma lista de objetos Parcelable de Proposals

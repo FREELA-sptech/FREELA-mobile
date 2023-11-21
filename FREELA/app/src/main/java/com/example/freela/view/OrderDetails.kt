@@ -24,8 +24,8 @@ class OrderDetails : AppCompatActivity() {
         val order = intent.getParcelableExtra<Order>("order")
         if(order != null){
             binding.title.text = order.title
-            binding.prize.text = "R$${order.maxValue.toString()}"
-            binding.deadline.text = order.expirationTime
+            binding.prize.text = "R$${order.value.toString()}"
+            binding.deadline.text = order.deadline
             myViewPagerAdapter = MyViewAdapter(this);
             myViewPagerAdapter.setOrder(order)
             binding.viewPager.adapter = myViewPagerAdapter
@@ -48,6 +48,13 @@ class OrderDetails : AppCompatActivity() {
                 val intent = Intent(this, BaseAuthenticatedActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+            binding.createProposal.setOnClickListener{
+                val intent = Intent(this, CreateProposal::class.java)
+                intent.putExtra("order", order)
+                startActivity(intent)
+                finish()
+
             }
         }
 

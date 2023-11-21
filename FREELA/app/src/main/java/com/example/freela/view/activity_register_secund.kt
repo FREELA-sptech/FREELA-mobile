@@ -37,6 +37,8 @@ class activity_register_secund : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.btnNext.isEnabled = false
+        binding.btnNext.setTextColor(Color.parseColor("#274C77"))
         val subCategoryService = RetrofitClient.getInstance().create(SubCategoryService::class.java)
         subCategoryViewModel = SubCategoryViewModel(subCategoryService)
         subCategoryViewModel.getSubCategories()
@@ -51,6 +53,13 @@ class activity_register_secund : AppCompatActivity() {
             } else {
                 selectedSubCategories.add(selectedSubCategory)
             }
+            if(selectedSubCategories.isNotEmpty()){
+                binding.btnNext.isEnabled = true
+                binding.btnNext.setTextColor(Color.parseColor("#f7f7f7"))
+            }else{
+                binding.btnNext.isEnabled = false
+                binding.btnNext.setTextColor(Color.parseColor("#274C77"))
+            }
         }
         binding.recyclerMain.adapter = subCategoryAdapter
 
@@ -61,6 +70,7 @@ class activity_register_secund : AppCompatActivity() {
                 intent.putExtra("subCategoriesIds", selectedSubCategoryIds.toIntArray())
                 startActivity(intent)
             } else {
+
                 Snackbar.make(binding.root, "Selecione pelo menos um interesse", Snackbar.LENGTH_SHORT).show()
             }
         }

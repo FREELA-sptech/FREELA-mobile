@@ -32,8 +32,8 @@ class OrderAdapter(private val orders: MutableList<Order>) : RecyclerView.Adapte
 
         fun bind(order: Order) {
             textTitleOrder.text = order.title
-            textPrize.text = "R$${order.maxValue.toString()}"
-            textDeadline.text = order.expirationTime
+            textPrize.text = "R$${order.value.toString()}"
+            textDeadline.text = order.deadline
 
         }
 

@@ -81,6 +81,7 @@ class Login : AppCompatActivity() {
                 snackbar.show()
                 binding.entrar.isEnabled = true
                 binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
+                progressBar.visibility = View.GONE
             }
         }
     }

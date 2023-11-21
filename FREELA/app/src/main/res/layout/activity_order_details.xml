@@ -97,14 +97,21 @@
         android:layout_height="match_parent"
         android:id="@+id/viewPager"
         android:layout_below="@+id/tab_layout"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_below="@+id/viewPager"
-        android:id="@+id/entrar"
-        android:layout_alignParentEnd="true"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:text="Fazer Proposta"
-        app:cornerRadius="32dp" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="@color/white"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="24dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createProposal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Fazer Proposta"
+            android:layout_marginHorizontal="24dp"
+            app:cornerRadius="32dp" />
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
