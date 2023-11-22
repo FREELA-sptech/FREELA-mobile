@@ -8,9 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityLoginBinding
+import com.example.freela.model.User
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
@@ -19,7 +19,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.PasswordAuthentication
 
 class Login : AppCompatActivity() {
     private val binding by lazy {
@@ -84,7 +83,14 @@ class Login : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val loginResponse = response.body()
                             val token = loginResponse?.token
-
+                            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                                if(task.isSuccessful){
+                                    if (token != null) {
+                                        updateFcm(task.result, token)
+                                    }
+                                    Log.i("token no login",task.result)
+                                }
+                            }
                             // Salvar o token nas preferências compartilhadas
                             val sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
                             val editor = sharedPreferences.edit()
@@ -118,5 +124,35 @@ class Login : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun updateFcm(fcm: String, token: String){
+        RetrofitClient.getInstance()
+            .create(AuthService::class.java)
+            .updateToken("Bearer $token",fcm)
+            .enqueue(object : Callback<User> {
+                override fun onResponse(
+                    call: Call<User>,
+                    response: Response<User>
+                ) {
+                    if (response.isSuccessful) {
+                        val user = response.body()
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                            if(task.isSuccessful){
+                                Log.i("token no login",response.toString())
+                            }
+                        }
+
+                    }else{
+                        Log.e("ERRO NA API",response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.e("ERRO NA API",t.message.toString())
+                }
+            })
+
+
     }
 }

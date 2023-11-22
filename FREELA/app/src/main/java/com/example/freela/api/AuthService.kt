@@ -9,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthService {
     @POST("/users")
@@ -19,7 +20,13 @@ interface AuthService {
     fun login(@Body loginRequest: LoginRequest):
             Call<LoginResponse>
 
+    @POST("/users/fcm-token")
+    fun updateToken(@Header("Authorization") token: String, @Query("fcmToken") fcmToken: String):
+            Call<User>
+
     @GET("/users")
     fun userDetails(@Header("Authorization") token: String): Call<User>
+
+
 
 }
