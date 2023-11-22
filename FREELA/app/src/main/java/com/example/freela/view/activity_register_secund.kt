@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.freela.R
@@ -25,11 +27,13 @@ import com.example.freela.viewModel.UserViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
+import java.util.Locale
 
 class activity_register_secund : AppCompatActivity() {
     private lateinit var subCategoryAdapter: SubCategoryAdapter
     private val selectedSubCategories = mutableListOf<SubCategory>()
     private lateinit var subCategoryViewModel: SubCategoryViewModel
+    private lateinit var subCategories: List<SubCategory>
     private val binding by lazy {
         ActivityRegisterSecundBinding.inflate(layoutInflater)
     }
@@ -42,12 +46,14 @@ class activity_register_secund : AppCompatActivity() {
         val subCategoryService = RetrofitClient.getInstance().create(SubCategoryService::class.java)
         subCategoryViewModel = SubCategoryViewModel(subCategoryService)
         subCategoryViewModel.getSubCategories()
+        subCategories = Session.subCategories
         Log.i("Lista", subCategoryViewModel.subCategories.value.toString())
         createSubCategory()
     }
+
     private fun createSubCategory(){
         binding.recyclerMain.layoutManager = LinearLayoutManager(this)
-        subCategoryAdapter = SubCategoryAdapter(Session.subCategories) { selectedSubCategory ->
+        subCategoryAdapter = SubCategoryAdapter(subCategories) { selectedSubCategory ->
             if (selectedSubCategories.contains(selectedSubCategory)) {
                 selectedSubCategories.remove(selectedSubCategory)
             } else {
@@ -62,6 +68,18 @@ class activity_register_secund : AppCompatActivity() {
             }
         }
         binding.recyclerMain.adapter = subCategoryAdapter
+        binding.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
+
+        })
 
         binding.btnNext.setOnClickListener {
             val selectedSubCategoryIds: List<Int> = selectedSubCategories.map { it.id }.distinct()
@@ -72,6 +90,39 @@ class activity_register_secund : AppCompatActivity() {
             } else {
 
                 Snackbar.make(binding.root, "Selecione pelo menos um interesse", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+        binding.btnreturn.setOnClickListener {
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
+        }
+    }
+    private fun filterList(query: String?) {
+        if (query != null) {
+            val filteredList = ArrayList<SubCategory>()
+
+            val selectedCategoryIds = subCategoryAdapter.getSelectedCategoryIds()
+
+            if (selectedCategoryIds.isEmpty()) {
+                for (subCategory in subCategories) {
+                    if (subCategory.name.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
+                        filteredList.add(subCategory)
+                    }
+                }
+            } else {
+                for (subCategory in subCategories) {
+                    if (selectedCategoryIds.contains(subCategory.category?.id)) {
+                        if (subCategory.name.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
+                            filteredList.add(subCategory)
+                        }
+                    }
+                }
+            }
+
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "Nenhum Registro Encontrado", Toast.LENGTH_SHORT).show()
+            } else {
+                subCategoryAdapter.updateSubCategories(filteredList)
             }
         }
     }

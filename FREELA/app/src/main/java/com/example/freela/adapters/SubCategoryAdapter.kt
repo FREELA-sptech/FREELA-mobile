@@ -25,6 +25,11 @@ class SubCategoryAdapter(
         val view = LayoutInflater.from(parent.context).inflate(R.layout.sub_category_item, parent, false)
         return SubCategoryViewHolder(view)
     }
+    fun getSelectedCategoryIds(): List<Int> {
+        return items.filter { it.isSelected }
+            .mapNotNull { it.category?.id }
+            .distinct()
+    }
 
     override fun getItemCount(): Int = items.size
 

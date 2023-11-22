@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.freela.R
+import com.example.freela.SuccessActivity
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.model.User
@@ -39,24 +40,21 @@ class activity_register_third : AppCompatActivity() {
 
         binding.register.setOnClickListener {
             val inputFields = listOf<TextInputEditText>(
-                binding.user,
                 binding.name,
                 binding.email,
-                binding.cpf,
                 binding.password
             )
 
             if (helpers.isInputValid(inputFields)) {
-                val redirect = Intent(this, Login::class.java)
+                val redirect = Intent(this, SuccessActivity::class.java)
+                val intent = Intent(this, Login::class.java)
+                redirect.putExtra("action","Cadastro")
+                redirect.putExtra("message","Cadastro de usuario realizado com sucesso!")
+                redirect.putExtra("redirect",intent)
                 performRegistration()
                 startActivity(redirect)
                 finish()
             }
-        }
-
-        binding.redirect.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
         }
 
     }
@@ -65,7 +63,6 @@ class activity_register_third : AppCompatActivity() {
         val cardSelected = intent.getStringExtra("type")
         val subCategoriesIds = intent.getIntArrayExtra("subCategoriesIds")
         val subCategoriesIdsList = subCategoriesIds?.toList()
-        val usuario = binding.user?.text.toString()
         val nome = binding.name?.text.toString()
         val email = binding.email?.text.toString()
         val senha = binding.password?.text.toString()

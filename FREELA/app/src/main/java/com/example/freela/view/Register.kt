@@ -18,34 +18,29 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         var selectedCard = ""
-        binding.btnNext.isEnabled = false
-        binding.btnNext.setTextColor(Color.parseColor("#274C77"))
 
         binding.autonomoCard.setOnClickListener {
             selectedCard = "Autônomo"
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.isEnabled = true
-            binding.btnNext.setTextColor(Color.parseColor("#f7f7f7"))
+            redirectActivity(selectedCard)
         }
 
         binding.clienteCard.setOnClickListener {
             selectedCard = "Cliente"
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.isEnabled = true
-            binding.btnNext.setTextColor(Color.parseColor("#f7f7f7"))
-        }
-
-        binding.btnNext.setOnClickListener {
-            val intent = Intent(this, activity_register_secund::class.java)
-            intent.putExtra("type", selectedCard)
-            startActivity(intent)
+            redirectActivity(selectedCard)
         }
 
         binding.btnreturn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+    private fun redirectActivity(selectedCard: String){
+        val intent = Intent(this, activity_register_secund::class.java)
+        intent.putExtra("type", selectedCard)
+        startActivity(intent)
     }
 }

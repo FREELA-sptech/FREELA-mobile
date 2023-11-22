@@ -43,10 +43,11 @@ class HomeFragment : Fragment() {
         val user = Session.user
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
         val orderService = RetrofitClient.getInstance().create(OrderService::class.java)
+        Log.i("User Details",user.toString())
         orderViewModel = OrderViewModel(orderService)
-        orderViewModel.getOrders()
 
         user?.let {
+            orderViewModel.getOrders()
             orderViewModel.orders.observe(viewLifecycleOwner, Observer { orders ->
                 orders?.let {
                     Log.i("Orders", "Number of orders")
