@@ -27,6 +27,7 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
                     val orders = response.body()
                     orders?.let {
                         _orders.value = it
+                        Log.i("Orders", response.toString())
                     }
                 } else {
                     Log.i("Orders", response.toString())
@@ -35,7 +36,7 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
             }
 
             override fun onFailure(call: Call<List<Order>>, t: Throwable) {
-
+                Log.i("Orders", t.message.toString())
             }
         })
     }

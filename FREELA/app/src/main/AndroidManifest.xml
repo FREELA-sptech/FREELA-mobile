@@ -16,6 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.EditUser"
+            android:exported="false"
+            android:theme="@style/AppThemeWhite"/>
+        <activity
             android:name=".SuccessActivity"
             android:exported="false" />
         <activity
@@ -29,7 +33,8 @@
             android:exported="false" />
         <activity
             android:name=".view.UserDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeColor04" />
         <activity
             android:name=".view.BaseAuthenticatedActivity"
             android:exported="false" />
@@ -38,13 +43,16 @@
             android:exported="false" />
         <activity
             android:name=".view.activity_register_third"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".view.activity_register_secund"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".view.Register"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".view.Chat"
             android:exported="false" />

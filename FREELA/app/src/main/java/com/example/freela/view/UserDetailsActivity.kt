@@ -32,54 +32,14 @@ class UserDetailsActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token: String? = sharedPreferences.getString("TOKEN", null)
 
-        binding.btnReturn.setOnClickListener{
+        binding.btnreturn.setOnClickListener{
             val intent = Intent(this, BaseAuthenticatedActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
-        binding.exit.setOnClickListener{
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-            editor.remove("TOKEN")
-            editor.apply()
-            val intent = Intent(this, BaseAuthenticatedActivity::class.java)
-            Session.token = ""
+        binding.editUser.setOnClickListener{
+            val intent = Intent(this, EditUser::class.java)
             startActivity(intent)
-            finish()
         }
-
-
-        if (token != null) {
-            fetchUserDetails(token)
-        }
-    }
-
-    private fun fetchUserDetails(token: String) {
-        RetrofitClient.getInstance()
-            .create(AuthService::class.java)
-            .userDetails("Bearer $token")
-            .enqueue(object : Callback<User> {
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-                    if (response.isSuccessful) {
-                        val user = response.body()
-                        if (user != null) {
-                            binding.name.setText(user.name)
-                            binding.city.setText("${user.city}, ${user.uf}")
-                            if(user.isFreelancer){
-                                binding.TitleDescription.visibility = View.VISIBLE
-                                binding.description.setText(user.description)
-                            }
-                            binding.name.setText(user.name)
-                            userDetails = user
-
-                        };
-                    }
-                }
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                    Log.e("ERRO NA API",t.message.toString())
-                }
-            })
-
     }
 }

@@ -5,7 +5,7 @@ import com.example.freela.model.User
 data class Proposals(
     val id: Int,
     val value: Double,
-    val originUser: User?,
+    val user: User?,
     val description: String,
     val deadline: String,
     val destinedOrder: Int,
@@ -26,7 +26,7 @@ data class Proposals(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeDouble(value)
-        parcel.writeParcelable(originUser, flags)
+        parcel.writeParcelable(user, flags)
         parcel.writeString(description)
         parcel.writeString(deadline)
         parcel.writeInt(destinedOrder)

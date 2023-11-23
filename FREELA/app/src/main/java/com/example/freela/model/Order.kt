@@ -12,12 +12,10 @@ data class Order(
     val user: User?,
     val deadline: String?,
     val subCategories: List<SubCategory>?,
-    val photos: List<ByteArray>?,
+    val photos: List<Photo>?,
     val proposals: List<Proposals>?,
     val isAccepted: Boolean
 ) : Parcelable {
-    // ... Restante do código
-
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
@@ -26,8 +24,8 @@ data class Order(
         parcel.readParcelable(User::class.java.classLoader), // Lendo um objeto Parcelable de User
         parcel.readString(),
         parcel.createTypedArrayList(SubCategory.CREATOR), // Lendo uma lista de objetos Parcelable de SubCategory
-        mutableListOf<ByteArray>().apply {
-            parcel.readList(this, ByteArray::class.java.classLoader) // Lendo uma lista de ByteArray
+        mutableListOf<Photo>().apply {
+            parcel.readTypedList(this, Photo.CREATOR) // Lendo uma lista de objetos Parcelable de Photo
         },
         parcel.createTypedArrayList(Proposals.CREATOR), // Lendo uma lista de objetos Parcelable de Proposals
         parcel.readByte() != 0.toByte()
@@ -41,7 +39,7 @@ data class Order(
         parcel.writeParcelable(user, flags) // Escrevendo um objeto Parcelable de User
         parcel.writeString(deadline)
         parcel.writeTypedList(subCategories) // Escrevendo uma lista de objetos Parcelable de SubCategory
-        parcel.writeList(photos) // Escrevendo uma lista de ByteArray
+        parcel.writeTypedList(photos) // Escrevendo uma lista de objetos Parcelable de Photo
         parcel.writeTypedList(proposals) // Escrevendo uma lista de objetos Parcelable de Proposals
         parcel.writeByte(if (isAccepted) 1 else 0)
     }

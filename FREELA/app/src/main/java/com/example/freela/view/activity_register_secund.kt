@@ -16,9 +16,7 @@ import com.example.freela.adapters.SubCategoryAdapter
 import com.example.freela.api.AuthService
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.example.freela.api.SubCategoryService
-import com.example.freela.databinding.ActivityLoginBinding
 import com.example.freela.databinding.ActivityRegisterSecundBinding
-import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.model.Session
 import com.example.freela.model.SubCategory
 import com.example.freela.network.RetrofitClient
@@ -46,9 +44,10 @@ class activity_register_secund : AppCompatActivity() {
         val subCategoryService = RetrofitClient.getInstance().create(SubCategoryService::class.java)
         subCategoryViewModel = SubCategoryViewModel(subCategoryService)
         subCategoryViewModel.getSubCategories()
-        subCategories = Session.subCategories
-        Log.i("Lista", subCategoryViewModel.subCategories.value.toString())
-        createSubCategory()
+        subCategoryViewModel.subCategories.observe(this, { newSubCategories ->
+            subCategories = newSubCategories
+            createSubCategory()
+        })
     }
 
     private fun createSubCategory(){

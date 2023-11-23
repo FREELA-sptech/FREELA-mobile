@@ -17,6 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userDetails"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="gone"/>
             <TextView
                 android:layout_marginStart="24dp"
                 android:id="@+id/userDetailsWithoutPhoto"

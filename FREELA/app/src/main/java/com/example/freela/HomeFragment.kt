@@ -19,6 +19,8 @@ import com.example.freela.adapters.OrderAdapter
 import com.example.freela.api.OrderService
 import com.example.freela.model.Order
 import com.example.freela.model.Session
+import com.example.freela.model.Session.user
+import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
 import com.example.freela.view.CreateOrder
 import com.example.freela.view.OrderDetails
@@ -36,60 +38,53 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
     private lateinit var orderViewModel: OrderViewModel
+    private lateinit var recyclerView: RecyclerView
     private lateinit var orderAdapter: OrderAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = Session.user
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
+        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
         val orderService = RetrofitClient.getInstance().create(OrderService::class.java)
-        Log.i("User Details",user.toString())
         orderViewModel = OrderViewModel(orderService)
-
-        user?.let {
-            orderViewModel.getOrders()
-            orderViewModel.orders.observe(viewLifecycleOwner, Observer { orders ->
-                orders?.let {
-                    Log.i("Orders", "Number of orders")
-                    orderAdapter = OrderAdapter(it as MutableList<Order>)
-                    orderAdapter.onItemClick = {
-                        val intent = Intent(view.context,OrderDetails::class.java)
-                        intent.putExtra("order", it)
-                        startActivity(intent)
-                    }
-                    recyclerView.adapter = orderAdapter
-                    recyclerView.layoutManager = LinearLayoutManager(view.context)
-                }
-            })
-
-            val btnUser = view.findViewById<CircleImageView>(R.id.userDetails)
-            val createOrder = view.findViewById<MaterialButton>(R.id.createOrder)
-            val textView = view.findViewById<TextView>(R.id.hello)
-            val txtIcon = view.findViewById<TextView>(R.id.userDetailsWithoutPhoto)
-            textView.text = "Olá, ${user.name}"
-            if (user.profilePhoto == null) {
+        if (user != null) {
+            val btnUser = view?.findViewById<CircleImageView>(R.id.userDetails)
+            val createOrder = view?.findViewById<MaterialButton>(R.id.createOrder)
+            val textView = view?.findViewById<TextView>(R.id.hello)
+            val txtIcon = view?.findViewById<TextView>(R.id.userDetailsWithoutPhoto)
+            textView?.text = "Olá, ${user.name}"
+            if (user.photo == "") {
                 val hash = user.hashCode()
-                txtIcon.text = user.name.first().toString()
-                txtIcon.background = view.oval(Color.parseColor("#274C77"))
-                txtIcon.setOnClickListener {
+                txtIcon?.text = user.name.first().toString()
+                txtIcon?.background = view?.oval(Color.parseColor("#274C77"))
+                txtIcon?.setOnClickListener {
                     val intent = Intent(activity, UserDetailsActivity::class.java)
                     startActivity(intent)
                 }
             }
 
             if(user.isFreelancer){
-                createOrder.visibility = View.GONE
+                createOrder?.visibility = View.GONE
             }
 
-            btnUser.setOnClickListener {
+            btnUser?.setOnClickListener {
                 val intent = Intent(activity, UserDetailsActivity::class.java)
                 startActivity(intent)
             }
 
-            createOrder.setOnClickListener {
+            createOrder?.setOnClickListener {
                 val intent = Intent(activity, CreateOrder::class.java)
                 startActivity(intent)
             }
+            listOrders(user)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val user = Session.user
+        if (user != null) {
+            listOrders(user)
         }
     }
 
@@ -102,6 +97,25 @@ class HomeFragment : Fragment() {
             paint.color = color
         }
         return oval
+    }
+
+    fun listOrders(user: User){
+        user?.let {
+            orderViewModel.getOrders()
+            orderViewModel.orders.observe(viewLifecycleOwner, Observer { orders ->
+                orders?.let {
+                    orderAdapter = OrderAdapter(orders)
+                    orderAdapter.onItemClick = {
+                        val intent = Intent(view?.context, OrderDetails::class.java)
+                        intent.putExtra("order", it)
+                        startActivity(intent)
+                    }
+                }
+                recyclerView.adapter = orderAdapter
+                recyclerView.layoutManager = LinearLayoutManager(view?.context)
+
+            })
+        }
     }
 
 

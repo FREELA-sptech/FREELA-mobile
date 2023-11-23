@@ -7,7 +7,7 @@ import com.example.freela.model.SubCategory
 data class User(
     val id: Int,
     val name: String,
-    val profilePhoto: ByteArray,
+    val photo: String,
     val rate: Double,
     val uf: String,
     val city: String,
@@ -18,7 +18,7 @@ data class User(
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",
-        parcel.createByteArray() ?: byteArrayOf(),
+        parcel.readString() ?: "",
         parcel.readDouble(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -30,7 +30,7 @@ data class User(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
-        parcel.writeByteArray(profilePhoto)
+        parcel.writeString(photo)
         parcel.writeDouble(rate)
         parcel.writeString(uf)
         parcel.writeString(city)

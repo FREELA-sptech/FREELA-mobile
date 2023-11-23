@@ -2,6 +2,7 @@ package com.example.freela.adapters
 
 import Proposals
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
@@ -14,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
 import com.example.freela.model.Order
 import com.example.freela.view.UserDetailsActivity
+import de.hdodenhof.circleimageview.CircleImageView
+import android.util.Base64
+import com.example.freela.model.Session.user
+import java.io.ByteArrayInputStream
 
 class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerView.Adapter<ProposalAdapter.ProposalViewHolder>() {
     var onItemClick : ((Proposals) -> Unit)? = null
@@ -24,12 +29,21 @@ class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerV
         private val txtIcon: TextView = itemView.findViewById(R.id.userDetailsWithoutPhoto)
 
         fun bind(proposals: Proposals) {
-            textTitleUser.text = proposals.originUser?.name
+            textTitleUser.text = proposals.user?.name
             textPrize.text = "R$${proposals.value}"
             textDeadline.text = proposals.deadline
-            if (proposals.originUser?.profilePhoto == null) {
-                txtIcon.text = proposals.originUser?.name?.first().toString()
+            if (proposals.user?.photo == "") {
+                txtIcon.text = proposals.user?.name?.first().toString()
                 txtIcon.background = itemView.oval(Color.parseColor("#274C77"))
+            }else{
+                proposals.user?.photo?.let { photoString ->
+                    val userDetailsImageView = itemView.findViewById<CircleImageView>(R.id.userDetails)
+                    userDetailsImageView?.visibility = View.VISIBLE
+                    val byteArray = Base64.decode(photoString, Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(byteArray))
+
+                    userDetailsImageView?.setImageBitmap(bitmap)
+                }
             }
         }
     }
