@@ -1,5 +1,6 @@
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.freela.model.Order
 import com.example.freela.model.User
 
 data class Proposals(
@@ -7,6 +8,7 @@ data class Proposals(
     val value: Double,
     val user: User?,
     val description: String,
+    val order: Order?,
     val deadline: String,
     val destinedOrder: Int,
     val isAccepted: Boolean,
@@ -17,6 +19,7 @@ data class Proposals(
         parcel.readDouble(),
         parcel.readParcelable(User::class.java.classLoader),
         parcel.readString() ?: "",
+        parcel.readParcelable(Order::class.java.classLoader),
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
@@ -28,6 +31,7 @@ data class Proposals(
         parcel.writeDouble(value)
         parcel.writeParcelable(user, flags)
         parcel.writeString(description)
+        parcel.writeParcelable(order, flags)
         parcel.writeString(deadline)
         parcel.writeInt(destinedOrder)
         parcel.writeByte(if (isAccepted) 1 else 0)

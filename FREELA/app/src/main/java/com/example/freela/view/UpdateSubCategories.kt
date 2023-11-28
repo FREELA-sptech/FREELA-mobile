@@ -4,47 +4,42 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.freela.R
 import com.example.freela.adapters.SubCategoryAdapter
 import com.example.freela.api.AuthService
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.example.freela.api.SubCategoryService
-import com.example.freela.databinding.ActivityRegisterSecundBinding
+import com.example.freela.databinding.ActivityUpdateSubCategoriesBinding
 import com.example.freela.model.Session
+import com.example.freela.model.Session.user
 import com.example.freela.model.SubCategory
+import com.example.freela.model.dto.request.UserDetailsRequest
 import com.example.freela.network.RetrofitClient
-import com.example.freela.viewModel.SubCategoryViewModel
 import com.example.freela.viewModel.UserViewModel
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
-class activity_register_secund : AppCompatActivity() {
+class UpdateSubCategories : AppCompatActivity() {
     private lateinit var subCategoryAdapter: SubCategoryAdapter
     private val selectedSubCategories = mutableListOf<SubCategory>()
     private lateinit var subCategories: List<SubCategory>
     private val binding by lazy {
-        ActivityRegisterSecundBinding.inflate(layoutInflater)
+        ActivityUpdateSubCategoriesBinding.inflate(layoutInflater)
     }
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.btnNext.isEnabled = false
-        binding.btnNext.setTextColor(Color.parseColor("#274C77"))
+        val authService = RetrofitClient.getInstance().create(AuthService::class.java)
+        userViewModel = UserViewModel(authService)
         subCategories = Session.subCategories
         createSubCategory()
+        updateSubCategories()
     }
 
     private fun createSubCategory(){
+        val user = Session.user
         binding.recyclerMain.layoutManager = LinearLayoutManager(this)
         subCategoryAdapter = SubCategoryAdapter(subCategories) { selectedSubCategory ->
             if (selectedSubCategories.contains(selectedSubCategory)) {
@@ -60,6 +55,7 @@ class activity_register_secund : AppCompatActivity() {
                 binding.btnNext.setTextColor(Color.parseColor("#274C77"))
             }
         }
+
         binding.recyclerMain.adapter = subCategoryAdapter
         binding.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -77,11 +73,22 @@ class activity_register_secund : AppCompatActivity() {
         binding.btnNext.setOnClickListener {
             val selectedSubCategoryIds: List<Int> = selectedSubCategories.map { it.id }.distinct()
             if (selectedSubCategoryIds.isNotEmpty()) {
-                val intent = Intent(this, activity_register_third::class.java)
-                intent.putExtra("subCategoriesIds", selectedSubCategoryIds.toIntArray())
-                startActivity(intent)
+                if(user != null){
+                    val userUpdate = if (user.description.isNullOrBlank()) {
+                        UserDetailsRequest(
+                            user.name, user.city, user.uf,"" ,selectedSubCategoryIds, "", user.photo
+                        )
+                    } else {
+                        UserDetailsRequest(
+                            user.name, user.city, user.uf,user.description ,selectedSubCategoryIds, "", user.photo
+                        )
+                    }
+                    if (userUpdate != null) {
+                        userViewModel.updateUserDetails(Session.token,userUpdate)
+                        onBackPressed()
+                    }
+                }
             } else {
-
                 Snackbar.make(binding.root, "Selecione pelo menos um interesse", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -105,7 +112,8 @@ class activity_register_secund : AppCompatActivity() {
             } else {
                 for (subCategory in subCategories) {
                     if (selectedCategoryIds.contains(subCategory.category?.id)) {
-                        if (subCategory.name.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
+                        if (subCategory.name.toLowerCase(Locale.ROOT).contains(query.toLowerCase(
+                                Locale.ROOT))) {
                             filteredList.add(subCategory)
                         }
                     }
@@ -118,5 +126,14 @@ class activity_register_secund : AppCompatActivity() {
                 subCategoryAdapter.updateSubCategories(filteredList)
             }
         }
+    }
+    private fun updateSubCategories() {
+        val selectedSubCategoryIds = user?.subCategories?.map { it.id }
+        subCategories.forEach { subCategory ->
+            if (selectedSubCategoryIds?.contains(subCategory.id) == true) {
+                subCategory.isSelected = true
+            }
+        }
+        subCategoryAdapter.setUpdateSubCategories(subCategories)
     }
 }

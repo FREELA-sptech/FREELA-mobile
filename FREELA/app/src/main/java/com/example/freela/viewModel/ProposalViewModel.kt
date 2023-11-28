@@ -62,7 +62,28 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
         // Implemente a lógica para editar o status de uma proposta usando o método do serviço
     }
 
-    fun getUserProposals() {
-        // Implemente a lógica para buscar as propostas de um usuário usando o método do serviço
+    fun getUserProposals(token: String) {
+        Log.d("YourApiService", "getUserProposals: Requesting user proposals")
+
+        proposalsService.getUserProposals("Bearer $token").enqueue(object : Callback<List<Proposals>> {
+            override fun onResponse(call: Call<List<Proposals>>, response: Response<List<Proposals>>) {
+                if (response.isSuccessful) {
+                    val proposalsList = response.body()
+                    proposalsList?.let {
+                        Log.d("YourApiService", "getUserProposals: Successful response received")
+                        // Atualiza a lista de Proposals na Session após obter a resposta da API
+                        Session.updateProposalsList(it)
+                    }
+                } else {
+                    Log.e("YourApiService", "getUserProposals: Unsuccessful response ${response.code()}")
+                    // Lidar com resposta de erro da API
+                }
+            }
+
+            override fun onFailure(call: Call<List<Proposals>>, t: Throwable) {
+                Log.e("YourApiService", "getUserProposals: Request failed", t)
+                // Lidar com falha na requisição à API
+            }
+        })
     }
 }

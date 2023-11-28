@@ -11,6 +11,7 @@ import com.example.freela.model.SubCategory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 class SubCategoryViewModel(private val subCategoryService: SubCategoryService) : ViewModel(){
     private val _subCategories = MutableLiveData<List<SubCategory>>()
@@ -24,7 +25,8 @@ class SubCategoryViewModel(private val subCategoryService: SubCategoryService) :
                     val subCategories = response.body()
                     if (subCategories != null) {
                         _subCategories.value = subCategories
-                        Session.subCategories = subCategories
+                        Session.updateSubCategories(subCategories)
+                        Log.i("categorias",response.toString())
                     }
                 } else {
                 }

@@ -26,8 +26,8 @@
 
                 <ImageView
                     android:id="@+id/btnreturn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:src="@drawable/baseline_close_24"
                     app:tint="@color/textprimary" />
             </androidx.appcompat.widget.Toolbar>
@@ -55,6 +55,7 @@
                     tools:ignore="MissingConstraints">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_marginVertical="28dp"
+                        android:id="@+id/changeImage"
                         android:layout_marginStart="16dp"
                         android:layout_width="84dp"
                         android:layout_height="84dp"
@@ -66,6 +67,7 @@
                         tools:ignore="MissingConstraints">
 
                         <TextView
+                            android:id="@+id/imgWithoutImage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="54sp"
@@ -97,7 +99,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <TextView
-                    android:layout_marginVertical="22dp"
+                    android:layout_marginVertical="36dp"
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,22 +107,11 @@
                     android:text="Usuario"
                     android:textColor="@color/textprimary"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toTopOf="@+id/description"
+                    app:layout_constraintBottom_toTopOf="@+id/description2"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:text="Descrição"
-                    android:textColor="@color/textsecondary"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    tools:ignore="MissingConstraints" />
                 <TextView
                     android:id="@+id/description2"
                     android:layout_marginHorizontal="16dp"
@@ -130,7 +121,7 @@
                     android:text="Autônomo"
                     android:textColor="@color/textsecondary"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/description"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
                     tools:ignore="MissingConstraints" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -138,6 +129,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
+
+                    <TextView
+                        android:id="@+id/titleAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="Sobre" />
+
+                    <TextView
+                        android:id="@+id/textDescription"
+                        android:layout_below="@+id/titleAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textprimary"
+                        android:textSize="18dp"
+                        android:text="..." />
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="74dp"
@@ -163,6 +176,7 @@
                         android:text="Cidade / Estado" />
 
                     <TextView
+                        android:id="@+id/textCity"
                         android:layout_below="@+id/titleCity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

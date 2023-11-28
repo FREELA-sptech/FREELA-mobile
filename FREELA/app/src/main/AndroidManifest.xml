@@ -16,11 +16,20 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.UpdateCityUser"
+            android:exported="false" />
+        <activity
+            android:name=".view.UpdateNameUser"
+            android:exported="false" />
+        <activity
+            android:name=".view.UpdateSubCategories"
+            android:exported="false" />
+        <activity
             android:name=".view.EditUser"
             android:exported="false"
-            android:theme="@style/AppThemeWhite"/>
+            android:theme="@style/AppThemeWhite" />
         <activity
-            android:name=".SuccessActivity"
+            android:name=".view.SuccessActivity"
             android:exported="false" />
         <activity
             android:name=".view.CreateProposal"

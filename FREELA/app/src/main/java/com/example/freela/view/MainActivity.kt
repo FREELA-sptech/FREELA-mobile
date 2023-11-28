@@ -6,19 +6,24 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.freela.R
+import com.example.freela.api.SubCategoryService
+import com.example.freela.model.Session
+import com.example.freela.network.RetrofitClient
+import com.example.freela.viewModel.SubCategoryViewModel
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var subCategoryViewModel: SubCategoryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
+        val subCategoryService = RetrofitClient.getInstance().create(SubCategoryService::class.java)
+        subCategoryViewModel = SubCategoryViewModel(subCategoryService)
+        subCategoryViewModel.getSubCategories()
 
         val button : Button = findViewById(R.id.start);
         val redirectLogin : TextView = findViewById(R.id.entrar);
 
-        val preferences = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val token = preferences.getString("TOKEN", null)
-
-        if (token != "") {
+        if (Session.token.isNotEmpty()) {
             val redirect = Intent(this, BaseAuthenticatedActivity::class.java)
             startActivity(redirect)
         }

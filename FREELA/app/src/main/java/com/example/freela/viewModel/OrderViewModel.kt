@@ -28,6 +28,7 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
                     orders?.let {
                         _orders.value = it
                         Log.i("Orders", response.toString())
+                        Session.updateOrderList(orders)
                     }
                 } else {
                     Log.i("Orders", response.toString())

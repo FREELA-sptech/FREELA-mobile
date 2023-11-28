@@ -5,11 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.freela.api.AuthService
+import com.example.freela.api.ProposalsService
 import com.example.freela.model.Session
 import com.example.freela.model.User
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
+import com.example.freela.model.dto.request.UserDetailsRequest
 import com.example.freela.model.dto.response.LoginResponse
+import com.example.freela.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,39 +37,36 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
         })
     }
 
-    fun loginUser(loginRequest: LoginRequest, callback: (Boolean) -> Unit) {
+    fun loginUser(loginRequest: LoginRequest) {
         authService.login(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-
                     response.body()?.token?.let { token ->
                         Session.token = token
                         getUserDetails(token)
                     }
-                    callback(true)
                 } else {
-                    _loginError.value = "Erro ao fazer login"
-                    callback(false)
+                    _loginError.postValue("Erro ao fazer login")
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.e("ERRO NA API",t.message.toString())
-                callback(false)
+                _loginError.postValue("Erro na API: ${t.message}")
             }
         })
     }
 
     private fun getUserDetails(token: String) {
+        val proposalViewModel = ProposalViewModel(RetrofitClient.getInstance().create(ProposalsService::class.java))
+
         authService.userDetails("Bearer $token").enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                Log.e("User Details",response.toString())
                 if (response.isSuccessful) {
                     val user = response.body()
-                    Log.i("User Details",user.toString())
                     if (user != null) {
-                        _loggedInUser.value = user
-                        Session.user = user
+                        _loggedInUser.postValue(user)
+                        proposalViewModel.getUserProposals(Session.token)// Atualiza _loggedInUser no ViewModel
+                        Session.updateUser(user) // Atualiza os dados na Session
                     } else {
                         // Lógica para lidar com resposta nula
                     }
@@ -76,8 +76,42 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("User Details",t.message.toString())
+                Log.e("User Details", t.message.toString())
             }
         })
+    }
+
+    fun updateUserPhoto(token: String, image: String) {
+        authService.updatePhoto("Bearer $token", image).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.i("Sucesso no update da foto",response.toString())
+                    getUserDetails(token)
+                } else {
+                    Log.e("Erro no update da foto",response.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+            }
+        })
+    }
+
+    fun updateUserDetails(token: String, userUpdateRequest: UserDetailsRequest) {
+        authService.updateUserDetails("Bearer $token", userUpdateRequest)
+            .enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        Log.i("Sucesso na atualização", "Detalhes do usuário atualizados com sucesso")
+                        getUserDetails(Session.token)
+                    } else {
+                        Log.e("Erro na atualização", "Erro ao atualizar os detalhes do usuário")
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.e("Falha na requisição", "Falha na requisição para atualizar os detalhes do usuário: ${t.message}")
+                }
+            })
     }
 }

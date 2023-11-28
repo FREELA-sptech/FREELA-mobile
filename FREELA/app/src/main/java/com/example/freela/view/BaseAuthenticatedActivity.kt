@@ -2,18 +2,20 @@ package com.example.freela.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.ScriptGroup.Binding
-import android.transition.ChangeTransform
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.freela.ChatFragment
 import com.example.freela.HomeFragment
 import com.example.freela.OrdersFragment
 import com.example.freela.R
+import com.example.freela.api.SubCategoryService
 import com.example.freela.databinding.ActivityBaseAuthenticatedBinding
+import com.example.freela.databinding.ActivityOrderDetailsBinding
 import com.example.freela.model.Session
+import com.example.freela.network.RetrofitClient
+import com.example.freela.viewModel.SubCategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BaseAuthenticatedActivity : AppCompatActivity() {
@@ -44,18 +46,19 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        val token = Session.token
-
-        if (token == "") {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-            finish()
+        Log.i("TOKEN PÓS LOGIN",Session.token)
+        if (Session.token.isEmpty()) {
+            redirectToLogin()
         }
     }
 
+    private fun redirectToLogin() {
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onBackPressed() {
-        // Construa um diálogo de confirmação
         AlertDialog.Builder(this)
             .setTitle("Sair do App")
             .setMessage("Tem certeza de que deseja sair do aplicativo?")
@@ -72,10 +75,10 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
         Session.token = ""
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,fragment)
-        fragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 }

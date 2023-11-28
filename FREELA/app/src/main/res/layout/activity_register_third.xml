@@ -201,6 +201,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
+        app:backgroundTint="@color/color01"
         android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="60dp"

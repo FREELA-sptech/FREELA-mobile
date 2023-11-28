@@ -30,14 +30,17 @@ class CreateProposal : AppCompatActivity() {
     }
 
     private lateinit var proposalViewModel: ProposalViewModel
+    private lateinit var orderViewModel: OrderViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val order = intent.getParcelableExtra<Order>("order")
         val helpers = Helpers();
+        val orderService = RetrofitClient.getInstance().create(OrderService::class.java)
         val proposalsService = RetrofitClient.getInstance().create(ProposalsService::class.java)
         proposalViewModel = ProposalViewModel(proposalsService)
+        orderViewModel = OrderViewModel(orderService)
 
         binding.createProposal.setOnClickListener{
             val inputFields = listOf<TextInputEditText>(
@@ -67,7 +70,7 @@ class CreateProposal : AppCompatActivity() {
             floatValue,description,deadline
         )
         proposalViewModel.createProposal(orderId,proposalRequest)
-
+        orderViewModel.getOrders()
 
     }
 }

@@ -43,6 +43,24 @@ class SubCategoryAdapter(
         items.addAll(subCategories)
         notifyDataSetChanged()
     }
+    fun setUpdateSubCategories(subCategories: List<SubCategory>) {
+        val selectedCategoryIds = subCategoriesGrouped.values
+            .flatten()
+            .filter { it.isSelected }
+            .map { it.category?.id }
+            .distinct()
+
+        if (selectedCategoryIds.size > 1 || selectedCategoryIds.isEmpty()) {
+            items.clear()
+            items.addAll(subCategories)
+        } else {
+            val selectedCategoryId = selectedCategoryIds.firstOrNull()
+            selectedCategoryId?.let {
+                filterSubCategoriesByCategory(it)
+            }
+        }
+        notifyDataSetChanged()
+    }
 
     inner class SubCategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val checkBox: CheckBox = itemView.findViewById(R.id.checkBoxSubCategory)
@@ -80,12 +98,13 @@ class SubCategoryAdapter(
             }
         }
 
-        private fun filterSubCategoriesByCategory(categoryId: Int) {
-            val itemsToDisplay = subCategories.filter { it.category?.id == categoryId }
-            items.clear()
-            items.addAll(itemsToDisplay)
-            notifyDataSetChanged()
-        }
 
+
+    }
+    private fun filterSubCategoriesByCategory(categoryId: Int) {
+        val itemsToDisplay = subCategories.filter { it.category?.id == categoryId }
+        items.clear()
+        items.addAll(itemsToDisplay)
+        notifyDataSetChanged()
     }
 }

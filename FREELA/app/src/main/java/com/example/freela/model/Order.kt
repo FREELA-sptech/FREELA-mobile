@@ -21,13 +21,15 @@ data class Order(
         parcel.readString(),
         parcel.readString(),
         parcel.readDouble(),
-        parcel.readParcelable(User::class.java.classLoader), // Lendo um objeto Parcelable de User
+        parcel.readParcelable(User::class.java.classLoader),
         parcel.readString(),
-        parcel.createTypedArrayList(SubCategory.CREATOR), // Lendo uma lista de objetos Parcelable de SubCategory
+        parcel.createTypedArrayList(SubCategory.CREATOR),
         mutableListOf<Photo>().apply {
-            parcel.readTypedList(this, Photo.CREATOR) // Lendo uma lista de objetos Parcelable de Photo
+            parcel.readTypedList(this, Photo.CREATOR)
         },
-        parcel.createTypedArrayList(Proposals.CREATOR), // Lendo uma lista de objetos Parcelable de Proposals
+        mutableListOf<Proposals>().apply {
+            parcel.readTypedList(this, Proposals.CREATOR)
+        },
         parcel.readByte() != 0.toByte()
     )
 

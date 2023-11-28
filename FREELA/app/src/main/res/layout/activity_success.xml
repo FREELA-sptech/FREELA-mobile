@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/success"
     android:layout_height="match_parent"
-    tools:context=".SuccessActivity">
+    tools:context=".view.SuccessActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"

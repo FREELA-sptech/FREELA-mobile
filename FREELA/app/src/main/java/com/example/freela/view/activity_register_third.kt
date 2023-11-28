@@ -4,17 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import com.example.freela.R
-import com.example.freela.SuccessActivity
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityRegisterThirdBinding
-import com.example.freela.model.User
-import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
@@ -23,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
 
 class activity_register_third : AppCompatActivity() {
     private val binding by lazy {
