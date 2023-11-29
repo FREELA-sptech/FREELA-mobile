@@ -35,6 +35,7 @@ class OrderDetailsFragment : Fragment() {
 
         order?.let {
             description.text = it.description
+
         }
     }
 

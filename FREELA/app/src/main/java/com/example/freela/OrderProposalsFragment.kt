@@ -62,7 +62,7 @@ class OrderProposalsFragment : Fragment() {
     private fun showDialog(view: View) {
         val dialog = Dialog(view.context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.activity_create_proposal)
+        dialog.setContentView(R.layout.activity_proposals_details)
         val close = dialog.findViewById<ImageView>(R.id.btnreturn)
 
         close.setOnClickListener {

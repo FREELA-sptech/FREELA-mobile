@@ -11,9 +11,20 @@
             android:layout_marginTop="28dp"
             android:orientation="vertical">
             <TextView
+                android:layout_marginBottom="16dp"
                 style="@style/title"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categorias" />
+
+
+            <TextView
+                android:layout_marginBottom="16dp"
+                style="@style/title"
+                android:textStyle="bold"
+                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Descrição" />

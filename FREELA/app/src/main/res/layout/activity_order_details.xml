@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleAndPrize"
-        android:background="@color/white"
+        android:background="@color/backgroundprimary"
         android:id="@+id/tab_layout">
 
         <com.google.android.material.tabs.TabItem
