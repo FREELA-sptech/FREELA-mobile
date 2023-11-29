@@ -41,7 +41,7 @@ class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerV
                     userDetailsImageView?.visibility = View.VISIBLE
                     val byteArray = Base64.decode(photoString, Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(byteArray))
-
+                    txtIcon.visibility = View.GONE
                     userDetailsImageView?.setImageBitmap(bitmap)
                 }
             }

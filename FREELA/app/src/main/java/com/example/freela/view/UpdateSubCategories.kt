@@ -35,7 +35,6 @@ class UpdateSubCategories : AppCompatActivity() {
         userViewModel = UserViewModel(authService)
         subCategories = Session.subCategories
         createSubCategory()
-        updateSubCategories()
     }
 
     private fun createSubCategory(){
@@ -57,6 +56,7 @@ class UpdateSubCategories : AppCompatActivity() {
         }
 
         binding.recyclerMain.adapter = subCategoryAdapter
+        updateSubCategories()
         binding.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -93,7 +93,7 @@ class UpdateSubCategories : AppCompatActivity() {
             }
         }
         binding.btnreturn.setOnClickListener {
-            val intent = Intent(this, Register::class.java)
+            val intent = Intent(this, EditUser::class.java)
             startActivity(intent)
         }
     }

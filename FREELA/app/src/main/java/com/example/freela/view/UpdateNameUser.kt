@@ -3,6 +3,7 @@ package com.example.freela.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityUpdateNameUserBinding
 import com.example.freela.model.Session
@@ -27,29 +28,50 @@ class UpdateNameUser : AppCompatActivity() {
         userViewModel = UserViewModel(authService)
         val helpers = Helpers();
         user = Session.user!!
-        binding.name.setText(user.name)
-        binding.description.setText(user.description)
+        if(user.isFreelancer){
+            binding.name.setText(user.name)
+            binding.description.setText(user.description)
+            binding.btnNext.setOnClickListener {
+                val inputFields = listOf<TextInputEditText>(
+                    binding.name,
+                    binding.description,
+                )
+
+                if (helpers.isInputValid(inputFields)) {
+                    val redirect = Intent(this, SuccessActivity::class.java)
+                    val intent = Intent(this, Login::class.java)
+                    redirect.putExtra("action","Cadastro")
+                    redirect.putExtra("message","Cadastro de usuario realizado com sucesso!")
+                    redirect.putExtra("redirect",intent)
+                    performRegistration()
+                    startActivity(redirect)
+                    finish()
+                }
+            }
+        }else{
+            binding.name.setText(user.name)
+            binding.description.visibility = View.GONE
+            binding.btnNext.setOnClickListener {
+                val inputFields = listOf<TextInputEditText>(
+                    binding.name
+                )
+
+                if (helpers.isInputValid(inputFields)) {
+                    val redirect = Intent(this, SuccessActivity::class.java)
+                    val intent = Intent(this, Login::class.java)
+                    redirect.putExtra("action","Cadastro")
+                    redirect.putExtra("message","Cadastro de usuario realizado com sucesso!")
+                    redirect.putExtra("redirect",intent)
+                    performRegistration()
+                    startActivity(redirect)
+                    finish()
+                }
+            }
+        }
+
 
         binding.btnreturn.setOnClickListener {
             onBackPressed()
-        }
-
-        binding.btnNext.setOnClickListener {
-            val inputFields = listOf<TextInputEditText>(
-                binding.name,
-                binding.description,
-            )
-
-            if (helpers.isInputValid(inputFields)) {
-                val redirect = Intent(this, SuccessActivity::class.java)
-                val intent = Intent(this, Login::class.java)
-                redirect.putExtra("action","Cadastro")
-                redirect.putExtra("message","Cadastro de usuario realizado com sucesso!")
-                redirect.putExtra("redirect",intent)
-                performRegistration()
-                startActivity(redirect)
-                finish()
-            }
         }
     }
     private fun performRegistration() {
@@ -58,16 +80,30 @@ class UpdateNameUser : AppCompatActivity() {
         val description = binding.description?.text.toString()
 
         if(user != null){
-            val selectedSubCategoryIds = user.subCategories?.map { it.id }
-            val userUpdate = selectedSubCategoryIds?.let {
-                UserDetailsRequest(
-                    nome, user.city, user.uf,description , it, "", user.photo
-                )
+            if(user.isFreelancer){
+                val selectedSubCategoryIds = user.subCategories?.map { it.id }
+                val userUpdate = selectedSubCategoryIds?.let {
+                    UserDetailsRequest(
+                        nome, user.city, user.uf,description , it, "", user.photo
+                    )
+                }
+                if (userUpdate != null) {
+                    userViewModel.updateUserDetails(Session.token,userUpdate)
+                    onBackPressed()
+                }
+            }else{
+                val selectedSubCategoryIds = user.subCategories?.map { it.id }
+                val userUpdate = selectedSubCategoryIds?.let {
+                    UserDetailsRequest(
+                        nome, user.city, user.uf,"", it, "", user.photo
+                    )
+                }
+                if (userUpdate != null) {
+                    userViewModel.updateUserDetails(Session.token,userUpdate)
+                    onBackPressed()
+                }
             }
-            if (userUpdate != null) {
-                userViewModel.updateUserDetails(Session.token,userUpdate)
-                onBackPressed()
-            }
+
         }
     }
 }

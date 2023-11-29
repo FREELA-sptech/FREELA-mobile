@@ -103,7 +103,7 @@
                 android:textColor="@color/textprimary"
                 android:layout_toEndOf="@+id/iconAction"
                 android:textSize="18dp"
-                android:text="Dados" />
+                android:text="Sobre" />
 
             <ImageView
                 android:layout_marginVertical="8dp"

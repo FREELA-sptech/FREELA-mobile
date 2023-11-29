@@ -63,9 +63,9 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
             .setTitle("Sair do App")
             .setMessage("Tem certeza de que deseja sair do aplicativo?")
             .setPositiveButton("Sim") { dialog, which ->
-                // Aqui você remove o token (exemplo)
                 removeToken()
                 finish()
+                redirectToLogin()
             }
             .setNegativeButton("Não", null)
             .show()

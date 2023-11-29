@@ -14,7 +14,6 @@ class SubCategoryAdapter(
     private val onSubCategorySelected: (SubCategory) -> Unit
 ) : RecyclerView.Adapter<SubCategoryAdapter.SubCategoryViewHolder>() {
 
-    private val subCategoriesGrouped = subCategories.groupBy { it.category?.id  }
     private val items = mutableListOf<SubCategory>()
 
     init {
@@ -44,8 +43,7 @@ class SubCategoryAdapter(
         notifyDataSetChanged()
     }
     fun setUpdateSubCategories(subCategories: List<SubCategory>) {
-        val selectedCategoryIds = subCategoriesGrouped.values
-            .flatten()
+        val selectedCategoryIds = subCategories
             .filter { it.isSelected }
             .map { it.category?.id }
             .distinct()
@@ -78,8 +76,7 @@ class SubCategoryAdapter(
                     isSelected = isChecked
                     onSubCategorySelected(subCategory)
 
-                    val selectedCategoryIds = subCategoriesGrouped.values
-                        .flatten()
+                    val selectedCategoryIds = subCategories
                         .filter { it.isSelected }
                         .map { it.category?.id }
                         .distinct()
@@ -97,10 +94,8 @@ class SubCategoryAdapter(
                 }
             }
         }
-
-
-
     }
+
     private fun filterSubCategoriesByCategory(categoryId: Int) {
         val itemsToDisplay = subCategories.filter { it.category?.id == categoryId }
         items.clear()

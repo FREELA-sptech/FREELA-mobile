@@ -1,15 +1,19 @@
 package com.example.freela
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +30,7 @@ import com.example.freela.view.UserDetailsActivity
 import com.example.freela.viewModel.OrderViewModel
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
+import java.io.ByteArrayInputStream
 
 class HomeFragment : Fragment() {
 
@@ -40,6 +45,7 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
@@ -62,6 +68,13 @@ class HomeFragment : Fragment() {
                 val intent = Intent(activity, UserDetailsActivity::class.java)
                 startActivity(intent)
             }
+        }else{
+            val userDetailsImageView = view.findViewById<CircleImageView>(R.id.userDetails)
+            userDetailsImageView?.visibility = View.VISIBLE
+            val byteArray = Base64.decode(user?.photo, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(byteArray))
+            txtIcon?.visibility = View.GONE
+            userDetailsImageView?.setImageBitmap(bitmap)
         }
 
         if (user?.isFreelancer == true) {
@@ -102,9 +115,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun listOrders() {
+
         if (Session.orders.isNullOrEmpty()) {
             orderViewModel.getOrders()
             orderViewModel.orders.observe(viewLifecycleOwner, Observer { orders ->
+                val loader = view?.findViewById<ConstraintLayout>(R.id.loading)
+                loader?.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
                 orders?.let {
                     orderAdapter = OrderAdapter(orders)
                     orderAdapter.onItemClick = { order ->
@@ -117,6 +134,9 @@ class HomeFragment : Fragment() {
                 }
             })
         } else {
+            val loader = view?.findViewById<ConstraintLayout>(R.id.loading)
+            loader?.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
             orderAdapter = OrderAdapter(Session.orders!!)
             orderAdapter.onItemClick = { order ->
                 val intent = Intent(view?.context, OrderDetails::class.java)

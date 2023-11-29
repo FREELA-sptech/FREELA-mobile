@@ -13,6 +13,12 @@ class EditUser : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.btnreturn.setOnClickListener {
+            val intent = Intent(this, UserDetailsActivity::class.java);
+            startActivity(intent)
+            finish()
+        }
+
         binding.subCategories.setOnClickListener{
             val intent = Intent(this, UpdateSubCategories::class.java);
             startActivity(intent)

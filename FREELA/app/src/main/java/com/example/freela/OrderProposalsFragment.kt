@@ -1,17 +1,27 @@
 package com.example.freela
 import Proposals
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.adapters.ProposalAdapter
 import com.example.freela.model.Order
 import com.example.freela.view.ProposalsDetails
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 
 private const val ARG_ORDER = "order"
 
@@ -44,11 +54,27 @@ class OrderProposalsFragment : Fragment() {
             recyclerView.adapter = proposalsAdapter
             recyclerView.layoutManager = LinearLayoutManager(view.context)
             proposalsAdapter.onItemClick = {
-                val intent = Intent(view.context, ProposalsDetails::class.java)
-                intent.putExtra("proposals", it)
-                startActivity(intent)
+                showDialog(view)
             }
         }
+    }
+
+    private fun showDialog(view: View) {
+        val dialog = Dialog(view.context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.activity_create_proposal)
+        val close = dialog.findViewById<ImageView>(R.id.btnreturn)
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show();
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
+
     }
 
     companion object {
