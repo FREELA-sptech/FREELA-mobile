@@ -69,15 +69,18 @@ class UserDetailsActivity : AppCompatActivity() {
 
             if (user.isFreelancer) {
                 binding.textDescription.text = user.description
-                binding.description2.text = "Autônomo"
                 binding.proposals.visibility = View.VISIBLE
                 binding.orders.visibility = View.GONE
+                binding.proposals.setOnClickListener {
+                    val intent = Intent(this, EditUser::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             } else {
                 binding.proposals.visibility = View.GONE
                 binding.orders.visibility = View.VISIBLE
                 binding.titleAbout.visibility = View.GONE
                 binding.textDescription.visibility = View.GONE
-                binding.description2.text = "Cliente"
             }
             if (user.photo == "") {
                 binding.imgWithoutImage.text = user.name.first().toString()

@@ -68,27 +68,22 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
         android:paddingHorizontal="16dp">
 
         <TextView
             android:id="@+id/hello"
             style="@style/title"
-            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/createOrder"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/ola_usuario" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/createOrder"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:text="Criar Pedidos"
-            app:cornerRadius="32dp" />
     </RelativeLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -111,6 +106,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/recyclerMain"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/order_item"
         android:orientation="horizontal"/>
 </LinearLayout>

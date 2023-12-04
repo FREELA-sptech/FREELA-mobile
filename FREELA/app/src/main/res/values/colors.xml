@@ -26,6 +26,9 @@
 
     <color name="disableBtnColor">#4F535A</color>
     <color name="submitBtnColor">#274C77</color>
+    <color name="primary10">#001C38</color>
+    <color name="primary40">#1660A5</color>
+    <color name="primary90">#D3E4FF</color>
 
 
 

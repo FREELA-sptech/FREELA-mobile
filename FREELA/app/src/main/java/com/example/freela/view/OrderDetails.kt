@@ -7,13 +7,16 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.freela.R
+import com.example.freela.adapters.CarouselAdapter
 import com.example.freela.api.OrderService
 import com.example.freela.api.ProposalsService
 import com.example.freela.databinding.ActivityOrderDetailsBinding
@@ -48,52 +51,22 @@ class OrderDetails : AppCompatActivity() {
         proposalViewModel = ProposalViewModel(proposalsService)
         orderViewModel = OrderViewModel(orderService)
 
-        val order = intent.getParcelableExtra<Order>("order")
-        val user = Session.user
-        if(order != null){
-            binding.title.text = order.title
-            binding.prize.text = "R$${order.value.toString()}"
-            binding.deadline.text = order.deadline
-            if(user != null){
-               if(!user.isFreelancer){
-                   binding.createProposal.visibility = View.GONE
-               }else if(user.id == order.user?.id){
-                   binding.createProposal.visibility = View.GONE
-               }else{
-                   binding.createProposal.visibility = View.VISIBLE
-               }
-            }
-            myViewPagerAdapter = MyViewAdapter(this);
-            myViewPagerAdapter.setOrder(order)
-            binding.viewPager.adapter = myViewPagerAdapter
-            binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    if (tab != null) {
-                        binding.viewPager.setCurrentItem(tab.position)
-                    }
-                }
+        val orderId = intent.getIntExtra("orderId", -1)
 
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    // Implement your logic here for when a tab is unselected
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-                    // Implement your logic here for when a tab is reselected
-                }
-            })
-            binding.btnReturn.setOnClickListener{
-                val intent = Intent(this, BaseAuthenticatedActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            binding.createProposal.setOnClickListener{
-                showDialog(order)
-
-            }
+        if (orderId != -1) {
+            orderViewModel.getOrderDetails(orderId)
         }
+        orderViewModel.orderDetails.observe(this, { orderDetails ->
+            updateUIWithOrderDetails(orderDetails)
+        })
     }
 
     private fun showDialog(order: Order) {
+        val imageRV: RecyclerView = binding.imgView
+        val imageAdapter = CarouselAdapter()
+        imageRV.adapter = imageAdapter
+        imageAdapter.submitList(order.photos)
+
         val dialog = Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.activity_create_proposal)
@@ -138,6 +111,64 @@ class OrderDetails : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)
+    }
+
+    private fun updateUIWithOrderDetails(orderDetails: Order) {
+        binding.container.visibility = View.VISIBLE
+        binding.loading.visibility = View.GONE
+        binding.title.text = orderDetails.title
+        binding.prize.text = "R$${orderDetails.value.toString()}"
+        binding.deadline.text = orderDetails.deadline
+        val imageRV: RecyclerView = binding.imgView
+        val imageAdapter = CarouselAdapter()
+        val user = Session.user
+
+        if(user != null){
+            if (!orderDetails.photos.isNullOrEmpty()) {
+                imageRV.adapter = imageAdapter
+                imageAdapter.submitList(orderDetails.photos)
+            }
+
+            if(!user.isFreelancer){
+                binding.createProposal.visibility = View.GONE
+            }
+
+            if(user.id == orderDetails.user?.id){
+                Log.i("Esse é o dono", "Dahora legal")
+                binding.createProposal.visibility = View.GONE
+                binding.tabLayout.visibility = View.VISIBLE
+                binding.viewPager.visibility = View.VISIBLE
+                myViewPagerAdapter = MyViewAdapter(this);
+                myViewPagerAdapter.setOrder(orderDetails)
+                binding.viewPager.adapter = myViewPagerAdapter
+                binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                        if (tab != null) {
+                            binding.viewPager.setCurrentItem(tab.position)
+                        }
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab?) {
+                        // Implement your logic here for when a tab is unselected
+                    }
+
+                    override fun onTabReselected(tab: TabLayout.Tab?) {
+                        // Implement your logic here for when a tab is reselected
+                    }
+                })
+            }else{
+                binding.createProposal.visibility = View.VISIBLE
+            }
+        }
+
+        binding.btnReturn.setOnClickListener{
+            val intent = Intent(this, BaseAuthenticatedActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.createProposal.setOnClickListener{
+            showDialog(orderDetails)
+        }
     }
 
 

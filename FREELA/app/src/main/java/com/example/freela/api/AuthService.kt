@@ -40,4 +40,7 @@ interface AuthService {
         @Body userDetails: UserDetailsRequest
     ): Call<Void>
 
+    @GET("/users/freelancers")
+    fun getFreelancers(@Header("Authorization") token: String): Call<List<User>>
+
 }

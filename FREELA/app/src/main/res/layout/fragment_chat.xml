@@ -101,7 +101,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="28dp"
             android:gravity="center"
-            android:text="Adicione Pedidos, aceite propostas para que assim você possa conversar melhor sobre os detalhes."
+            android:text=""
             android:textColor="@color/textsecondary"
             android:textSize="18dp"
             app:layout_constraintTop_toBottomOf="@+id/title"

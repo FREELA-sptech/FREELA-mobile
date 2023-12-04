@@ -1,6 +1,5 @@
 package com.example.freela.adapters
 
-import Proposals
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -17,6 +16,7 @@ import com.example.freela.model.Order
 import com.example.freela.view.UserDetailsActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import android.util.Base64
+import com.example.freela.model.Proposals
 import com.example.freela.model.Session.user
 import java.io.ByteArrayInputStream
 

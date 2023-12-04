@@ -1,6 +1,7 @@
 package com.example.freela.api
 
-import Proposals
+
+import com.example.freela.model.Proposals
 import com.example.freela.model.dto.request.ProposalRequest
 import retrofit2.Call
 import retrofit2.http.*

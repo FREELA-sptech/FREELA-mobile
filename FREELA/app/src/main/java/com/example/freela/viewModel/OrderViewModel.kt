@@ -20,6 +20,10 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
     val orders: LiveData<List<Order>> // LiveData exposto para observação externa
         get() = _orders
 
+    private val _orderDetails = MutableLiveData<Order>() // MutableLiveData para armazenar os detalhes do pedido
+    val orderDetails: LiveData<Order> // LiveData exposto para observação externa
+        get() = _orderDetails
+
     fun getOrders() {
         orderService.getOrders("Bearer ${Session.token}").enqueue(object : Callback<List<Order>> {
             override fun onResponse(call: Call<List<Order>>, response: Response<List<Order>>) {
@@ -57,4 +61,24 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
         })
     }
 
+    fun getOrderDetails(orderId: Int) {
+        orderService.getOrderDetails("Bearer ${Session.token}", orderId)
+            .enqueue(object : Callback<Order> {
+                override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                    if (response.isSuccessful) {
+                        val orderDetails = response.body()
+                        orderDetails?.let {
+                            _orderDetails.value = it
+                            Log.i("Detalhes da Order", response.toString())
+                        }
+                    } else {
+                        Log.i("Detalhes da Order Erro", response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<Order>, t: Throwable) {
+                    // Lidar com falhas na requisição
+                }
+            })
+    }
 }

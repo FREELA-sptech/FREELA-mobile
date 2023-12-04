@@ -1,3 +1,5 @@
+package com.example.freela.model
+
 import android.os.Parcel
 import android.os.Parcelable
 import com.example.freela.model.Order

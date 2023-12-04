@@ -1,5 +1,4 @@
 package com.example.freela
-import Proposals
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.adapters.ProposalAdapter
 import com.example.freela.model.Order
+import com.example.freela.model.Proposals
 import com.example.freela.view.ProposalsDetails
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -53,21 +53,30 @@ class OrderProposalsFragment : Fragment() {
             proposalsAdapter = ProposalAdapter(it.proposals as MutableList<Proposals>)
             recyclerView.adapter = proposalsAdapter
             recyclerView.layoutManager = LinearLayoutManager(view.context)
-            proposalsAdapter.onItemClick = {
-                showDialog(view)
+            proposalsAdapter.onItemClick = { proposals ->
+                showDialog(view, proposals)
             }
         }
     }
 
-    private fun showDialog(view: View) {
+    private fun showDialog(view: View, proposals: Proposals) {
         val dialog = Dialog(view.context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.activity_proposals_details)
         val close = dialog.findViewById<ImageView>(R.id.btnreturn)
+        val titleUser = dialog.findViewById<TextView>(R.id.textView2)
+        val category = dialog.findViewById<TextView>(R.id.description2)
+        val description = dialog.findViewById<TextView>(R.id.description)
 
         close.setOnClickListener {
             dialog.dismiss()
         }
+
+        titleUser.text = proposals.user?.name
+        category.text = proposals.user?.description
+        description.text = proposals.description
+
+
 
         dialog.show();
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)

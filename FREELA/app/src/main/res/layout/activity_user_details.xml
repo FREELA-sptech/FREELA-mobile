@@ -126,17 +126,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/description2"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="8dp"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="Autônomo"
-                    android:textColor="@color/textsecondary"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    tools:ignore="MissingConstraints" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout

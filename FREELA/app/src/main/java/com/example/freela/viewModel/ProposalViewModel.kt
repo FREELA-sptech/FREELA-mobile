@@ -1,11 +1,11 @@
 package com.example.freela.viewModel
 
-import Proposals
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.freela.api.ProposalsService
+import com.example.freela.model.Proposals
 import com.example.freela.model.Session
 import com.example.freela.model.dto.request.ProposalRequest
 import retrofit2.Call

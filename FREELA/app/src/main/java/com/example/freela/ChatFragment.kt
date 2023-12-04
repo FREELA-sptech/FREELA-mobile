@@ -36,6 +36,7 @@ class ChatFragment : Fragment() {
         val createOrder = view.findViewById<MaterialButton>(R.id.createOrder)
         val textView = view.findViewById<TextView>(R.id.hello)
         val txtIcon = view.findViewById<TextView>(R.id.userDetailsWithoutPhoto)
+        val message = view.findViewById<TextView>(R.id.subTitle)
 
         val user = Session.user
         textView?.text = "Olá, ${user?.name}"
@@ -59,6 +60,9 @@ class ChatFragment : Fragment() {
 
         if (user?.isFreelancer == true) {
             createOrder?.visibility = View.GONE
+            message.text = view.context.getText(R.string.messageChatFreelancer)
+        }else{
+            message.text = view.context.getText(R.string.messageChatCliente)
         }
 
         btnUser?.setOnClickListener {

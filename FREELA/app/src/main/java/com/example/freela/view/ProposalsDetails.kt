@@ -1,10 +1,10 @@
 package com.example.freela.view
 
-import Proposals
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.freela.R
 import com.example.freela.model.Order
+import com.example.freela.model.Proposals
 
 class ProposalsDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

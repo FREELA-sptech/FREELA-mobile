@@ -1,6 +1,5 @@
 package com.example.freela.model
 
-import Proposals
 import android.os.Parcel
 import android.os.Parcelable
 

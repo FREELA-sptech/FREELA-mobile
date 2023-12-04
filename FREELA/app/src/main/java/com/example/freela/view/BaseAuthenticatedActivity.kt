@@ -35,10 +35,6 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
                     replaceFragment(HomeFragment())
                     true
                 }
-                R.id.menu_search -> {
-                    replaceFragment(OrdersFragment())
-                    true
-                }
                 R.id.menu_chat -> {
                     replaceFragment(ChatFragment())
                     true

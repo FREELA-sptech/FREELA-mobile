@@ -29,6 +29,9 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
     private val _loginError = MutableLiveData<String>()
     val loginError: LiveData<String> get() = _loginError
 
+    private val _freelancers = MutableLiveData<List<User>>()
+    val freelancers: LiveData<List<User>> get() = _freelancers
+
     fun registerUser(registerRequest: RegisterRequest) {
         authService.register(registerRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -71,9 +74,13 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
                 if (response.isSuccessful) {
                     val user = response.body()
                     if (user != null) {
+                        if(user.isFreelancer){
+                            orderViewModel.getOrders()
+                        }else{
+                            fetchFreelancers(Session.token)
+                        }
                         _loggedInUser.postValue(user)
                         proposalViewModel.getUserProposals(Session.token)
-                        orderViewModel.getOrders()
                         subCategoriesViewModel.getSubCategories()
                         Session.updateUser(user) // Atualiza os dados na Session
                     } else {
@@ -126,6 +133,26 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
                     Log.e("Falha na requisição", "Falha na requisição para atualizar os detalhes do usuário: ${t.message}")
                 }
             })
+    }
+
+    fun fetchFreelancers(token: String) {
+        authService.getFreelancers("Bearer $token").enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    val freelancersList = response.body()
+                    freelancersList?.let {
+                        _freelancers.postValue(it)
+                        Session.updateFreelancersList(it)
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                // Lidar com falhas na requisição de freelancers
+            }
+        })
     }
 
     fun File.copyInputStreamToFile(inputStream: InputStream) {

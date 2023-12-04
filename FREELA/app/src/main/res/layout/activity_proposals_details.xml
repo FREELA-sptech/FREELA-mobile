@@ -162,6 +162,7 @@ tools:context=".view.ProposalsDetails">
                 android:layout_height="wrap_content"
                 android:textColor="@color/textsecondary"
                 android:textSize="15sp"
+                android:text="..."
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -181,6 +182,7 @@ tools:context=".view.ProposalsDetails">
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="16dp"
+            android:textColor="@color/backgroundprimary"
             android:backgroundTint="#5EC34F"
             android:text="Aceitar"
             app:cornerRadius="32dp" />
@@ -189,6 +191,7 @@ tools:context=".view.ProposalsDetails">
             android:id="@+id/recuseProposal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:textColor="@color/backgroundprimary"
             android:backgroundTint="@color/error"
             android:text="Recusar"
             app:cornerRadius="32dp" />
