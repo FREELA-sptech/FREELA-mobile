@@ -10,6 +10,7 @@
     android:layout_marginHorizontal="16dp"
     app:strokeColor="#dcdcdc"
     app:cardCornerRadius="18dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,10 +31,12 @@
             <TextView
                 android:id="@+id/titleOrder"
                 style="@style/title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Pedido"
                 android:textColor="@color/color01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
@@ -91,7 +94,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/titleDeadline" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:text="Ações"
+            android:layout_height="50dp"/>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

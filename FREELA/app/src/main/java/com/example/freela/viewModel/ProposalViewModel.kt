@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.freela.api.AuthService
 import com.example.freela.api.ProposalsService
 import com.example.freela.model.Proposals
 import com.example.freela.model.Session
 import com.example.freela.model.dto.request.ProposalRequest
+import com.example.freela.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,9 +23,12 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
     val proposalError: LiveData<String> get() = _proposalError
 
     fun createProposal(orderId: Int,proposals: ProposalRequest) {
+        val userViewModel = UserViewModel(RetrofitClient.getInstance().create(AuthService::class.java))
+
         proposalsService.createProposal("Bearer ${Session.token}",orderId, proposals).enqueue(object : Callback<Proposals> {
             override fun onResponse(call: Call<Proposals>, response: Response<Proposals>) {
                 if (response.isSuccessful) {
+                    userViewModel.getUserDetails(Session.token)
                     Log.i("Sucesso", response.toString())
                 } else {
                     Log.i("Erro", response.toString())
@@ -38,12 +43,15 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
     }
 
     fun deleteProposal(proposalId: Int) {
+        val userViewModel = UserViewModel(RetrofitClient.getInstance().create(AuthService::class.java))
+
         proposalsService.deleteProposal("Bearer ${Session.token}",proposalId).enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
-                    // Lógica para tratar a resposta da exclusão da proposta
-                    // Por exemplo, atualizar a lista de propostas após a exclusão bem-sucedida
+                    Log.i("Sucesso", response.toString())
+                    userViewModel.getUserDetails(Session.token)
                 } else {
+                    Log.i("Erro", response.toString())
                     _proposalError.value = "Erro ao excluir proposta"
                 }
             }

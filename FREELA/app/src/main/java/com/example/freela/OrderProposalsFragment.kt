@@ -53,8 +53,10 @@ class OrderProposalsFragment : Fragment() {
             proposalsAdapter = ProposalAdapter(it.proposals as MutableList<Proposals>)
             recyclerView.adapter = proposalsAdapter
             recyclerView.layoutManager = LinearLayoutManager(view.context)
-            proposalsAdapter.onItemClick = { proposals ->
-                showDialog(view, proposals)
+            proposalsAdapter.onItemClick = { proposals, clickType ->
+                if (clickType == "itemClick") {
+                    showDialog(view, proposals)
+                }
             }
         }
     }

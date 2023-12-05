@@ -61,14 +61,15 @@ class CreateProposal : AppCompatActivity() {
     }
 
     private fun performRegistration(orderId: Int) {
-        val description = binding.description?.text.toString()
-        val deadline = binding.deadline?.text.toString()
-        val value = binding.value?.text.toString()
+        val description = binding.description.text.toString()
+        val deadline = binding.deadline.text.toString()
+        val value = binding.value.text.toString()
         val floatValue = value.toFloatOrNull() ?: 0.0f
 
         val proposalRequest = ProposalRequest(
             floatValue,description,deadline
         )
+
         proposalViewModel.createProposal(orderId,proposalRequest)
         orderViewModel.getOrders()
 

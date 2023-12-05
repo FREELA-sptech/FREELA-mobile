@@ -33,7 +33,9 @@ class activity_register_third : AppCompatActivity() {
             val inputFields = listOf<TextInputEditText>(
                 binding.name,
                 binding.email,
-                binding.password
+                binding.password,
+                binding.city,
+                binding.uf
             )
 
             if (helpers.isInputValid(inputFields)) {
@@ -57,11 +59,13 @@ class activity_register_third : AppCompatActivity() {
         val nome = binding.name?.text.toString()
         val email = binding.email?.text.toString()
         val senha = binding.password?.text.toString()
+        val uf = binding.uf?.text.toString()
+        val city = binding.city?.text.toString()
         val type = cardSelected == "Autônomo"
 
         val userRequest = subCategoriesIdsList?.let {
             RegisterRequest(
-                nome,email,senha, it,"","",type
+                nome,email,senha, it,city,uf,type
             )
         }
 
@@ -88,4 +92,5 @@ class activity_register_third : AppCompatActivity() {
                 })
         }
     }
+
 }

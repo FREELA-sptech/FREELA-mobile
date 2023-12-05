@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.Orders"
+            android:exported="false" />
+        <activity
+            android:name=".view.Proposals"
+            android:exported="false" />
+        <activity
             android:name=".view.UpdateCityUser"
             android:exported="false" />
         <activity
@@ -49,7 +55,8 @@
             android:exported="false" />
         <activity
             android:name=".view.OrderDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeColorDetails" />
         <activity
             android:name=".view.activity_register_third"
             android:exported="false"

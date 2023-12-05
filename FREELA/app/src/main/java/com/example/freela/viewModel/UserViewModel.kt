@@ -23,11 +23,8 @@ import java.io.File
 import java.io.InputStream
 
 class UserViewModel(private val authService: AuthService) : ViewModel() {
-    private val _loggedInUser = MutableLiveData<User>()
-    val loggedInUser: LiveData<User> get() = _loggedInUser
-
-    private val _loginError = MutableLiveData<String>()
-    val loginError: LiveData<String> get() = _loginError
+    private val _loginSuccess = MutableLiveData<Boolean>()
+    val loginSuccess: LiveData<Boolean> get() = _loginSuccess
 
     private val _freelancers = MutableLiveData<List<User>>()
     val freelancers: LiveData<List<User>> get() = _freelancers
@@ -45,26 +42,31 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
         })
     }
 
-    fun loginUser(loginRequest: LoginRequest) {
+    fun loginUser(loginRequest: LoginRequest): LiveData<Boolean> {
+        val loginSuccessLiveData = MutableLiveData<Boolean>()
+
         authService.login(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.token?.let { token ->
                         Session.token = token
                         getUserDetails(token)
+                        loginSuccessLiveData.postValue(true)
                     }
                 } else {
-                    _loginError.postValue("Erro ao fazer login")
+                    loginSuccessLiveData.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _loginError.postValue("Erro na API: ${t.message}")
+                loginSuccessLiveData.postValue(false)
             }
         })
+
+        return loginSuccessLiveData
     }
 
-    private fun getUserDetails(token: String) {
+    fun getUserDetails(token: String) {
         val proposalViewModel = ProposalViewModel(RetrofitClient.getInstance().create(ProposalsService::class.java))
         val orderViewModel = OrderViewModel(RetrofitClient.getInstance().create(OrderService::class.java))
         val subCategoriesViewModel = SubCategoryViewModel(RetrofitClient.getInstance().create(SubCategoryService::class.java))
@@ -77,9 +79,9 @@ class UserViewModel(private val authService: AuthService) : ViewModel() {
                         if(user.isFreelancer){
                             orderViewModel.getOrders()
                         }else{
+                            orderViewModel.getOrdersByCostumer()
                             fetchFreelancers(Session.token)
                         }
-                        _loggedInUser.postValue(user)
                         proposalViewModel.getUserProposals(Session.token)
                         subCategoriesViewModel.getSubCategories()
                         Session.updateUser(user) // Atualiza os dados na Session

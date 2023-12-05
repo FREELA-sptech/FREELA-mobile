@@ -9,7 +9,7 @@
     <color name="color05">#8B8C89</color>
     <color name="black">#000000</color>
 
-
+    <color name="transparentColor">#00FFFFFF</color>
     <color name="textprimary">#1D1D1D</color>
     <color name="textsecondary">#4F535A</color>
 

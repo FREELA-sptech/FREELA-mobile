@@ -8,12 +8,50 @@
     android:orientation="vertical"
     tools:context=".view.Login">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:background="@color/color01"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnreturn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:src="@drawable/freela"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="Cadastro"
+                    android:textAlignment="center"
+                    android:textSize="22dp"
+                    app:tint="@color/white" />
+            </androidx.appcompat.widget.Toolbar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_below="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="100dp"
         android:layout_marginBottom="-38dp"
         android:paddingBottom="38dp"
         app:cardBackgroundColor="@color/backgroundprimary"

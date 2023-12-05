@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.example.freela.api.AuthService
 import com.example.freela.api.ProposalsService
+import com.example.freela.databinding.ActivityIntroBinding
 import com.example.freela.databinding.ActivityLoginBinding
 import com.example.freela.model.Session
 import com.example.freela.model.User
@@ -49,13 +52,12 @@ class Login : AppCompatActivity() {
             }
         }
 
-        Session.userLiveData.observe(this, Observer<User?> { user ->
-            user?.let {
-                val home = Intent(this, BaseAuthenticatedActivity::class.java)
-                startActivity(home)
-                finish()
-            }
-        })
+        binding.btnreturn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -68,7 +70,46 @@ class Login : AppCompatActivity() {
         binding.entrar.isEnabled = false
         binding.entrar.setTextColor(Color.parseColor("#274C77"))
 
+        var loginAttempted = true // Defina como true antes de fazer a chamada do login
+
         val loginRequest = LoginRequest(email, password)
-        userViewModel.loginUser(loginRequest)
+        val loginResultLiveData = userViewModel.loginUser(loginRequest)
+
+        loginResultLiveData.observe(this) { loginSuccess ->
+            if (loginSuccess) {
+                Snackbar.make(binding.root, "Login feito com sucesso", Snackbar.LENGTH_SHORT).show()
+                loadHome()
+            } else {
+                showErrorDialog()
+            }
+
+            progressBar.visibility = View.GONE
+            binding.entrar.isEnabled = true
+            binding.entrar.setTextColor(Color.parseColor("#ffffff"))
+        }
     }
+
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Erro ao fazer login")
+        builder.setMessage("Usuario não encontrado")
+
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun loadHome(){
+        Session.userLiveData.observe(this, Observer<User?> { user ->
+            user?.let {
+                val home = Intent(this, BaseAuthenticatedActivity::class.java)
+                startActivity(home)
+                finish()
+            }
+        })
+    }
+
 }

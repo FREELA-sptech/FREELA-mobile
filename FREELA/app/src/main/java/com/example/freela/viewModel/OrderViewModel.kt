@@ -45,6 +45,28 @@ class OrderViewModel(private val orderService: OrderService) : ViewModel(){
             }
         })
     }
+    fun getOrdersByCostumer() {
+        orderService.getOrdersByCostumer("Bearer ${Session.token}").enqueue(object : Callback<List<Order>> {
+            override fun onResponse(call: Call<List<Order>>, response: Response<List<Order>>) {
+                if (response.isSuccessful) {
+                    val orders = response.body()
+                    orders?.let {
+                        _orders.value = it
+                        Log.i("Orders", response.toString())
+                        Session.updateOrderList(orders)
+                    }
+                } else {
+                    Log.i("Orders", response.toString())
+                    Log.i("Token", Session.token.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<Order>>, t: Throwable) {
+                Log.i("Orders", t.message.toString())
+            }
+        })
+    }
+
     fun createOrder(order: OrderRequest) {
         orderService.createOrder("Bearer ${Session.token}",order).enqueue(object : Callback<Order> {
             override fun onResponse(call: Call<Order>, response: Response<Order>) {

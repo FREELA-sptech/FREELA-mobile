@@ -16,22 +16,32 @@ import com.example.freela.model.Order
 import com.example.freela.view.UserDetailsActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import android.util.Base64
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.freela.model.Proposals
+import com.example.freela.model.Session
 import com.example.freela.model.Session.user
 import java.io.ByteArrayInputStream
 
 class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerView.Adapter<ProposalAdapter.ProposalViewHolder>() {
-    var onItemClick : ((Proposals) -> Unit)? = null
+    var onItemClick : ((Proposals, String) -> Unit)? = null
     inner class ProposalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val textTitleUser: TextView = itemView.findViewById(R.id.user)
         private val textPrize: TextView = itemView.findViewById(R.id.prize)
         private val textDeadline: TextView = itemView.findViewById(R.id.deadlineValue)
         private val txtIcon: TextView = itemView.findViewById(R.id.userDetailsWithoutPhoto)
+        private val action: ConstraintLayout = itemView.findViewById(R.id.action)
 
         fun bind(proposals: Proposals) {
-            textTitleUser.text = proposals.user?.name
+            if(proposals.user?.name == Session.user?.name){
+                textTitleUser.text = proposals.order?.title
+            }else{
+                textTitleUser.text = proposals.user?.name
+                action.visibility = View.GONE
+            }
             textPrize.text = "R$${proposals.value}"
             textDeadline.text = proposals.deadline
+
             if (proposals.user?.photo == "") {
                 txtIcon.text = proposals.user?.name?.first().toString()
                 txtIcon.background = itemView.oval(Color.parseColor("#274C77"))
@@ -45,6 +55,7 @@ class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerV
                     userDetailsImageView?.setImageBitmap(bitmap)
                 }
             }
+
         }
     }
 
@@ -58,8 +69,13 @@ class ProposalAdapter(private val proposals: MutableList<Proposals>) : RecyclerV
     override fun onBindViewHolder(holder: ProposalViewHolder, position: Int) {
         holder.bind(proposals[position])
         holder.itemView.setOnClickListener{
-            onItemClick?.invoke(proposals[position])
+            onItemClick?.invoke(proposals[position], "itemClick")
         }
+
+        holder.itemView.findViewById<ConstraintLayout>(R.id.action).setOnClickListener{
+            onItemClick?.invoke(proposals[position], "actionClick")
+        }
+
     }
 }
 

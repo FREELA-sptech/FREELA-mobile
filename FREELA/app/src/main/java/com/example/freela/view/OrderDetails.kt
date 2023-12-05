@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.freela.R
@@ -21,6 +23,7 @@ import com.example.freela.api.OrderService
 import com.example.freela.api.ProposalsService
 import com.example.freela.databinding.ActivityOrderDetailsBinding
 import com.example.freela.model.Order
+import com.example.freela.model.Proposals
 import com.example.freela.model.Session
 import com.example.freela.model.dto.request.ProposalRequest
 import com.example.freela.network.RetrofitClient
@@ -28,6 +31,7 @@ import com.example.freela.util.helpers.Helpers
 import com.example.freela.viewModel.OrderViewModel
 import com.example.freela.viewModel.ProposalViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.textfield.TextInputEditText
@@ -131,10 +135,15 @@ class OrderDetails : AppCompatActivity() {
 
             if(!user.isFreelancer){
                 binding.createProposal.visibility = View.GONE
+                binding.action.visibility = View.GONE
             }
 
             if(user.id == orderDetails.user?.id){
                 Log.i("Esse é o dono", "Dahora legal")
+
+                binding.action.setOnClickListener {
+                    showDialogActions(orderDetails)
+                }
                 binding.createProposal.visibility = View.GONE
                 binding.tabLayout.visibility = View.VISIBLE
                 binding.viewPager.visibility = View.VISIBLE
@@ -157,6 +166,7 @@ class OrderDetails : AppCompatActivity() {
                     }
                 })
             }else{
+                binding.action.visibility = View.GONE
                 binding.createProposal.visibility = View.VISIBLE
             }
         }
@@ -171,5 +181,46 @@ class OrderDetails : AppCompatActivity() {
         }
     }
 
+    private fun showDialogActions(order: Order) {
+        val dialog = Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.actions_proposals)
+        val close = dialog.findViewById<ImageView>(R.id.close)
+        val edit = dialog.findViewById<RelativeLayout>(R.id.editar)
+        val delete = dialog.findViewById<RelativeLayout>(R.id.delete)
+        val details = dialog.findViewById<RelativeLayout>(R.id.details)
 
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        details.visibility = View.GONE
+
+        edit.setOnClickListener {
+            dialog.dismiss()
+            Snackbar.make(binding.root, "Editar", Snackbar.LENGTH_SHORT).show()
+        }
+
+        delete.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Tem certeza de que deseja excluir a proposta?")
+                .setCancelable(false)
+                .setPositiveButton("Sim") { _, _ ->
+//                    orderViewModel.deleteOrder(order.id)
+                    Snackbar.make(binding.root, "Proposta deletada com sucesso", Snackbar.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Não") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+        }
+
+        dialog.show();
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
+
+    }
 }

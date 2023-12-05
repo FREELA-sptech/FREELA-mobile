@@ -20,7 +20,10 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
+import com.example.freela.adapters.ListSubCategoryAdapter
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityUserDetailsBinding
 import com.example.freela.model.Session
@@ -40,12 +43,14 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private lateinit var userDetails: User
     private lateinit var userViewModel: UserViewModel
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val userService = RetrofitClient.getInstance().create(AuthService::class.java)
         val user = Session.user
+        val recyclerView = binding.recyclerViewSubcategories
         userViewModel = UserViewModel(userService)
 
         binding.btnreturn.setOnClickListener {
@@ -66,22 +71,33 @@ class UserDetailsActivity : AppCompatActivity() {
 
         user?.let {
             binding.textView2.text = user.name
+            val subCategories = user.subCategories
+            recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = ListSubCategoryAdapter(subCategories)
 
             if (user.isFreelancer) {
+                binding.description2.text = "Autônomo"
                 binding.textDescription.text = user.description
                 binding.proposals.visibility = View.VISIBLE
                 binding.orders.visibility = View.GONE
                 binding.proposals.setOnClickListener {
-                    val intent = Intent(this, EditUser::class.java)
+                    val intent = Intent(this, Proposals::class.java)
                     startActivity(intent)
                     finish()
                 }
             } else {
+                binding.description2.text = "Cliente"
                 binding.proposals.visibility = View.GONE
                 binding.orders.visibility = View.VISIBLE
                 binding.titleAbout.visibility = View.GONE
                 binding.textDescription.visibility = View.GONE
+                binding.orders.setOnClickListener {
+                    val intent = Intent(this, Orders::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
+
             if (user.photo == "") {
                 binding.imgWithoutImage.text = user.name.first().toString()
             }else{
@@ -93,12 +109,16 @@ class UserDetailsActivity : AppCompatActivity() {
                 userDetailsImageView.setImageBitmap(bitmap)
                 userDetailsImageView.setOnClickListener {
                     showDialog()
-                }            }
+                }
+            }
+
             if (user.city == "" && user.uf == "") {
                 binding.textCity.text = "Sem registro"
             } else {
                 binding.textCity.text = "${user.city} / ${user.uf}"
             }
+
+
         }
     }
 
@@ -129,7 +149,6 @@ class UserDetailsActivity : AppCompatActivity() {
 
         close.setOnClickListener {
             dialog.dismiss()
-            Toast.makeText(this, "Selecionar Imagem", Toast.LENGTH_SHORT).show()
         }
 
         uploadImage.setOnClickListener {

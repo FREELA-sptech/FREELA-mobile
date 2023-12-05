@@ -75,10 +75,12 @@ class activity_register_secund : AppCompatActivity() {
         })
 
         binding.btnNext.setOnClickListener {
+            val cardSelected = intent.getStringExtra("type")
             val selectedSubCategoryIds: List<Int> = selectedSubCategories.map { it.id }.distinct()
             if (selectedSubCategoryIds.isNotEmpty()) {
                 val intent = Intent(this, activity_register_third::class.java)
                 intent.putExtra("subCategoriesIds", selectedSubCategoryIds.toIntArray())
+                intent.putExtra("type", cardSelected)
                 startActivity(intent)
             } else {
 

@@ -14,6 +14,9 @@ interface OrderService {
     @GET("/orders")
     fun getOrders(@Header("Authorization") token: String): Call<List<Order>>
 
+    @GET("/orders/user")
+    fun getOrdersByCostumer(@Header("Authorization") token: String): Call<List<Order>>
+
     @GET("/orders/{orderId}")
     fun getOrderDetails(
         @Header("Authorization") token: String,
