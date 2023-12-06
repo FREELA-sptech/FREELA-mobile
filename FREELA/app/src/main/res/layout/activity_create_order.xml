@@ -8,186 +8,226 @@
     android:orientation="vertical"
     tools:context=".view.CreateOrder">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/btnreturn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/baseline_arrow_back_24"
-                    app:layout_constraintEnd_toStartOf="@+id/textView"
-                    app:tint="@color/textprimary" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:textSize="22dp"
-                    style="@style/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:text="Criar pedido"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toTopOf="@+id/recyclerMain"
-                    />
-            </androidx.appcompat.widget.Toolbar>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <TextView
-        android:layout_below="@+id/appBar"
-        android:id="@+id/titleForm"
-        style="@style/title"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="2sp"
-        android:text="Insira os dados "
-        android:textSize="22dp"
-        android:layout_marginStart="16dp"/>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleForm"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="-38dp"
-        android:paddingBottom="38dp"
-        app:cardBackgroundColor="@color/backgroundprimary"
-        app:cardCornerRadius="28dp">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="581dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="36dp"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="28dp">
-
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/textsecondary"
-                app:boxStrokeColor="@color/textsecondary"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/error"
-                app:hintAnimationEnabled="true"
-                app:hintTextColor="@color/textsecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/title"
+                android:layout_height="match_parent">
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Titulo"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/textprimary" />
+                    android:background="@color/white"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/textsecondary"
-                app:boxStrokeColor="@color/textsecondary"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/error"
-                app:hintAnimationEnabled="true"
-                app:hintTextColor="@color/textsecondary">
+                        <androidx.appcompat.widget.Toolbar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/description"
+                            <ImageView
+                                android:id="@+id/btnreturn"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/baseline_arrow_back_24"
+                                app:layout_constraintEnd_toStartOf="@+id/textView"
+                                app:tint="@color/textprimary" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:textSize="22dp"
+                                style="@style/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="28dp"
+                                android:text="Criar pedido"
+                                android:textAlignment="center"
+                                app:layout_constraintBottom_toTopOf="@+id/recyclerMain"
+                                />
+                        </androidx.appcompat.widget.Toolbar>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <TextView
+                    android:layout_below="@+id/appBar"
+                    android:id="@+id/titleForm"
+                    style="@style/title"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="2sp"
+                    android:text="Insira os dados "
+                    android:textSize="22dp"
+                    android:layout_marginStart="16dp"/>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Descrição"
-                    android:inputType="textLongMessage"
-                    android:maxLines="2"
-                    android:textColor="@color/textprimary"
-                    android:textColorHint="@color/textsecondary" />
+                    android:layout_below="@+id/titleForm"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="28dp"
+                    android:paddingBottom="38dp"
+                    app:cardBackgroundColor="@color/backgroundprimary"
+                    app:cardCornerRadius="28dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="36dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="28dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/textsecondary"
-                app:boxStrokeColor="@color/textsecondary"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/error"
-                app:hintAnimationEnabled="true"
-                app:hintTextColor="@color/textsecondary">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="16dp"
+                            android:text="Carregar Imagens:"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/deadline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Prazo"
-                    android:inputType="date"
-                    android:maxLines="1"
-                    android:textColor="@color/textprimary"
-                    android:textColorHint="@color/textsecondary" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:id="@+id/chooseImage"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="@color/primary90"
+                                android:layout_marginBottom="16dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/baseline_add_photo_alternate_24" />
+                            </RelativeLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/textsecondary"
-                app:boxStrokeColor="@color/textsecondary"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/error"
-                app:hintAnimationEnabled="true"
-                app:hintTextColor="@color/textsecondary">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/imgView"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />
+                        </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Valor"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:textColor="@color/textprimary"
-                    android:textColorHint="@color/textsecondary" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/textsecondary"
+                            app:boxStrokeColor="@color/textsecondary"
+                            app:errorEnabled="true"
+                            app:errorTextColor="@color/error"
+                            app:hintAnimationEnabled="true"
+                            app:hintTextColor="@color/textsecondary">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Titulo"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:textColor="@color/textprimary" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/createOrder"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="28dp"
-                android:text="Enviar"
-                app:cornerRadius="32dp" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/textsecondary"
+                            app:boxStrokeColor="@color/textsecondary"
+                            app:errorEnabled="true"
+                            app:errorTextColor="@color/error"
+                            app:hintAnimationEnabled="true"
+                            app:hintTextColor="@color/textsecondary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Descrição"
+                                android:inputType="textLongMessage"
+                                android:maxLines="2"
+                                android:textColor="@color/textprimary"
+                                android:textColorHint="@color/textsecondary" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/textsecondary"
+                            app:boxStrokeColor="@color/textsecondary"
+                            app:errorEnabled="true"
+                            app:errorTextColor="@color/error"
+                            app:hintAnimationEnabled="true"
+                            app:hintTextColor="@color/textsecondary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/deadline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Prazo"
+                                android:inputType="date"
+                                android:maxLines="1"
+                                android:textColor="@color/textprimary"
+                                android:textColorHint="@color/textsecondary" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/textsecondary"
+                            app:boxStrokeColor="@color/textsecondary"
+                            app:errorEnabled="true"
+                            app:errorTextColor="@color/error"
+                            app:hintAnimationEnabled="true"
+                            app:hintTextColor="@color/textsecondary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/value"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Valor"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:textColor="@color/textprimary"
+                                android:textColorHint="@color/textsecondary" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/createOrder"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="28dp"
+                            android:text="Enviar"
+                            app:cornerRadius="32dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 </RelativeLayout>
