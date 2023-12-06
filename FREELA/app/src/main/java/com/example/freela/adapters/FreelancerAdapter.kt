@@ -7,16 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
 import com.example.freela.model.Order
+import com.example.freela.model.Proposals
 import com.example.freela.model.User
+import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayInputStream
 
 class FreelancerAdapter(private val freelancers: List<User>) : RecyclerView.Adapter<FreelancerAdapter.FreelancerViewHolder>() {
-    var onItemClick : ((User) -> Unit)? = null
+    var onItemClick : ((User, String) -> Unit)? = null
 
     inner class FreelancerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val textTitleUser: TextView = itemView.findViewById(R.id.user)
@@ -57,7 +60,11 @@ class FreelancerAdapter(private val freelancers: List<User>) : RecyclerView.Adap
     override fun onBindViewHolder(holder: FreelancerViewHolder, position: Int) {
         holder.bind(freelancers[position])
         holder.itemView.setOnClickListener{
-            onItemClick?.invoke(freelancers[position])
+            onItemClick?.invoke(freelancers[position], "itemClick")
+        }
+
+        holder.itemView.findViewById<MaterialButton>(R.id.chat).setOnClickListener{
+            onItemClick?.invoke(freelancers[position], "actionClick")
         }
     }
 
