@@ -3,10 +3,14 @@ package com.example.freela.view
 import MyViewAdapter
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -14,11 +18,15 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.freela.R
 import com.example.freela.adapters.CarouselAdapter
+import com.example.freela.adapters.ListSubCategoryAdapter
+import com.example.freela.adapters.oval
 import com.example.freela.api.OrderService
 import com.example.freela.api.ProposalsService
 import com.example.freela.databinding.ActivityOrderDetailsBinding
@@ -35,6 +43,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.textfield.TextInputEditText
+import de.hdodenhof.circleimageview.CircleImageView
+import java.io.ByteArrayInputStream
 
 class OrderDetails : AppCompatActivity() {
     private val binding by lazy {
@@ -121,8 +131,25 @@ class OrderDetails : AppCompatActivity() {
         binding.container.visibility = View.VISIBLE
         binding.loading.visibility = View.GONE
         binding.title.text = orderDetails.title
+        binding.description.text = orderDetails.description
         binding.prize.text = "R$${orderDetails.value.toString()}"
-        binding.deadline.text = orderDetails.deadline
+        binding.deadlineValue.text = orderDetails.deadline
+        binding.user.text = orderDetails.user?.name
+
+        binding.recyclerViewSubcategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewSubcategories.adapter = orderDetails.subCategories?.let { ListSubCategoryAdapter(it) }
+
+        if (orderDetails.user?.photo == "") {
+            binding.userDetailsWithoutPhoto.text = orderDetails.user.name.first().toString()
+        }else{
+            binding.userDetailsWithoutPhoto.visibility = View.GONE
+            val userDetailsImageView = binding.userDetails
+            userDetailsImageView.visibility = View.VISIBLE
+            val byteArray = Base64.decode(orderDetails.user?.photo, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(byteArray))
+            userDetailsImageView.setImageBitmap(bitmap)
+        }
+
         val imageRV: RecyclerView = binding.imgView
         val imageAdapter = CarouselAdapter()
         val user = Session.user
@@ -135,7 +162,6 @@ class OrderDetails : AppCompatActivity() {
 
             if(!user.isFreelancer){
                 binding.createProposal.visibility = View.GONE
-                binding.action.visibility = View.GONE
             }
 
             if(user.id == orderDetails.user?.id){
@@ -223,4 +249,15 @@ class OrderDetails : AppCompatActivity() {
         dialog.window?.setGravity(Gravity.BOTTOM)
 
     }
+
+    fun View.oval(@ColorInt color: Int): ShapeDrawable? {
+        val oval = ShapeDrawable(OvalShape())
+        with(oval){
+            intrinsicHeight = height
+            intrinsicWidth = width
+            paint.color = color
+        }
+        return oval
+    }
+
 }

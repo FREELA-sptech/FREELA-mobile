@@ -50,7 +50,8 @@ class OrderProposalsFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
 
         order?.let {
-            proposalsAdapter = ProposalAdapter(it.proposals as MutableList<Proposals>)
+            val listaFiltrada = it.proposals?.filter { it.status == "OPEN" }
+            proposalsAdapter = ProposalAdapter(listaFiltrada as MutableList<Proposals>)
             recyclerView.adapter = proposalsAdapter
             recyclerView.layoutManager = LinearLayoutManager(view.context)
             proposalsAdapter.onItemClick = { proposals, clickType ->

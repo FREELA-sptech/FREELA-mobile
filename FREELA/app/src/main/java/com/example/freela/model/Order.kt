@@ -13,7 +13,8 @@ data class Order(
     val subCategories: List<SubCategory>?,
     val photos: List<Photo>?,
     val proposals: List<Proposals>?,
-    val isAccepted: Boolean
+    val isAccepted: Boolean,
+    val status: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -29,7 +30,8 @@ data class Order(
         mutableListOf<Proposals>().apply {
             parcel.readTypedList(this, Proposals.CREATOR)
         },
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -43,6 +45,7 @@ data class Order(
         parcel.writeTypedList(photos) // Escrevendo uma lista de objetos Parcelable de Photo
         parcel.writeTypedList(proposals) // Escrevendo uma lista de objetos Parcelable de Proposals
         parcel.writeByte(if (isAccepted) 1 else 0)
+        parcel.writeString(status)
     }
 
     override fun describeContents(): Int {

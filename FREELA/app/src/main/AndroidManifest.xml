@@ -16,10 +16,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateProposals"
+            android:exported="false" />
+        <activity
             android:name=".view.Orders"
             android:exported="false" />
         <activity
-            android:name=".view.Proposals"
+            android:name=".view.Proposal"
             android:exported="false" />
         <activity
             android:name=".view.UpdateCityUser"

@@ -19,7 +19,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
@@ -30,7 +29,6 @@ import com.example.freela.model.Session
 import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
 import com.example.freela.viewModel.UserViewModel
-import de.hdodenhof.circleimageview.CircleImageView
 import okhttp3.MultipartBody
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -81,7 +79,7 @@ class UserDetailsActivity : AppCompatActivity() {
                 binding.proposals.visibility = View.VISIBLE
                 binding.orders.visibility = View.GONE
                 binding.proposals.setOnClickListener {
-                    val intent = Intent(this, Proposals::class.java)
+                    val intent = Intent(this, Proposal::class.java)
                     startActivity(intent)
                     finish()
                 }

@@ -14,7 +14,8 @@ data class Proposals(
     val deadline: String,
     val destinedOrder: Int,
     val isAccepted: Boolean,
-    val isRefused: Boolean
+    val isRefused: Boolean,
+    val status: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -25,7 +26,8 @@ data class Proposals(
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -38,6 +40,7 @@ data class Proposals(
         parcel.writeInt(destinedOrder)
         parcel.writeByte(if (isAccepted) 1 else 0)
         parcel.writeByte(if (isRefused) 1 else 0)
+        parcel.writeString(status)
     }
 
     override fun describeContents(): Int {

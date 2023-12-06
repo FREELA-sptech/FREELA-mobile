@@ -51,7 +51,7 @@ class Orders : AppCompatActivity() {
         }
 
         binding.discoverFreelancers.setOnClickListener{
-            val intent = Intent(this, BaseAuthenticatedActivity::class.java)
+            val intent = Intent(this, CreateOrder::class.java)
             startActivity(intent);
         }
 
@@ -86,7 +86,8 @@ class Orders : AppCompatActivity() {
 
         details.setOnClickListener {
             dialog.dismiss()
-            val intent = Intent(this, Order::class.java)
+            val intent = Intent(this, OrderDetails::class.java)
+            intent.putExtra("orderId",order.id)
             startActivity(intent);
         }
 

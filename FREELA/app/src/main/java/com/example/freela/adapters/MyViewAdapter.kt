@@ -10,19 +10,26 @@ class MyViewAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(f
     private var order: Order? = null
 
     override fun getItemCount(): Int {
-        return 2
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                val fragment = OrderDetailsFragment()
+                val fragment = OrderProposalsFragment()
                 fragment.arguments = Bundle().apply {
                     putParcelable("order", order)
                 }
                 fragment
             }
             1 -> {
+                val fragment = OrderDetailsFragment()
+                fragment.arguments = Bundle().apply {
+                    putParcelable("order", order)
+                }
+                fragment
+            }
+            2 -> {
                 val fragment = OrderProposalsFragment()
                 fragment.arguments = Bundle().apply {
                     putParcelable("order", order)

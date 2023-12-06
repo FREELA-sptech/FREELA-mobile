@@ -7,19 +7,17 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
+import com.example.freela.UpdateProposals
 import com.example.freela.adapters.ProposalAdapter
-import com.example.freela.api.AuthService
 import com.example.freela.api.ProposalsService
 import com.example.freela.databinding.ActivityProposalsBinding
 import com.example.freela.model.Proposals
@@ -28,7 +26,7 @@ import com.example.freela.network.RetrofitClient
 import com.example.freela.viewModel.ProposalViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class Proposals : AppCompatActivity() {
+class Proposal : AppCompatActivity() {
     private val binding by lazy {
         ActivityProposalsBinding.inflate(layoutInflater)
     }
@@ -85,8 +83,11 @@ class Proposals : AppCompatActivity() {
         }
 
         edit.setOnClickListener {
+            finish()
             dialog.dismiss()
-            Snackbar.make(binding.root, "Editar", Snackbar.LENGTH_SHORT).show()
+            val intent = Intent(this, UpdateProposals::class.java)
+            intent.putExtra("proposal", proposals)
+            startActivity(intent);
         }
 
         delete.setOnClickListener {

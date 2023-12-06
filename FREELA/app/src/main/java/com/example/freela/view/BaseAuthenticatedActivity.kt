@@ -69,6 +69,10 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
 
     private fun removeToken() {
         Session.token = ""
+        Session.user = null
+        Session.proposals = null
+        Session.orders = null
+        Session.freelancers = null
     }
 
     private fun replaceFragment(fragment: Fragment) {

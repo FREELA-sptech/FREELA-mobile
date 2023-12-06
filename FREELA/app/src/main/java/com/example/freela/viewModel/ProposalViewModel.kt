@@ -42,32 +42,61 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
         })
     }
 
-    fun deleteProposal(proposalId: Int) {
+    fun deleteProposal(proposalId: Int): LiveData<Boolean>{
         val userViewModel = UserViewModel(RetrofitClient.getInstance().create(AuthService::class.java))
+        val success = MutableLiveData<Boolean>()
 
         proposalsService.deleteProposal("Bearer ${Session.token}",proposalId).enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
                     Log.i("Sucesso", response.toString())
                     userViewModel.getUserDetails(Session.token)
+                    success.postValue(true)
                 } else {
                     Log.i("Erro", response.toString())
                     _proposalError.value = "Erro ao excluir proposta"
+                    success.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<Unit>, t: Throwable) {
-                TODO("Not yet implemented")
+                success.postValue(false)
             }
         })
+
+        return success
     }
 
-    fun editProposal(proposalId: Int) {
-        // Implemente a lógica para editar uma proposta usando o método do serviço
+    fun editProposal(proposalId: Int, updatedProposal: ProposalRequest): LiveData<Boolean> {
+        val userViewModel = UserViewModel(RetrofitClient.getInstance().create(AuthService::class.java))
+        val success = MutableLiveData<Boolean>()
+
+        proposalsService.editProposal("Bearer ${Session.token}", proposalId.toString(), updatedProposal)
+            .enqueue(object : Callback<Unit> {
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                    if (response.isSuccessful) {
+                        userViewModel.getUserDetails(Session.token)
+                        getUserProposals(Session.token)
+                        Log.i("Sucesso", response.toString())
+                        success.postValue(true)
+                    } else {
+                        Log.i("Erro", response.toString())
+                        _proposalError.value = "Erro ao editar proposta"
+                        success.postValue(false)
+                    }
+                }
+
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                    Log.e("EDIT PROPOSAL", t.message.toString())
+                    success.postValue(false)
+                }
+            })
+
+        return success
     }
 
     fun editProposalStatus(proposalId: Int) {
-        // Implemente a lógica para editar o status de uma proposta usando o método do serviço
+
     }
 
     fun getUserProposals(token: String) {
@@ -90,7 +119,6 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
 
             override fun onFailure(call: Call<List<Proposals>>, t: Throwable) {
                 Log.e("YourApiService", "getUserProposals: Request failed", t)
-                // Lidar com falha na requisição à API
             }
         })
     }

@@ -13,8 +13,8 @@
         android:id="@+id/loading">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,144 +22,260 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/container"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imgView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnReturn"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="24dp"
-            android:background="@drawable/background_oval_1"
-            android:backgroundTint="#AE274C77"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_keyboard_backspace_24" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/action"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#AE274C77"
-            android:background="@drawable/background_oval_1"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_more_vert_24"
-                app:tint="@color/white" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/titleAndPrize"
-            android:layout_below="@+id/imgView"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="24dp">
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/title"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/prize"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Order" />
-            <TextView
-                android:id="@+id/prize"
-                style="@style/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="R$ 300,00"
-                android:textStyle="bold"
-                android:textColor="@color/color01" />
-            <TextView
-                android:id="@+id/deadline"
-                android:textSize="15sp"
-                android:layout_below="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Criado por"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/textsecondary" />
-
-        </RelativeLayout>
-            <com.google.android.material.tabs.TabLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/titleAndPrize"
-                android:background="@color/backgroundprimary"
-                android:id="@+id/tabLayout">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Detalhes"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Propostas"/>
-
-            </com.google.android.material.tabs.TabLayout>
-            <androidx.viewpager2.widget.ViewPager2
-                android:visibility="gone"
+            <RelativeLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/viewPager"
-                android:layout_below="@+id/tabLayout"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:cardBackgroundColor="@color/white"
-            android:paddingVertical="12dp"
-            android:paddingHorizontal="24dp"
-            >
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/createProposal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Fazer Proposta"
-                android:layout_marginHorizontal="24dp"
-                app:cornerRadius="32dp" />
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+                android:visibility="gone">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnReturn"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/background_oval_1"
+                    android:backgroundTint="#AE274C77"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/baseline_keyboard_backspace_24" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/action"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/background_oval_1"
+                    android:backgroundTint="#AE274C77"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/baseline_more_vert_24"
+                        app:tint="@color/white" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/titleAndPrize"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/imgView"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        android:textSize="24sp"
+                        android:id="@+id/title"
+                        style="@style/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Order"
+                        android:textStyle="bold"
+                        android:layout_marginVertical="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_marginVertical="16dp"
+                        android:id="@id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:textColor="@color/textsecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title"
+                        tools:ignore="MissingConstraints" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/description"
+                        tools:ignore="MissingConstraints">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/userDetails"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:elevation="1dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/userDetailsWithoutPhoto"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/background_oval_1"
+                            android:elevation="1dp"
+                            android:gravity="center"
+                            android:text="U"
+                            android:textColor="@color/backgroundprimary"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/user"
+                            style="@style/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Usuario"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                        android:id="@+id/recycler_view_subcategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/list_subcategories_item" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/recycler_view_subcategories"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/titlePrize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Orçamento:"
+                            android:textColor="@color/textsecondary"
+                            app:layout_constraintTop_toBottomOf="@+id/titleOrder"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/prize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="R$ 130,00"
+                            android:textColor="@color/textprimary"
+                            android:textSize="18dp"
+                            app:layout_constraintTop_toBottomOf="@+id/titlePrize"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/titleDeadline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Prazo:"
+                            android:textColor="@color/textsecondary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/titleOrder"
+                            tools:ignore="UnknownIdInLayout" />
+
+                        <TextView
+                            android:id="@+id/deadlineValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="2023/03/03"
+                            android:textColor="@color/textprimary"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/titleDeadline" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleAndPrize"
+                    android:background="@color/backgroundprimary"
+                    android:id="@+id/tabLayout">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pendentes"/>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Aprovada"/>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recusadas"/>
+
+                </com.google.android.material.tabs.TabLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/viewPager"
+                    android:layout_below="@+id/tabLayout"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="16dp"
+                    android:layout_below="@+id/titleAndPrize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="12dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/createProposal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginHorizontal="24dp"
+                        android:text="Fazer proposta"
+                        app:cornerRadius="32dp" />
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>
