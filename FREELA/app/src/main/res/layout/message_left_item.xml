@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp"
     tools:context=".MessageItemActivity">
 
     <TextView
@@ -18,4 +19,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.005"
         tools:text="Mensagem recebida aqui" />
+
+    <TextView
+        android:id="@+id/textMessageRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/background_message_right"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.005"
+        tools:text="Sua mensagem aqui" />
 </androidx.constraintlayout.widget.ConstraintLayout>

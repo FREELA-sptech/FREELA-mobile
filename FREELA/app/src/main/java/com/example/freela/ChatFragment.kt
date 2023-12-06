@@ -160,6 +160,24 @@
                     chatAdapter.onItemClick = { chat ->
                         val intent = Intent(view?.context, com.example.freela.view.Chat::class.java)
                         intent.putExtra("chatId", chat.id)
+
+                        var photo = ""
+                        var name = ""
+
+                        var user = Session.user
+
+                        if (user != null) {
+                            if (user.isFreelancer) {
+                                photo = chat.userId.photo
+                                name = chat.userId.name
+                            } else {
+                                photo = chat.freelancerId.photo
+                                name = chat.freelancerId.name
+                            }
+                        }
+
+                        intent.putExtra("photo", photo)
+                        intent.putExtra("name", name)
                         startActivity(intent)
                     }
                 }
