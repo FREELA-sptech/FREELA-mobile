@@ -1,11 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundprimary"
     tools:context=".view.OrderDetails">
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/color01"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tatoou"
+        />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnReturn"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/background_oval_1"
+        android:backgroundTint="#AE274C77"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_keyboard_backspace_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleAndPrize"
+        android:layout_below="@+id/imgView"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="24dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/title"
+            style="@style/title"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/prize"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order" />
+        <TextView
+            android:id="@+id/prize"
+            style="@style/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="R$ 300,00"
+            android:textStyle="bold"
+            android:textColor="@color/color01" />
+        <TextView
+            android:id="@+id/deadline"
+            android:textSize="15sp"
+            android:layout_below="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Criado por"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/textsecondary" />
+
+    </RelativeLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleAndPrize"
+        android:background="@color/white"
+        android:id="@+id/tab_layout">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalhes"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Propostas"/>
+
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"
+        android:layout_below="@+id/tab_layout"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="@color/white"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="24dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createProposal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Fazer Proposta"
+            android:layout_marginHorizontal="24dp"
+            app:cornerRadius="32dp" />
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

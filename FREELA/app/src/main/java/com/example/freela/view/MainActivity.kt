@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val preferences = getSharedPreferences("AUTH", MODE_PRIVATE)
         val token = preferences.getString("TOKEN", null)
 
-        if (token != null) {
+        if (token != "") {
             val redirect = Intent(this, BaseAuthenticatedActivity::class.java)
             startActivity(redirect)
         }

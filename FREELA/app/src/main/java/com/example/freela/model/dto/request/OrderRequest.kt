@@ -1,6 +1,6 @@
 package com.example.freela.model.dto.request
 
-data class OrderRequest (
+data class OrderRequest(
     val description: String,
     val title: String,
     val value: Float,

@@ -6,7 +6,7 @@
     android:background="@color/color01"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CreateOrder">
+    tools:context=".view.CreateOrder">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,6 +33,7 @@
             android:layout_height="42dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
+            android:backgroundTint="#AE274C77"
             android:background="@drawable/background_oval_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -81,11 +82,11 @@
                 app:hintTextColor="@color/textsecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Titulo"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@color/textprimary" />
 
@@ -107,8 +108,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Descrição"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
+                    android:inputType="textLongMessage"
+                    android:maxLines="2"
                     android:textColor="@color/textprimary"
                     android:textColorHint="@color/textsecondary" />
 
@@ -168,7 +169,7 @@
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/entrar"
+                android:id="@+id/createOrder"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="28dp"

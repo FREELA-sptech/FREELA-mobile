@@ -13,6 +13,7 @@ import com.example.freela.HomeFragment
 import com.example.freela.OrdersFragment
 import com.example.freela.R
 import com.example.freela.databinding.ActivityBaseAuthenticatedBinding
+import com.example.freela.model.Session
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BaseAuthenticatedActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
                     replaceFragment(HomeFragment())
                     true
                 }
-                R.id.menu_orders -> {
+                R.id.menu_search -> {
                     replaceFragment(OrdersFragment())
                     true
                 }
@@ -44,10 +45,9 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
             }
         }
 
-        val preferences = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val token = preferences.getString("TOKEN", null)
+        val token = Session.token
 
-        if (token == null ) {
+        if (token == "") {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
@@ -69,11 +69,7 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
     }
 
     private fun removeToken() {
-        // Lógica para remover o token (exemplo)
-        val preferences = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val editor = preferences.edit()
-        editor.remove("TOKEN")
-        editor.apply()
+        Session.token = ""
     }
 
     private fun replaceFragment(fragment: Fragment){

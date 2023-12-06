@@ -40,7 +40,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textprimary</item>
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="label" parent="Base.Theme.FREELA">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textprimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="check_box" parent="Base.Theme.FREELA">
         <item name="android:layout_width">wrap_content</item>

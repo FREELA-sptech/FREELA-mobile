@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.freela.R
+import com.example.freela.SuccessActivity
 import com.example.freela.api.AuthService
 import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.model.User
@@ -17,6 +18,7 @@ import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
+import com.example.freela.util.helpers.Helpers
 import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,85 +32,69 @@ class activity_register_third : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val helpers = Helpers();
 
         binding.btnreturn.setOnClickListener {
             onBackPressed()
         }
 
         binding.register.setOnClickListener {
-            if (isInputValid()) {
+            val inputFields = listOf<TextInputEditText>(
+                binding.name,
+                binding.email,
+                binding.password
+            )
+
+            if (helpers.isInputValid(inputFields)) {
+                val redirect = Intent(this, SuccessActivity::class.java)
+                val intent = Intent(this, Login::class.java)
+                redirect.putExtra("action","Cadastro")
+                redirect.putExtra("message","Cadastro de usuario realizado com sucesso!")
+                redirect.putExtra("redirect",intent)
                 performRegistration()
+                startActivity(redirect)
+                finish()
             }
         }
 
-        binding.btnreturn.setOnClickListener {
-            val intent = Intent(this, activity_register_secund::class.java)
-            startActivity(intent)
-        }
-
-        binding.redirect.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-        }
-
-    }
-    private fun isInputValid(): Boolean {
-        val inputFields = listOf<TextInputEditText>(
-            binding.user,
-            binding.name,
-            binding.email,
-            binding.cpf,
-            binding.password
-        )
-
-        var isValid = true
-
-        for (inputText in inputFields) {
-            if (inputText != null && inputText.text.isNullOrBlank()) {
-                inputText.error = "Campo obrigatório"
-                isValid = false
-            } else {
-                inputText.error = null
-            }
-        }
-
-        return isValid
     }
 
     private fun performRegistration() {
         val cardSelected = intent.getStringExtra("type")
-        val listaDeIDs: List<Int> = listOf(1, 2, 3, 4, 5)
-        val usuario = binding.user?.text.toString()
+        val subCategoriesIds = intent.getIntArrayExtra("subCategoriesIds")
+        val subCategoriesIdsList = subCategoriesIds?.toList()
         val nome = binding.name?.text.toString()
         val email = binding.email?.text.toString()
-        val cpf = binding.cpf?.text.toString()
         val senha = binding.password?.text.toString()
         val type = cardSelected == "Autônomo"
 
-        val userRequest = RegisterRequest(
-            nome,email,senha,listaDeIDs,"","",type,"001"
-        )
+        val userRequest = subCategoriesIdsList?.let {
+            RegisterRequest(
+                nome,email,senha, it,"","",type
+            )
+        }
 
-        RetrofitClient.getInstance()
-            .create(AuthService::class.java)
-            .register(userRequest)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(baseContext, "Registro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                        onBackPressed()
-                    } else {
-                        Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+        if (userRequest != null) {
+            RetrofitClient.getInstance()
+                .create(AuthService::class.java)
+                .register(userRequest)
+                .enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(baseContext, "Registro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
-                    Log.e("ERRO NA API",t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Toast.makeText(baseContext, "Falha no registro. Tente novamente.", Toast.LENGTH_SHORT).show()
+                        Log.e("ERRO NA API",t.message.toString())
+                    }
+                })
+        }
     }
 }

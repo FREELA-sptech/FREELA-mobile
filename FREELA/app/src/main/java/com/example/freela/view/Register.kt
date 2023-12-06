@@ -1,6 +1,7 @@
 package com.example.freela.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,25 +25,24 @@ class Register : AppCompatActivity() {
             selectedCard = "Autônomo"
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.setBackgroundColor(resources.getColor(R.color.submitBtnColor))
+            redirectActivity(selectedCard)
         }
 
         binding.clienteCard.setOnClickListener {
             selectedCard = "Cliente"
             binding.clienteCard.setCardBackgroundColor(resources.getColor(R.color.selectedCardColor))
             binding.autonomoCard.setCardBackgroundColor(resources.getColor(R.color.defaultCardColor))
-            binding.btnNext.setBackgroundColor(resources.getColor(R.color.submitBtnColor))
-        }
-
-        binding.btnNext.setOnClickListener {
-            val intent = Intent(this, activity_register_secund::class.java)
-            intent.putExtra("type", selectedCard)
-            startActivity(intent)
+            redirectActivity(selectedCard)
         }
 
         binding.btnreturn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+    private fun redirectActivity(selectedCard: String){
+        val intent = Intent(this, activity_register_secund::class.java)
+        intent.putExtra("type", selectedCard)
+        startActivity(intent)
     }
 }

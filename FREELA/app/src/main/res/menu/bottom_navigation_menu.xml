@@ -6,9 +6,9 @@
         android:title="@string/menu_home"
         />
     <item
-        android:id="@+id/menu_orders"
+        android:id="@+id/menu_search"
         android:icon="@drawable/border_all"
-        android:title="@string/menu_pedidos"/>
+        android:title="Buscar"/>
     <item
         android:id="@+id/menu_chat"
         android:icon="@drawable/chat_bubble"
