@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
@@ -21,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.adapters.ChatAdapter
 import com.example.freela.api.ChatService
 import com.example.freela.api.OrderService
+import com.example.freela.model.Chat
 import com.example.freela.model.Session
+import com.example.freela.model.SubCategory
 import com.example.freela.network.RetrofitClient
 import com.example.freela.view.CreateOrder
 import com.example.freela.view.UserDetailsActivity
@@ -30,10 +34,14 @@ import com.example.freela.viewModel.OrderViewModel
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayInputStream
+import java.util.Locale
+
 class ChatFragment : Fragment() {
 
     private lateinit var chatViewModel: ChatViewModel
     private lateinit var recyclerViewChats: RecyclerView
+    private lateinit var chatAdapter: ChatAdapter
+    private lateinit var chat: List<Chat>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +58,9 @@ class ChatFragment : Fragment() {
         val textView = view.findViewById<TextView>(R.id.hello)
         val txtIcon = view.findViewById<TextView>(R.id.userDetailsWithoutPhoto)
         val message = view.findViewById<TextView>(R.id.subTitle)
+        val noContext = view.findViewById<ConstraintLayout>(R.id.noContent)
+        val search = view.findViewById<SearchView>(R.id.search)
+
         recyclerViewChats = view.findViewById(R.id.recyclerViewChats)
 
         val user = Session.user
@@ -76,7 +87,6 @@ class ChatFragment : Fragment() {
         chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
 
             if (chats.isNullOrEmpty()) {
-                // Se não houver chats, mostrar mensagem e ocultar RecyclerView
                 message.text = if (user?.isFreelancer == true) {
                     view.context.getText(R.string.messageChatFreelancer)
                 } else {
@@ -84,12 +94,13 @@ class ChatFragment : Fragment() {
                 }
                 recyclerViewChats.visibility = View.GONE
             } else {
-                // Se houver chats, mostrar RecyclerView e ocultar mensagem
+                chat = chats
+                noContext.visibility = View.GONE
                 recyclerViewChats.visibility = View.VISIBLE
                 message.text = ""
 
                 // Configurar o RecyclerView com o adapter apropriado
-                val chatAdapter = ChatAdapter(chats)
+                chatAdapter = ChatAdapter(chats)
                 recyclerViewChats.adapter = chatAdapter
                 recyclerViewChats.layoutManager = LinearLayoutManager(view?.context)
             }
@@ -100,6 +111,17 @@ class ChatFragment : Fragment() {
             startActivity(intent)
         }
 
+        search.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
+        })
+
         listChats()
     }
 
@@ -108,9 +130,9 @@ class ChatFragment : Fragment() {
 
         chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
             recyclerViewChats.visibility = View.VISIBLE
-
+            chat = chats
             chats?.let {
-                val chatAdapter = ChatAdapter(chats)
+                chatAdapter = ChatAdapter(chats)
                 recyclerViewChats.adapter = chatAdapter
                 recyclerViewChats.layoutManager = LinearLayoutManager(view?.context)
             }
@@ -132,5 +154,26 @@ class ChatFragment : Fragment() {
             paint.color = color
         }
         return oval
+    }
+
+    private fun filterList(query: String?) {
+        if (query != null) {
+            val filteredList = ArrayList<Chat>()
+                for (item in chat) {
+                    if (item.userId.name.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
+                        filteredList.add(item)
+                    }
+                }
+            val noContext = view?.findViewById<TextView>(R.id.notFound)
+            if (filteredList.isNotEmpty()) {
+                noContext?.visibility = View.GONE
+                recyclerViewChats.visibility = View.VISIBLE
+                chatAdapter.updateChat(filteredList)
+            }else{
+
+                noContext?.visibility = View.VISIBLE
+                recyclerViewChats.visibility = View.GONE
+            }
+        }
     }
 }

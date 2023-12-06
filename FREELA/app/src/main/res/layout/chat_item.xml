@@ -11,44 +11,38 @@
     app:strokeColor="#dcdcdc"
     app:cardCornerRadius="18dp">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="16dp">
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userDetails"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="1dp"
+            android:visibility="gone"/>
+        <TextView
+            android:elevation="1dp"
+            android:id="@+id/userDetailsWithoutPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:textColor="@color/backgroundprimary"
+            android:gravity="center"
+            android:text="U"
+            android:textSize="24sp"
+            android:background="@drawable/background_oval_1"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/userDetails"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:id="@+id/userDetailsWithoutPhoto"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/background_oval_1"
-                    android:gravity="center"
-                    android:text="U"
-                    android:textColor="@color/backgroundprimary"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="0dp" />
-
-    <TextView
-        android:id="@+id/nameUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome User"
-        android:textColor="@color/textsecondary"
-        android:textSize="18dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="13dp" />
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:id="@+id/nameUser"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/title"
+            android:text="Usuario"/>
 
         <TextView
             android:id="@+id/lastUpdate"
@@ -56,8 +50,10 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="@color/textsecondary"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="312dp"
-            tools:layout_editor_absoluteY="16dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

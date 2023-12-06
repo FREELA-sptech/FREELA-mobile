@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.adapters.ProposalAdapter
@@ -60,7 +61,7 @@ class OrderRefuseFragment : Fragment() {
         proposalViewModel = ProposalViewModel(RetrofitClient.getInstance().create(ProposalsService::class.java))
 
         order?.let {
-            val listaFiltrada = it.proposals?.filter { it.status == "OPEN" }
+            val listaFiltrada = it.proposals?.filter { it.status == "REFUSED" }
             proposalsAdapter = ProposalAdapter(listaFiltrada as MutableList<Proposals>)
             recyclerView.adapter = proposalsAdapter
             recyclerView.layoutManager = LinearLayoutManager(view.context)
