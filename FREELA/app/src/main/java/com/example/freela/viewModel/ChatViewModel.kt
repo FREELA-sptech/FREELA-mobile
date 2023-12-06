@@ -8,6 +8,7 @@ import com.example.freela.api.ChatService
 import com.example.freela.model.Chat
 import com.example.freela.model.Message
 import com.example.freela.model.Session
+import com.example.freela.model.dto.request.ChatRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,4 +72,33 @@ class ChatViewModel(private val chatService: ChatService) : ViewModel() {
                 }
             })
     }
+
+    fun createChat(freelancerId: Int, userId: Int, orderId: Int, lastUpdate: String): LiveData<Boolean> {
+        val newChat = ChatRequest(freelancerId, userId, orderId, lastUpdate)
+        val success = MutableLiveData<Boolean>()
+
+        chatService.createChat("Bearer ${Session.token}", newChat).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    // Lógica após o chat ser criado com sucesso
+                    Log.i("CreateChat", "Chat created successfully")
+                    getChats()
+                    success.postValue(true)
+
+                } else {
+                    Log.i("CreateChat", response.toString())
+                    success.postValue(false)
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                success.postValue(false)
+            }
+        })
+
+        return success
+    }
+
+
+
 }
