@@ -2,7 +2,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.freela.OrderDetailsFragment
+import com.example.freela.OrderAccepted
+import com.example.freela.OrderRefuseFragment
 import com.example.freela.OrderProposalsFragment
 import com.example.freela.model.Order
 
@@ -23,7 +24,7 @@ class MyViewAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(f
                 fragment
             }
             1 -> {
-                val fragment = OrderDetailsFragment()
+                val fragment = OrderAccepted()
                 fragment.arguments = Bundle().apply {
                     putParcelable("order", order)
                 }
@@ -36,7 +37,7 @@ class MyViewAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(f
                 }
                 fragment
             }
-            else -> OrderDetailsFragment()
+            else -> OrderRefuseFragment()
         }
     }
     fun setOrder(order: Order) {

@@ -1,4 +1,5 @@
 package com.example.freela
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -14,9 +15,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
@@ -27,21 +26,17 @@ import com.example.freela.api.ProposalsService
 import com.example.freela.model.Order
 import com.example.freela.model.Proposals
 import com.example.freela.model.Session
-import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
 import com.example.freela.view.BaseAuthenticatedActivity
-import com.example.freela.view.OrderDetails
-import com.example.freela.view.ProposalsDetails
 import com.example.freela.viewModel.ProposalViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayInputStream
 
 private const val ARG_ORDER = "order"
 
-class OrderProposalsFragment : Fragment() {
+class OrderAccepted : Fragment() {
 
     private var order: Order? = null
     private lateinit var proposalsAdapter: ProposalAdapter
@@ -58,24 +53,28 @@ class OrderProposalsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_order_proposals, container, false)
+        return inflater.inflate(R.layout.fragment_order_accepted, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val description = view.findViewById<TextView>(R.id.description)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerMain)
         proposalViewModel = ProposalViewModel(RetrofitClient.getInstance().create(ProposalsService::class.java))
 
         order?.let {
-            val listaFiltrada = it.proposals?.filter { it.status == "OPEN" }
-            proposalsAdapter = ProposalAdapter(listaFiltrada as MutableList<Proposals>)
-            recyclerView.adapter = proposalsAdapter
-            recyclerView.layoutManager = LinearLayoutManager(view.context)
-            proposalsAdapter.onItemClick = { proposals, clickType ->
-                if (clickType == "itemClick") {
-                    showDialog(view, proposals)
+            val listaFiltrada = it.proposals?.filter { it.status == "ACCEPTED" }
+            if (listaFiltrada.isNullOrEmpty()){
+                proposalsAdapter = ProposalAdapter(listaFiltrada as MutableList<Proposals>)
+                recyclerView.adapter = proposalsAdapter
+                recyclerView.layoutManager = LinearLayoutManager(view.context)
+                proposalsAdapter.onItemClick = { proposals, clickType ->
+                    if (clickType == "itemClick") {
+                        showDialog(view, proposals)
+                    }
                 }
             }
+
         }
     }
 
@@ -215,6 +214,4 @@ class OrderProposalsFragment : Fragment() {
             }
         })
     }
-
-
 }

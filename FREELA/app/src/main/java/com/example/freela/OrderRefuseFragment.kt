@@ -7,19 +7,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Base64
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.adapters.ProposalAdapter
@@ -27,21 +24,17 @@ import com.example.freela.api.ProposalsService
 import com.example.freela.model.Order
 import com.example.freela.model.Proposals
 import com.example.freela.model.Session
-import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
 import com.example.freela.view.BaseAuthenticatedActivity
-import com.example.freela.view.OrderDetails
-import com.example.freela.view.ProposalsDetails
 import com.example.freela.viewModel.ProposalViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayInputStream
 
 private const val ARG_ORDER = "order"
 
-class OrderProposalsFragment : Fragment() {
+class OrderRefuseFragment : Fragment() {
 
     private var order: Order? = null
     private lateinit var proposalsAdapter: ProposalAdapter
@@ -58,7 +51,7 @@ class OrderProposalsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_order_proposals, container, false)
+        return inflater.inflate(R.layout.fragment_order_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -215,6 +208,5 @@ class OrderProposalsFragment : Fragment() {
             }
         })
     }
-
 
 }

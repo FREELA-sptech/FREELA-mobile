@@ -32,7 +32,7 @@ interface ProposalsService {
     fun editProposalStatus(
         @Header("Authorization") token: String,
         @Path("proposalId") proposalId: String,
-        @Body updatedStatus: String
+        @Query("status") updatedStatus: String
     ): Call<Unit>
 
     @GET("/proposals/user")

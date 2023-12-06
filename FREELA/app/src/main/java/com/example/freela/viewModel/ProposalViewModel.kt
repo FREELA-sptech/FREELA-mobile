@@ -95,8 +95,32 @@ class ProposalViewModel(private val proposalsService: ProposalsService) : ViewMo
         return success
     }
 
-    fun editProposalStatus(proposalId: Int) {
+    fun editProposalStatus(proposalId: String, updatedStatus: String) : LiveData<Boolean>  {
+        val userViewModel = UserViewModel(RetrofitClient.getInstance().create(AuthService::class.java))
+        val success = MutableLiveData<Boolean>()
 
+        proposalsService.editProposalStatus("Bearer ${Session.token}", proposalId, updatedStatus)
+            .enqueue(object : Callback<Unit> {
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                    if (response.isSuccessful) {
+                        userViewModel.getUserDetails(Session.token)
+                        getUserProposals(Session.token)
+                        Log.i("Sucesso", response.toString())
+                        success.postValue(true)
+                    } else {
+                        Log.i("Erro", response.toString())
+                        _proposalError.value = "Erro ao editar o status da proposta"
+                        success.postValue(false)
+                    }
+                }
+
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                    Log.e("EDIT PROPOSAL STATUS", t.message.toString())
+                    success.postValue(false)
+                }
+            })
+
+        return success
     }
 
     fun getUserProposals(token: String) {
