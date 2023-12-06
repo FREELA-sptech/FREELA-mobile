@@ -96,7 +96,7 @@ class CreateOrder : AppCompatActivity() {
                     val imageUri = clipData.getItemAt(i).uri
                     chooseImageListArray.add(imageUri)
                     val imagePart = convertImageToMultipart(imageUri)
-                    photos.add()
+//                    photos.add()
 
                     if (imagePart != null) {
                         chooseImageList.add(imagePart)
@@ -109,23 +109,27 @@ class CreateOrder : AppCompatActivity() {
 
     private fun SetAdapter() {
         imageRV.adapter = imageAdapter
-        imageAdapter.submitList(chooseImageList)
+//        imageAdapter.submitList(chooseImageList)
     }
 
 
     private fun performRegistration() {
+        val subCategoriesIds = intent.getIntArrayExtra("subCategoriesIds")
+        val subCategoriesIdsList = subCategoriesIds?.toList()
         val description = binding.description?.text.toString()
         val title = binding.title?.text.toString()
         val deadline = binding.deadline?.text.toString()
         val value = binding.value?.text.toString()
         val floatValue = value.toFloatOrNull() ?: 0.0f
 
-        val orderRequest = OrderRequest(
-            description,title,floatValue,listOf(1, 2, 3, 4, 5),deadline
-        )
-        orderViewModel.createOrder(orderRequest)
-
-
+        val orderRequest = subCategoriesIdsList?.let {
+            OrderRequest(
+                description,title,floatValue, it,deadline
+            )
+        }
+        if (orderRequest != null) {
+            orderViewModel.createOrder(orderRequest)
+        }
     }
 
     private fun convertImageToMultipart(imageUri: Uri): MultipartBody.Part? {

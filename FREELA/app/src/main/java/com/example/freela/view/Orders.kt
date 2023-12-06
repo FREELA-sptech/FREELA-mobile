@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.freela.CreateSecondOrder
 import com.example.freela.R
 import com.example.freela.adapters.OrderAdapter
 import com.example.freela.adapters.ProposalAdapter
@@ -51,7 +52,7 @@ class Orders : AppCompatActivity() {
         }
 
         binding.discoverFreelancers.setOnClickListener{
-            val intent = Intent(this, CreateOrder::class.java)
+            val intent = Intent(this, CreateSecondOrder::class.java)
             startActivity(intent);
         }
 

@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CreateSecondOrder"
+            android:exported="false" />
+        <activity
             android:name=".MessageRightItemActivity"
             android:exported="false" />
         <activity
