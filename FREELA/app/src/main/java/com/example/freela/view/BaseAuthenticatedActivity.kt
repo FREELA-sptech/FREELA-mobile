@@ -29,6 +29,10 @@ class BaseAuthenticatedActivity : AppCompatActivity() {
         setContentView(binding.root)
         replaceFragment(HomeFragment())
 
+        if (intent.getBooleanExtra("loadChatFragment", false)) {
+            replaceFragment(ChatFragment())
+        }
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {

@@ -3,6 +3,7 @@ package com.example.freela.api
 import com.example.freela.model.Chat
 import com.example.freela.model.Message
 import com.example.freela.model.User
+import com.example.freela.model.dto.request.ChatRequest
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
 import com.example.freela.model.dto.response.LoginResponse
@@ -24,8 +25,9 @@ interface ChatService {
     ): Call<List<Chat>>
 
     @POST("/chats")
-    fun sendMessage(@Body loginRequest: LoginRequest):
-            Call<LoginResponse>
+    fun createChat(
+        @Header("Authorization") token: String,
+        @Body chatData: ChatRequest): Call<Void>
 
     @GET("/chats/messages/{id")
     fun getMessagesByChat(@Header("Authorization") token: String,

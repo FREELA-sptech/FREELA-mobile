@@ -3,59 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/color01"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.CreateOrder">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/color01">
-
-        <TextView
-            android:id="@+id/name"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Criar Pedido"
-            android:textColor="@color/backgroundprimary"
-            android:textSize="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.561" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnReturn"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="#AE274C77"
-            android:background="@drawable/background_oval_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_keyboard_backspace_24" />
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnreturn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:layout_constraintEnd_toStartOf="@+id/textView"
+                    app:tint="@color/textprimary" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:textSize="22dp"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="Criar pedido"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerMain"
+                    />
+            </androidx.appcompat.widget.Toolbar>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:layout_below="@+id/appBar"
+        android:id="@+id/titleForm"
+        style="@style/title"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="2sp"
+        android:text="Insira os dados "
+        android:textSize="22dp"
+        android:layout_marginStart="16dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/titleForm"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="28dp"
         android:layout_marginBottom="-38dp"
         android:paddingBottom="38dp"
         app:cardBackgroundColor="@color/backgroundprimary"
@@ -67,8 +77,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="36dp"
             android:orientation="vertical"
-            android:paddingHorizontal="28dp"
+            android:paddingHorizontal="16dp"
             android:paddingTop="28dp">
+
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
