@@ -18,6 +18,7 @@ import android.util.Base64
 import androidx.constraintlayout.helper.widget.Carousel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.freela.model.Chat
+import com.example.freela.model.Session
 import com.example.freela.model.SubCategory
 import com.example.freela.model.User
 import de.hdodenhof.circleimageview.CircleImageView
@@ -36,17 +37,29 @@ class ChatAdapter(private val chats: List<Chat>) :
     var onItemClick : ((Chat) -> Unit)? = null
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val user = Session.user
         val userDetails: CircleImageView = itemView.findViewById(R.id.userDetails)
         val userDetailsWithoutPhoto: TextView =
             itemView.findViewById(R.id.userDetailsWithoutPhoto)
         val nameUser: TextView = itemView.findViewById(R.id.nameUser)
         val lastUpdate: TextView = itemView.findViewById(R.id.lastUpdate)
         fun bind(chat: Chat) {
-            if (chat.userId.photo == "") {
+            var photo = ""
+
+            if (user !== null) {
+                if (user.isFreelancer) {
+                    photo = chat.userId.photo
+                } else {
+                    photo = chat.freelancerId.photo
+                }
+            }
+
+
+            if (photo == "") {
                 userDetailsWithoutPhoto.text = chat.userId.name.first().toString()
                 userDetailsWithoutPhoto.background = itemView.oval(Color.parseColor("#274C77"))
             }else{
-                chat.userId.photo.let { photoString ->
+                photo.let { photoString ->
                     val userDetailsImageView = itemView.findViewById<CircleImageView>(R.id.userDetails)
                     userDetailsImageView?.visibility = View.VISIBLE
                     val byteArray = Base64.decode(photoString, Base64.DEFAULT)
@@ -56,14 +69,19 @@ class ChatAdapter(private val chats: List<Chat>) :
                 }
             }
 
-            nameUser.text = chat.userId.name
+            if (user !== null) {
+                if (user.isFreelancer) {
+                    nameUser.text = chat.userId.name
+                } else {
+                    nameUser.text = chat.freelancerId.name
+                }
+            }
             val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
             try {
                 val date = inputFormat.parse(chat.lastUpdate)
                 val formattedTime = outputFormat.format(date)
-                lastUpdate.text = formattedTime
             } catch (e: ParseException) {
             }
 

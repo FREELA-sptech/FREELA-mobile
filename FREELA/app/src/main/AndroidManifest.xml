@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MessageRightItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MessageItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".chat_item"
             android:exported="false" />
         <activity
