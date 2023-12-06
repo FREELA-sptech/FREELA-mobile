@@ -40,6 +40,9 @@ object Session {
     private val _freelancersListLiveData = MutableLiveData<List<User>>()
     val freelancersListLiveData: LiveData<List<User>> = _freelancersListLiveData
 
+    private val _chatsListLiveData = MutableLiveData<List<Chat>>()
+    val chatsListLiveData: LiveData<List<Chat>> = _chatsListLiveData
+
     var user: User?
         get() = _userLiveData.value
         set(value) {
@@ -64,6 +67,12 @@ object Session {
             _freelancersListLiveData.value = value
         }
 
+    var chats: List<Chat>?
+        get() = _chatsListLiveData.value
+        set(value) {
+            _chatsListLiveData.value = value
+        }
+
     var subCategories: List<SubCategory> = emptyList()
         private set
 
@@ -85,5 +94,9 @@ object Session {
 
     fun updateFreelancersList(newFreelancersList: List<User>) {
         freelancers = newFreelancersList
+    }
+
+    fun updateChatsList(newChatsList: List<Chat>) {
+        chats = newChatsList
     }
 }

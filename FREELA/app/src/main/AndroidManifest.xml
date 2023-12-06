@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".chat_item"
+            android:exported="false" />
+        <activity
             android:name=".UpdateProposals"
             android:exported="false" />
         <activity
