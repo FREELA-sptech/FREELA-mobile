@@ -42,7 +42,6 @@ class ChatAdapter(private val chats: List<Chat>) :
         val userDetailsWithoutPhoto: TextView =
             itemView.findViewById(R.id.userDetailsWithoutPhoto)
         val nameUser: TextView = itemView.findViewById(R.id.nameUser)
-        val lastUpdate: TextView = itemView.findViewById(R.id.lastUpdate)
         fun bind(chat: Chat) {
             var photo = ""
 
@@ -56,8 +55,15 @@ class ChatAdapter(private val chats: List<Chat>) :
 
 
             if (photo == "") {
-                userDetailsWithoutPhoto.text = chat.userId.name.first().toString()
-                userDetailsWithoutPhoto.background = itemView.oval(Color.parseColor("#274C77"))
+                if(user?.isFreelancer == true){
+                    userDetailsWithoutPhoto.text = chat.userId.name.first().toString()
+                    userDetailsWithoutPhoto.background = itemView.oval(Color.parseColor("#274C77"))
+                }else{
+                    userDetailsWithoutPhoto.text = chat.freelancerId.name.first().toString()
+                    userDetailsWithoutPhoto.background = itemView.oval(Color.parseColor("#274C77"))
+                }
+
+
             }else{
                 photo.let { photoString ->
                     val userDetailsImageView = itemView.findViewById<CircleImageView>(R.id.userDetails)
@@ -76,15 +82,6 @@ class ChatAdapter(private val chats: List<Chat>) :
                     nameUser.text = chat.freelancerId.name
                 }
             }
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-            try {
-                val date = inputFormat.parse(chat.lastUpdate)
-                val formattedTime = outputFormat.format(date)
-            } catch (e: ParseException) {
-            }
-
 
         }
     }
@@ -96,14 +93,16 @@ class ChatAdapter(private val chats: List<Chat>) :
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        val currentChat = items[position]
-        holder.itemView.setOnClickListener{
-            onItemClick?.invoke(currentChat)
+        if (position < items.size) {
+            val currentChat = items[position]
+            holder.itemView.setOnClickListener{
+                onItemClick?.invoke(currentChat)
+            }
+            holder.bind(currentChat)
         }
-        holder.bind(currentChat)
     }
 
-    override fun getItemCount(): Int = chats.size
+    override fun getItemCount(): Int = items.size
 
     fun updateChat(chats: List<Chat>) {
         items.clear()

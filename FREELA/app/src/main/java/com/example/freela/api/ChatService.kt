@@ -1,6 +1,7 @@
 package com.example.freela.api
 
 import com.example.freela.model.Chat
+import com.example.freela.model.Message
 import com.example.freela.model.User
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.request.RegisterRequest
@@ -10,6 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ChatService {
@@ -25,6 +27,8 @@ interface ChatService {
     fun sendMessage(@Body loginRequest: LoginRequest):
             Call<LoginResponse>
 
-    @GET("/chats/messages/")
-    fun getMessagesByChat(@Header("Authorization") token: String): Call<User>
+    @GET("/chats/messages/{id")
+    fun getMessagesByChat(@Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<List<Message>>
 }
