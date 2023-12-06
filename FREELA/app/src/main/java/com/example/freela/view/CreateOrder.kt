@@ -96,7 +96,7 @@ class CreateOrder : AppCompatActivity() {
                     val imageUri = clipData.getItemAt(i).uri
                     chooseImageListArray.add(imageUri)
                     val imagePart = convertImageToMultipart(imageUri)
-                    photos.add()
+                    //photos.add()
 
                     if (imagePart != null) {
                         chooseImageList.add(imagePart)
@@ -109,7 +109,7 @@ class CreateOrder : AppCompatActivity() {
 
     private fun SetAdapter() {
         imageRV.adapter = imageAdapter
-        imageAdapter.submitList(chooseImageList)
+        //imageAdapter.submitList(chooseImageList)
     }
 
 

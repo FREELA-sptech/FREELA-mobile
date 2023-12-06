@@ -2,20 +2,21 @@ package com.example.freela.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.freela.model.dto.response.ChatResponse
 
 data class Message(
     val id: Int?,
     val userIdFrom: Int,
     val message: String,
     val time: String,
-    val chat: Chat?
+    val chat: ChatResponse?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readInt(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readParcelable(Chat::class.java.classLoader)
+        parcel.readParcelable(ChatResponse::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

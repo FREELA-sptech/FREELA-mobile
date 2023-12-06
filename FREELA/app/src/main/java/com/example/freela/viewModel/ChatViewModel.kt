@@ -32,6 +32,7 @@ class ChatViewModel(private val chatService: ChatService) : ViewModel() {
         chatService.getChats("Bearer ${Session.token}", Session.user?.id, Session.user?.isFreelancer)
             .enqueue(object : Callback<List<Chat>> {
                 override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
+
                     if (response.isSuccessful) {
                         val chats = response.body()
                         chats?.let {
@@ -56,11 +57,13 @@ class ChatViewModel(private val chatService: ChatService) : ViewModel() {
         chatService.getMessagesByChat("Bearer ${Session.token}", id)
             .enqueue(object : Callback<List<Message>> {
                 override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+
                     if (response.isSuccessful) {
                         val messages = response.body()
                         messages?.let {
                             _messages.value = it
                             Log.i("Mensagens do Chat", response.toString())
+                            Session.updateMessagessList(messages)
                         }
                     } else {
                         Log.i("Mensagens do Chat Erro", response.toString())

@@ -29,7 +29,7 @@ interface ChatService {
         @Header("Authorization") token: String,
         @Body chatData: ChatRequest): Call<Void>
 
-    @GET("/chats/messages/{id")
+    @GET("/chats/messages/{id}")
     fun getMessagesByChat(@Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<List<Message>>
