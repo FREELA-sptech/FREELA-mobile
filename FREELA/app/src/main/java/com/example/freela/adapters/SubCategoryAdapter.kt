@@ -14,7 +14,6 @@ class SubCategoryAdapter(
     private val onSubCategorySelected: (SubCategory) -> Unit
 ) : RecyclerView.Adapter<SubCategoryAdapter.SubCategoryViewHolder>() {
 
-    private val subCategoriesGrouped = subCategories.groupBy { it.category?.id  }
     private val items = mutableListOf<SubCategory>()
 
     init {
@@ -43,6 +42,23 @@ class SubCategoryAdapter(
         items.addAll(subCategories)
         notifyDataSetChanged()
     }
+    fun setUpdateSubCategories(subCategories: List<SubCategory>) {
+        val selectedCategoryIds = subCategories
+            .filter { it.isSelected }
+            .map { it.category?.id }
+            .distinct()
+
+        if (selectedCategoryIds.size > 1 || selectedCategoryIds.isEmpty()) {
+            items.clear()
+            items.addAll(subCategories)
+        } else {
+            val selectedCategoryId = selectedCategoryIds.firstOrNull()
+            selectedCategoryId?.let {
+                filterSubCategoriesByCategory(it)
+            }
+        }
+        notifyDataSetChanged()
+    }
 
     inner class SubCategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val checkBox: CheckBox = itemView.findViewById(R.id.checkBoxSubCategory)
@@ -60,8 +76,7 @@ class SubCategoryAdapter(
                     isSelected = isChecked
                     onSubCategorySelected(subCategory)
 
-                    val selectedCategoryIds = subCategoriesGrouped.values
-                        .flatten()
+                    val selectedCategoryIds = subCategories
                         .filter { it.isSelected }
                         .map { it.category?.id }
                         .distinct()
@@ -79,13 +94,12 @@ class SubCategoryAdapter(
                 }
             }
         }
+    }
 
-        private fun filterSubCategoriesByCategory(categoryId: Int) {
-            val itemsToDisplay = subCategories.filter { it.category?.id == categoryId }
-            items.clear()
-            items.addAll(itemsToDisplay)
-            notifyDataSetChanged()
-        }
-
+    private fun filterSubCategoriesByCategory(categoryId: Int) {
+        val itemsToDisplay = subCategories.filter { it.category?.id == categoryId }
+        items.clear()
+        items.addAll(itemsToDisplay)
+        notifyDataSetChanged()
     }
 }

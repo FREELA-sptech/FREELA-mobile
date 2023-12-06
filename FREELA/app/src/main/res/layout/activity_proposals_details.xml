@@ -1,9 +1,354 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.ProposalsDetails">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_marginTop="36dp"
+android:background="@drawable/dialog_background"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".view.ProposalsDetails">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundprimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnreturn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_close_24"
+                    app:layout_constraintEnd_toStartOf="@+id/textView"
+                    app:tint="@color/textprimary" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:textSize="22dp"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="Proposta"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerMain"
+                    />
+            </androidx.appcompat.widget.Toolbar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btns"
+        android:layout_below="@+id/appBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="@+id/btns"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/circleImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userDetails"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/category"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/changeImage"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/background_oval_1"
+                    android:backgroundTint="@color/color02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/imgWithoutImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="U"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="Usuario"
+                android:textColor="@color/textprimary"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:paddingTop="16dp">
+            <TextView
+                android:textColor="@color/textsecondary"
+                android:layout_marginTop="16dp"
+                android:id="@+id/titlePrize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orçamento:"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:textColor="@color/textprimary"
+                android:id="@+id/prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 130,00"
+                android:textSize="18dp"
+                app:layout_constraintTop_toBottomOf="@+id/titlePrize"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/titleDeadline"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prazo:"
+                android:textColor="@color/textsecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="UnknownIdInLayout" />
+
+            <TextView
+                android:textColor="@color/textprimary"
+                android:id="@+id/deadlineValue"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023/03/03"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleDeadline" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Descrição"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textsecondary"
+                android:textSize="15sp"
+                android:text="..."
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            app:cardBackgroundColor="@color/color04"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="28dp"
+            android:layout_marginHorizontal="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/titleOrder"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order"
+                        style="@style/title"
+                        android:textColor="@color/color01"
+                        />
+                    <TextView
+                        android:id="@+id/descriptionOrder"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order"
+                        android:textColor="@color/textsecondary"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="16dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/description"
+                        tools:ignore="MissingConstraints">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/userOrderDetails"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:elevation="1dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/userOrderDetailsWithoutPhoto"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/background_oval_1"
+                            android:elevation="1dp"
+                            android:gravity="center"
+                            android:text="U"
+                            android:textColor="@color/backgroundprimary"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/userOrder"
+                            style="@style/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Usuario"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:paddingTop="16dp">
+                        <TextView
+                            android:textColor="@color/textsecondary"
+                            android:layout_marginTop="16dp"
+                            android:id="@+id/titlePrizeOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Orçamento:"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/textprimary"
+                            android:id="@+id/prizeOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$ 130,00"
+                            android:textSize="18dp"
+                            app:layout_constraintTop_toBottomOf="@+id/titlePrizeOrder"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/titleDeadlineOrder"
+                            android:layout_marginTop="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Prazo:"
+                            android:textColor="@color/textsecondary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:ignore="UnknownIdInLayout" />
+
+                        <TextView
+                            android:textColor="@color/textprimary"
+                            android:id="@+id/deadlineValueOrder"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2023/03/03"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/titleDeadlineOrder" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_weight="1"
+            android:layout_marginRight="16dp"
+            android:id="@+id/acceptProposal"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/backgroundprimary"
+            android:backgroundTint="#5EC34F"
+            android:text="Aceitar"
+            app:cornerRadius="32dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_weight="1"
+            android:id="@+id/recuseProposal"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:textColor="@color/backgroundprimary"
+            android:backgroundTint="@color/error"
+            android:text="Recusar"
+            app:cornerRadius="32dp" />
+    </LinearLayout>
+</RelativeLayout>

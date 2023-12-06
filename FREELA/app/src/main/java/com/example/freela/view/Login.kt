@@ -4,29 +4,31 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.util.Patterns
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import com.example.freela.api.AuthService
+import com.example.freela.api.ProposalsService
+import com.example.freela.databinding.ActivityIntroBinding
 import com.example.freela.databinding.ActivityLoginBinding
 import com.example.freela.model.User
 import com.example.freela.model.Session
+import com.example.freela.model.User
 import com.example.freela.model.dto.request.LoginRequest
 import com.example.freela.model.dto.response.LoginResponse
 import com.example.freela.network.RetrofitClient
+import com.example.freela.viewModel.ProposalViewModel
 import com.example.freela.viewModel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.messaging.FirebaseMessaging
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Login : AppCompatActivity() {
     private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
-    private lateinit var userViewModel: UserViewModel // Declare o UserViewModel
+    private lateinit var userViewModel: UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -42,20 +44,25 @@ class Login : AppCompatActivity() {
                 binding.email.error = "Email inválido"
                 val snackbar = Snackbar.make(it, "Email inválido!", Snackbar.LENGTH_SHORT)
                 snackbar.show()
-
             } else if (inputPassword.length < 8) {
                 binding.password.error = "Senha muito curta"
                 val snackbar = Snackbar.make(it, "Senha muito curta!", Snackbar.LENGTH_SHORT)
                 snackbar.show()
-
             } else {
-                tryLogin(inputEmail,inputPassword,it)
+                tryLogin(inputEmail, inputPassword, it)
             }
         }
+
+        binding.btnreturn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     private fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun tryLogin(email: String, password: String, view: View) {
@@ -64,16 +71,16 @@ class Login : AppCompatActivity() {
         binding.entrar.isEnabled = false
         binding.entrar.setTextColor(Color.parseColor("#274C77"))
 
+        var loginAttempted = true // Defina como true antes de fazer a chamada do login
 
-        val home = Intent(this, BaseAuthenticatedActivity::class.java)
-        val loginRequest = LoginRequest(
-            email, password
-        )
-        userViewModel.loginUser(loginRequest) { success ->
-            Log.e("Login",success.toString())
-            if (success) {
+        val loginRequest = LoginRequest(email, password)
+        val loginResultLiveData = userViewModel.loginUser(loginRequest)
 
-//                val token = loginResponse?.token
+        loginResultLiveData.observe(this) { loginSuccess ->
+            if (loginSuccess) {
+
+
+//              val token = loginResponse?.token
 //                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
 //                    if(task.isSuccessful){
 //                        if (token != null) {
@@ -82,17 +89,16 @@ class Login : AppCompatActivity() {
 //                        Log.i("token no login",task.result)
 //                    }
 //                }
-                val snackbar = Snackbar.make(view, "Login Feito com sucesso!", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-                finish()
-                startActivity(home)
+
+                Snackbar.make(binding.root, "Login feito com sucesso", Snackbar.LENGTH_SHORT).show()
+                loadHome()
             } else {
-                val snackbar = Snackbar.make(view,"Email ou senha inválida!",Snackbar.LENGTH_SHORT)
-                snackbar.show()
-                binding.entrar.isEnabled = true
-                binding.entrar.setTextColor(Color.parseColor("#f7f7f7"))
-                progressBar.visibility = View.GONE
+                showErrorDialog()
             }
+
+            progressBar.visibility = View.GONE
+            binding.entrar.isEnabled = true
+            binding.entrar.setTextColor(Color.parseColor("#ffffff"))
         }
     }
 
@@ -125,4 +131,28 @@ class Login : AppCompatActivity() {
 
 
     }
+}
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Erro ao fazer login")
+        builder.setMessage("Usuario não encontrado")
+
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun loadHome(){
+        Session.userLiveData.observe(this, Observer<User?> { user ->
+            user?.let {
+                val home = Intent(this, BaseAuthenticatedActivity::class.java)
+                startActivity(home)
+                finish()
+            }
+        })
+    }
+
 }

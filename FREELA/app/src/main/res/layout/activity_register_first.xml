@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundprimary"
     android:orientation="vertical"
+    style="@style/AppThemeWhite"
     tools:context=".view.Register">
 
     <com.google.android.material.appbar.AppBarLayout

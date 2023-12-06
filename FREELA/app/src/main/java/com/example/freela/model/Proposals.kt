@@ -1,37 +1,46 @@
+package com.example.freela.model
+
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.freela.model.Order
 import com.example.freela.model.User
 
 data class Proposals(
     val id: Int,
     val value: Double,
-    val originUser: User?,
+    val user: User?,
     val description: String,
+    val order: Order?,
     val deadline: String,
     val destinedOrder: Int,
     val isAccepted: Boolean,
-    val isRefused: Boolean
+    val isRefused: Boolean,
+    val status: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readDouble(),
         parcel.readParcelable(User::class.java.classLoader),
         parcel.readString() ?: "",
+        parcel.readParcelable(Order::class.java.classLoader),
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeDouble(value)
-        parcel.writeParcelable(originUser, flags)
+        parcel.writeParcelable(user, flags)
         parcel.writeString(description)
+        parcel.writeParcelable(order, flags)
         parcel.writeString(deadline)
         parcel.writeInt(destinedOrder)
         parcel.writeByte(if (isAccepted) 1 else 0)
         parcel.writeByte(if (isRefused) 1 else 0)
+        parcel.writeString(status)
     }
 
     override fun describeContents(): Int {

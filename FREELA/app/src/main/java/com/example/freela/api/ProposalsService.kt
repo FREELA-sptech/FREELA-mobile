@@ -1,6 +1,7 @@
 package com.example.freela.api
 
-import Proposals
+
+import com.example.freela.model.Proposals
 import com.example.freela.model.dto.request.ProposalRequest
 import retrofit2.Call
 import retrofit2.http.*
@@ -31,7 +32,7 @@ interface ProposalsService {
     fun editProposalStatus(
         @Header("Authorization") token: String,
         @Path("proposalId") proposalId: String,
-        @Body updatedStatus: String
+        @Query("status") updatedStatus: String
     ): Call<Unit>
 
     @GET("/proposals/user")

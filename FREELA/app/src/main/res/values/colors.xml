@@ -9,7 +9,8 @@
     <color name="color05">#8B8C89</color>
     <color name="black">#000000</color>
 
-
+    <color name="transparentColor">#00FFFFFF</color>
+    <color name="grey">#E7ECEF</color>
     <color name="textprimary">#1D1D1D</color>
     <color name="textsecondary">#4F535A</color>
 
@@ -26,6 +27,9 @@
 
     <color name="disableBtnColor">#4F535A</color>
     <color name="submitBtnColor">#274C77</color>
+    <color name="primary10">#001C38</color>
+    <color name="primary40">#1660A5</color>
+    <color name="primary90">#D3E4FF</color>
 
 
 

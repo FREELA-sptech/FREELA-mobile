@@ -16,6 +16,49 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
+    <style name="AppTheme" parent="Base.Theme.FREELA">
+        <item name="colorPrimary">@color/color01</item>
+        <item name="colorPrimaryVariant">@color/color01</item>
+        <item name="colorOnPrimary">@color/color01</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/disable</item>
+        <item name="colorSecondaryVariant">@color/disable</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="AppThemeWhite" parent="Base.Theme.FREELA">
+        <item name="colorPrimary">@color/color01</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color02</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSecondaryVariant">@color/color02</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+    </style>
+    <style name="AppThemeColor04" parent="Base.Theme.FREELA">
+        <item name="colorPrimary">@color/color01</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/color04</item>
+
+    </style>
+    <style name="AppThemeColorDetails" parent="Base.Theme.FREELA">
+        <item name="colorPrimary">@color/color01</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
     <style name="logo" parent="Base.Theme.FREELA">
         <item name="android:src">@drawable/freela</item>
         <item name="android:layout_width">20dp</item>
@@ -76,9 +119,18 @@
         <item name="android:background">@color/color01</item>
         <item name="android:padding">5dp</item>
         <item name="android:paddingBottom">5dp</item>
-
-
     </style>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary40</item>
+    </style>
+
+    <style name="DialogAnimation" >
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+
 
 
 

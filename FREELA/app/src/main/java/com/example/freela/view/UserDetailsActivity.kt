@@ -1,85 +1,202 @@
 package com.example.freela.view
 
-import android.annotation.SuppressLint
-import android.content.Context
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.provider.OpenableColumns
+import android.util.Base64
+import android.view.Gravity
 import android.view.View
-import android.widget.TextView
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.freela.R
+import com.example.freela.adapters.ListSubCategoryAdapter
 import com.example.freela.api.AuthService
-import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.databinding.ActivityUserDetailsBinding
 import com.example.freela.model.Session
 import com.example.freela.model.User
 import com.example.freela.network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.freela.viewModel.UserViewModel
+import okhttp3.MultipartBody
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.InputStream
 
 class UserDetailsActivity : AppCompatActivity() {
     private val binding by lazy {
-        ActivityUserDetailsBinding.inflate(layoutInflater);
+        ActivityUserDetailsBinding.inflate(layoutInflater)
     }
 
     private lateinit var userDetails: User
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val sharedPreferences: SharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val token: String? = sharedPreferences.getString("TOKEN", null)
+        val userService = RetrofitClient.getInstance().create(AuthService::class.java)
+        val user = Session.user
+        val recyclerView = binding.recyclerViewSubcategories
+        userViewModel = UserViewModel(userService)
 
-        binding.btnReturn.setOnClickListener{
+        binding.btnreturn.setOnClickListener {
             val intent = Intent(this, BaseAuthenticatedActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        binding.exit.setOnClickListener{
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-            editor.remove("TOKEN")
-            editor.apply()
-            val intent = Intent(this, BaseAuthenticatedActivity::class.java)
-            Session.token = ""
+        binding.editUser.setOnClickListener {
+            val intent = Intent(this, EditUser::class.java)
             startActivity(intent)
             finish()
         }
 
+        binding.changeImage.setOnClickListener {
+            showDialog()
+        }
 
-        if (token != null) {
-            fetchUserDetails(token)
+        user?.let {
+            binding.textView2.text = user.name
+            val subCategories = user.subCategories
+            recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.adapter = ListSubCategoryAdapter(subCategories)
+
+            if (user.isFreelancer) {
+                binding.description2.text = "Autônomo"
+                binding.textDescription.text = user.description
+                binding.proposals.visibility = View.VISIBLE
+                binding.orders.visibility = View.GONE
+                binding.proposals.setOnClickListener {
+                    val intent = Intent(this, Proposal::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                binding.description2.text = "Cliente"
+                binding.proposals.visibility = View.GONE
+                binding.orders.visibility = View.VISIBLE
+                binding.titleAbout.visibility = View.GONE
+                binding.textDescription.visibility = View.GONE
+                binding.orders.setOnClickListener {
+                    val intent = Intent(this, Orders::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
+            if (user.photo == "") {
+                binding.imgWithoutImage.text = user.name.first().toString()
+            }else{
+                val userDetailsImageView = binding.userDetails
+                userDetailsImageView.visibility = View.VISIBLE
+                val byteArray = Base64.decode(user.photo, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(byteArray))
+                binding.changeImage.visibility = View.GONE
+                userDetailsImageView.setImageBitmap(bitmap)
+                userDetailsImageView.setOnClickListener {
+                    showDialog()
+                }
+            }
+
+            if (user.city == "" && user.uf == "") {
+                binding.textCity.text = "Sem registro"
+            } else {
+                binding.textCity.text = "${user.city} / ${user.uf}"
+            }
+
+
         }
     }
 
-    private fun fetchUserDetails(token: String) {
-        RetrofitClient.getInstance()
-            .create(AuthService::class.java)
-            .userDetails("Bearer $token")
-            .enqueue(object : Callback<User> {
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-                    if (response.isSuccessful) {
-                        val user = response.body()
-                        if (user != null) {
-                            binding.name.setText(user.name)
-                            binding.city.setText("${user.city}, ${user.uf}")
-                            if(user.isFreelancer){
-                                binding.TitleDescription.visibility = View.VISIBLE
-                                binding.description.setText(user.description)
-                            }
-                            binding.name.setText(user.name)
-                            userDetails = user
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-                        };
-                    }
-                }
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                    Log.e("ERRO NA API",t.message.toString())
-                }
-            })
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            val imageUri = data?.data
+            val token = Session.token
 
+            if (imageUri != null && token != null) {
+                val imagePart = convertImageToMultipart(imageUri)
+                if (imagePart != null) {
+                    userViewModel.updateUserPhoto(token, imagePart)
+                } else {
+                    // Tratamento se a conversão falhar
+                }
+            }
+        }
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.bottomsheetuploadimage)
+        val uploadImage = dialog.findViewById<RelativeLayout>(R.id.uploadImage)
+        val close = dialog.findViewById<ImageView>(R.id.close)
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        uploadImage.setOnClickListener {
+            selectPhoto()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
+    }
+
+    private fun selectPhoto() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 0)
+    }
+
+    private fun convertImageToMultipart(imageUri: Uri): MultipartBody.Part? {
+        val contentResolver: ContentResolver = applicationContext.contentResolver
+        val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+
+        inputStream?.let {
+            val file = File(cacheDir, contentResolver.getFileName(imageUri))
+            file.copyInputStreamToFile(inputStream)
+
+            val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            return MultipartBody.Part.createFormData("image", file.name, requestFile)
+        }
+
+        return null
+    }
+
+    private fun ContentResolver.getFileName(imageUri: Uri): String {
+        var name = ""
+        val returnCursor = this.query(imageUri, null, null, null, null)
+        returnCursor?.use {
+            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            it.moveToFirst()
+            name = it.getString(nameIndex)
+        }
+        returnCursor?.close()
+        return name
+    }
+
+    private fun File.copyInputStreamToFile(inputStream: InputStream) {
+        this.outputStream().use { fileOut ->
+            inputStream.copyTo(fileOut)
+        }
     }
 }

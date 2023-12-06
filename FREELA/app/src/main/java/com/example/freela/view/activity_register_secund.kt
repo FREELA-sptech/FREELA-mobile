@@ -16,9 +16,7 @@ import com.example.freela.adapters.SubCategoryAdapter
 import com.example.freela.api.AuthService
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.example.freela.api.SubCategoryService
-import com.example.freela.databinding.ActivityLoginBinding
 import com.example.freela.databinding.ActivityRegisterSecundBinding
-import com.example.freela.databinding.ActivityRegisterThirdBinding
 import com.example.freela.model.Session
 import com.example.freela.model.SubCategory
 import com.example.freela.network.RetrofitClient
@@ -32,7 +30,6 @@ import java.util.Locale
 class activity_register_secund : AppCompatActivity() {
     private lateinit var subCategoryAdapter: SubCategoryAdapter
     private val selectedSubCategories = mutableListOf<SubCategory>()
-    private lateinit var subCategoryViewModel: SubCategoryViewModel
     private lateinit var subCategories: List<SubCategory>
     private val binding by lazy {
         ActivityRegisterSecundBinding.inflate(layoutInflater)
@@ -43,11 +40,7 @@ class activity_register_secund : AppCompatActivity() {
         setContentView(binding.root)
         binding.btnNext.isEnabled = false
         binding.btnNext.setTextColor(Color.parseColor("#274C77"))
-        val subCategoryService = RetrofitClient.getInstance().create(SubCategoryService::class.java)
-        subCategoryViewModel = SubCategoryViewModel(subCategoryService)
-        subCategoryViewModel.getSubCategories()
         subCategories = Session.subCategories
-        Log.i("Lista", subCategoryViewModel.subCategories.value.toString())
         createSubCategory()
     }
 
@@ -82,10 +75,12 @@ class activity_register_secund : AppCompatActivity() {
         })
 
         binding.btnNext.setOnClickListener {
+            val cardSelected = intent.getStringExtra("type")
             val selectedSubCategoryIds: List<Int> = selectedSubCategories.map { it.id }.distinct()
             if (selectedSubCategoryIds.isNotEmpty()) {
                 val intent = Intent(this, activity_register_third::class.java)
                 intent.putExtra("subCategoriesIds", selectedSubCategoryIds.toIntArray())
+                intent.putExtra("type", cardSelected)
                 startActivity(intent)
             } else {
 
